@@ -54,8 +54,8 @@ public class MovieModel
         return mManager.getMovie(movie);
     }
     
-//    public ObservableList<Movie≥ searchMovies(String input)
-//    {
-//        return mManager.searchMovies(input);
-//    }
+    public ObservableList<Movie> searchMovies(String input)
+    {
+        return FXCollections.observableArrayList(mManager.searchMovies(input));
+    }
 }
