@@ -46,27 +46,29 @@ public class FXMLDocumentController implements Initializable
     private AnchorPane rootPane2;
     @FXML
     private TableView<Movie> tbViewMovie;
-//    @FXML
-//    private TableView<Category> tbViewCategory;
-    @FXML
-    private TextField txtSearch;
     @FXML
     private TableColumn<Movie, String> colImdbRating;
     @FXML
     private TableColumn<Movie, String> colPersonalRating;
     @FXML
     private TableColumn<Movie, String> colTitle;
+    @FXML
+    private TableView<Category> tbViewCategory;
+    @FXML
+    private TableColumn<Category, String> colCat;
+    @FXML
+    private TextField txtSearch;
 
     MovieModel mModel;
-    @FXML
-    private TableView<?> tbViewCategory;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         try
         {
             mModel = new MovieModel();
+            tbViewCategory.setItems(mModel.getAllCategories());
+            tbViewMovie.setItems(mModel.getAllMovies());
         } catch (IOException ex)
         {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -74,16 +76,13 @@ public class FXMLDocumentController implements Initializable
         {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-//        colTitle.setCellFactory(new PropertyValueFactory<> ("Title"));
-//        colImdbRating.setCellFactory(new PropertyValueFactory<> ("Imdb Rating"));
-//        colPersonalRating.setCellFactory(new PropertyValueFactory<> ("Personal Rating"));
-        
+        colCat.setCellValueFactory(new PropertyValueFactory<>("Category"));
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("Title"));
+        colImdbRating.setCellValueFactory(new PropertyValueFactory<>("ImdbRating"));
+        colPersonalRating.setCellValueFactory(new PropertyValueFactory<>("PersonalRating"));
 //        TableColumn<Movie, String> f = new TableColumn("Title");
-//        f.setCellFactory(new PropertyValueFactory<> ("Title"));
-
-    }    
-
+//        f.setCellValueFactory(new PropertyValueFactory<> ("Title"));
+    }
 
     @FXML
     private void chooseFile(ActionEvent event)
@@ -115,7 +114,7 @@ public class FXMLDocumentController implements Initializable
 
                 }
             }
-           
+
         } catch (ID3Exception e)
         {
             e.printStackTrace();
@@ -130,7 +129,7 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void addCategory(ActionEvent event)
     {
-        
+
         String catName = JOptionPane.showInputDialog(null, "Category name", "add new category", JOptionPane.OK_OPTION);
         Category newCat = new Category(0, catName);
         if (catName == null || catName.equals(""))
@@ -139,5 +138,5 @@ public class FXMLDocumentController implements Initializable
         }
         mModel.addCategory(newCat);
     }
-    
+
 }

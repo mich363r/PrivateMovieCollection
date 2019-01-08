@@ -77,7 +77,7 @@ public List<Movie> getAllMovies () throws SQLServerException, SQLException
         {
             int id = rs.getInt("id");
             String title = rs.getString("title");
-            String location = rs.getString("location");
+            String location = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
             
             movieList.add(new Movie (id, title, location, imdbRating));

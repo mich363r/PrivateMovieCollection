@@ -20,8 +20,7 @@
       </TableView>
       <TableView fx:id="tbViewCategory" layoutX="411.0" layoutY="129.0" prefHeight="200.0" prefWidth="200.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="colCat" prefWidth="199.0" text="C1" />
         </columns>
       </TableView>
       <Label layoutX="26.0" layoutY="55.0" text="Private Movie Collection">
