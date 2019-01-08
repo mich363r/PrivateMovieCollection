@@ -19,8 +19,8 @@ import privatemoviecollection.DAL.Database.MovieDbDAO;
  */
 public class MovieManager
 {
-    MovieDbDAO mDbDAO;
-    CategoryDbDAO cDbDAO;
+    private MovieDbDAO mDbDAO;
+    private CategoryDbDAO cDbDAO;
     
     public MovieManager() throws IOException
     {
