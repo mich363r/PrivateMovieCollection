@@ -5,6 +5,7 @@
  */
 package privatemoviecollection.GUI.Controller;
 
+import privatemoviecollection.GUI.View.AddMovieWindowController;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -47,8 +48,8 @@ import privatemoviecollection.GUI.Model.MovieModel;
 public class FXMLDocumentController implements Initializable
 {
 
-    @FXML
-    private AnchorPane rootPane2;
+//    @FXML
+//    private AnchorPane rootPane2;
     @FXML
     private TableView<Movie> tbViewMovie;
     @FXML
@@ -70,7 +71,6 @@ public class FXMLDocumentController implements Initializable
     private Button btnAddMovie;
     
     private Boolean searchDone;
-    @FXML
     private Button btnSearch;
     
     @Override
@@ -195,6 +195,11 @@ public class FXMLDocumentController implements Initializable
 //        stageNewSong.initModality(Modality.WINDOW_MODAL);
 //        stageNewSong.initOwner(secondStage);
 //        stageNewSong.show();
+
+    @FXML
+    private void chooseFile(ActionEvent event)
+    {
+    }
     
     
 }
