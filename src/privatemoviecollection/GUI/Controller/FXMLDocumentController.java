@@ -14,13 +14,18 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import org.blinkenlights.jid3.ID3Exception;
@@ -60,6 +65,8 @@ public class FXMLDocumentController implements Initializable
     private TextField txtSearch;
 
     MovieModel mModel;
+    @FXML
+    private Button btnAddMovie;
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -126,7 +133,6 @@ public class FXMLDocumentController implements Initializable
     {
     }
 
-    @FXML
     private void addCategory(ActionEvent event)
     {
 
@@ -137,6 +143,24 @@ public class FXMLDocumentController implements Initializable
             return;
         }
         mModel.addCategory(newCat);
+    }
+
+    @FXML
+    private void addMovie(ActionEvent event) throws IOException
+    {
+         Stage secondStage = (Stage) btnAddMovie.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/privatemoviecollection/GUI/View/addMovieWindow.fxml"));
+        Parent root = loader.load();
+
+        AddMovieWindowController addMovieController = loader.getController();
+        addMovieController.setModel(mModel);
+
+        Stage stageAddMovie = new Stage();
+        stageAddMovie.setScene(new Scene(root));
+
+        stageAddMovie.initModality(Modality.WINDOW_MODAL);
+        stageAddMovie.initOwner(secondStage);
+        stageAddMovie.show();
     }
 
 }
