@@ -137,7 +137,7 @@ public class FXMLDocumentController implements Initializable
     private void addCategory(ActionEvent event)
     {
         
-        String catName = JOptionPane.showInputDialog(null, "Category name", "add", JOptionPane.OK_OPTION);
+        String catName = JOptionPane.showInputDialog(null, "Category name", "add new category", JOptionPane.OK_OPTION);
         Category newCat = new Category(0, catName);
         if (catName == null || catName.equals(""))
         {

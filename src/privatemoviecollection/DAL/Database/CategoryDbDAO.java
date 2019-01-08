@@ -30,11 +30,12 @@ public class CategoryDbDAO
     
     public void addCategory(Category catToAdd)
     {
+        String name = catToAdd.getName();
         try (Connection con = ds.getConnection())
         {
            String sql = "INSERT INTO Category VALUES (?)";
             PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, catToAdd.getName());
+            pstmt.setString(1, name);
             pstmt.execute();
             
         } 

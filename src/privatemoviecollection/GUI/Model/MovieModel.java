@@ -29,7 +29,9 @@ public class MovieModel
    
    public MovieModel () throws IOException, SQLException
    {
-       MovieManager mManager = new MovieManager();
+       mManager = new MovieManager();
+       categoryList = FXCollections.observableArrayList();
+       categoryList.addAll(mManager.getAllCategories());
        movieList = FXCollections.observableArrayList();
        movieList.addAll(mManager.getAllMovies());
    }
