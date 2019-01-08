@@ -10,31 +10,33 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 
 /**
+ * FXML Controller class
  *
- * @author michaellemmiche
+ * @author Kokushi
  */
 public class FXMLDocumentController implements Initializable {
-    
-    @FXML
-    private Label label;
+
     @FXML
     private TableView<?> tbViewMovie;
     @FXML
     private TableView<?> tbViewCategory;
-    
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
-    
+    private TextField txtSearch;
+
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    @FXML
+    private void handleButtonAction(ActionEvent event) {
+    }
     
 }

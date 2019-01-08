@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="privatemoviecollection.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="privatemoviecollection.GUI.Controller.FXMLDocumentController">
     <children>
         <Button layoutX="430.0" layoutY="14.0" onAction="#handleButtonAction" text="Search" />
       <TableView fx:id="tbViewMovie" layoutX="26.0" layoutY="129.0" prefHeight="200.0" prefWidth="200.0">
