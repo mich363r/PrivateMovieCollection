@@ -65,17 +65,20 @@ public class FXMLDocumentController implements Initializable
     private TextField txtSearch;
 
     MovieModel mModel;
+    
     @FXML
     private Button btnAddMovie;
-
+    
+    private Boolean searchDone;
+    @FXML
+    private Button btnSearch;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         try
         {
             mModel = new MovieModel();
-            tbViewCategory.setItems(mModel.getAllCategories());
-            tbViewMovie.setItems(mModel.getAllMovies());
         } catch (IOException ex)
         {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,59 +86,75 @@ public class FXMLDocumentController implements Initializable
         {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        colCat.setCellValueFactory(new PropertyValueFactory<>("Category"));
-        colTitle.setCellValueFactory(new PropertyValueFactory<>("Title"));
-        colImdbRating.setCellValueFactory(new PropertyValueFactory<>("ImdbRating"));
-        colPersonalRating.setCellValueFactory(new PropertyValueFactory<>("PersonalRating"));
+        
+//        colTitle.setCellFactory(new PropertyValueFactory<> ("Title"));
+//        colImdbRating.setCellFactory(new PropertyValueFactory<> ("Imdb Rating"));
+//        colPersonalRating.setCellFactory(new PropertyValueFactory<> ("Personal Rating"));
+        
 //        TableColumn<Movie, String> f = new TableColumn("Title");
-//        f.setCellValueFactory(new PropertyValueFactory<> ("Title"));
-    }
+//        f.setCellFactory(new PropertyValueFactory<> ("Title"));
+
+    }    
+
+
+//    @FXML
+//    private void chooseFile(ActionEvent event)
+//    {
+//        FileChooser fileChooser = new FileChooser();
+//        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Select a file (mp4)", "*.mp4");
+//        fileChooser.getExtensionFilters().add(filter);
+//        fileChooser.setTitle("Open Music File");
+//        Stage stage = (Stage) rootPane2.getScene().getWindow();
+//        File mediafile = fileChooser.showOpenDialog(stage);
+//        String title = null;
+//        String location = null;
+//
+//        MP3File mp3 = new MP3File(mediafile);
+//        try
+//        {
+//            for (ID3Tag tag : mp3.getTags())
+//            {
+//                if (tag instanceof ID3V1_0Tag || tag instanceof ID3V1_1Tag)
+//                {
+//                    ID3V1Tag id3Tag = (ID3V1Tag) tag;
+//                    title = id3Tag.getTitle();
+//                    location = mediafile.getPath();
+//                } else if (tag instanceof ID3V2_3_0Tag)
+//                {
+//                    ID3V2_3_0Tag id3Tag = (ID3V2_3_0Tag) tag;
+//                    title = id3Tag.getTitle();
+//                    location = mediafile.getPath();
+//
+//                }
+//            }
+//           
+//        } catch (ID3Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//    }
 
     @FXML
-    private void chooseFile(ActionEvent event)
+    private void handleSearch(ActionEvent event) throws SQLException
     {
-        FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Select a file (mp4)", "*.mp4");
-        fileChooser.getExtensionFilters().add(filter);
-        fileChooser.setTitle("Open Music File");
-        Stage stage = (Stage) rootPane2.getScene().getWindow();
-        File mediafile = fileChooser.showOpenDialog(stage);
-        String title = null;
-        String location = null;
-
-        MP3File mp3 = new MP3File(mediafile);
-        try
+        if (searchDone == false)
         {
-            for (ID3Tag tag : mp3.getTags())
-            {
-                if (tag instanceof ID3V1_0Tag || tag instanceof ID3V1_1Tag)
-                {
-                    ID3V1Tag id3Tag = (ID3V1Tag) tag;
-                    title = id3Tag.getTitle();
-                    location = mediafile.getPath();
-                } else if (tag instanceof ID3V2_3_0Tag)
-                {
-                    ID3V2_3_0Tag id3Tag = (ID3V2_3_0Tag) tag;
-                    title = id3Tag.getTitle();
-                    location = mediafile.getPath();
-
-                }
-            }
-
-        } catch (ID3Exception e)
+            searchDone = true;
+            String input = txtSearch.getText();
+            tbViewMovie.setItems(mModel.searchMovies(input));
+            btnSearch.setText("Clear");
+        } else if (searchDone == true)
         {
-            e.printStackTrace();
+            searchDone = false;
+            btnSearch.setText("Search");
+            tbViewMovie.setItems(mModel.getAllMovies());
+            txtSearch.clear();
         }
-    }
-
-    @FXML
-    private void handleSearch(ActionEvent event)
-    {
     }
 
     private void addCategory(ActionEvent event)
     {
-
+        
         String catName = JOptionPane.showInputDialog(null, "Category name", "add new category", JOptionPane.OK_OPTION);
         Category newCat = new Category(0, catName);
         if (catName == null || catName.equals(""))
@@ -148,7 +167,7 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void addMovie(ActionEvent event) throws IOException
     {
-         Stage secondStage = (Stage) btnAddMovie.getScene().getWindow();
+        Stage primeStage = (Stage) btnAddMovie.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/privatemoviecollection/GUI/View/addMovieWindow.fxml"));
         Parent root = loader.load();
 
@@ -159,8 +178,23 @@ public class FXMLDocumentController implements Initializable
         stageAddMovie.setScene(new Scene(root));
 
         stageAddMovie.initModality(Modality.WINDOW_MODAL);
-        stageAddMovie.initOwner(secondStage);
+        stageAddMovie.initOwner(primeStage);
         stageAddMovie.show();
     }
-
+    
+//    Stage secondStage = (Stage) btnNewPlay.getScene().getWindow();
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunesamt/GUI/View/NewEditPlay.fxml"));
+//        Parent root = loader.load();
+//
+//        NewEditPlayController newEditPlayController = loader.getController();
+//        newEditPlayController.setModel(tModel);
+//
+//        Stage stageNewSong = new Stage();
+//        stageNewSong.setScene(new Scene(root));
+//
+//        stageNewSong.initModality(Modality.WINDOW_MODAL);
+//        stageNewSong.initOwner(secondStage);
+//        stageNewSong.show();
+    
+    
 }
