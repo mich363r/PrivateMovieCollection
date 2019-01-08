@@ -6,13 +6,19 @@
 package privatemoviecollection.GUI.Controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -23,6 +29,8 @@ import org.blinkenlights.jid3.v1.ID3V1Tag;
 import org.blinkenlights.jid3.v1.ID3V1_0Tag;
 import org.blinkenlights.jid3.v1.ID3V1_1Tag;
 import org.blinkenlights.jid3.v2.ID3V2_3_0Tag;
+import privatemoviecollection.BE.Movie;
+import privatemoviecollection.GUI.Model.MovieModel;
 
 /**
  * FXML Controller class
@@ -35,19 +43,38 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private AnchorPane rootPane2;
     @FXML
-    private TableView<?> tbViewMovie;
-    @FXML
-    private TableView<?> tbViewCategory;
+    private TableView<Movie> tbViewMovie;
+//    @FXML
+//    private TableView<Category> tbViewCategory;
     @FXML
     private TextField txtSearch;
+    @FXML
+    private TableColumn<Movie, String> colImdbRating;
+    @FXML
+    private TableColumn<Movie, String> colPersonalRating;
+    @FXML
+    private TableColumn<Movie, String> colTitle;
 
-    /**
-     * Initializes the controller class.
-     */
+    MovieModel mModel;
+    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+        try
+        {
+            mModel = new MovieModel();
+        } catch (IOException ex)
+        {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex)
+        {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+//        colTitle.setCellFactory(new PropertyValueFactory<> ("Title"));
+//        colImdbRating.setCellFactory(new PropertyValueFactory<> ("Imdb Rating"));
+//        colPersonalRating.setCellFactory(new PropertyValueFactory<> ("Personal Rating"));
+
     }    
 
 

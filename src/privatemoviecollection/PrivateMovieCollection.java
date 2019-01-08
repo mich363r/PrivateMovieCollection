@@ -25,6 +25,8 @@ public class PrivateMovieCollection extends Application {
         
         stage.setScene(scene);
         stage.show();
+        
+        
     }
 
     /**
