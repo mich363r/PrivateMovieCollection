@@ -72,7 +72,7 @@ public List<Movie> getAllMovies () throws SQLServerException, SQLException
     {
         
         Statement statement = con.createStatement();
-        ResultSet rs = statement.executeQuery("SELECT FROM Movie");
+        ResultSet rs = statement.executeQuery("SELECT * FROM Movie");
         while (rs.next())
         {
             int id = rs.getInt("id");

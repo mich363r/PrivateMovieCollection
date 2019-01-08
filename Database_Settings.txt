@@ -1,4 +1,4 @@
 Server = 10.176.111.31
-Database = MyTunesAMT
+Database = AMTMovieCollection
 User = CS2018A_31
 Password = CS2018A_31
