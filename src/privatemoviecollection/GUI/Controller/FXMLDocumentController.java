@@ -74,6 +74,9 @@ public class FXMLDocumentController implements Initializable
 //        colTitle.setCellFactory(new PropertyValueFactory<> ("Title"));
 //        colImdbRating.setCellFactory(new PropertyValueFactory<> ("Imdb Rating"));
 //        colPersonalRating.setCellFactory(new PropertyValueFactory<> ("Personal Rating"));
+        
+        TableColumn<Movie, String> f = new TableColumn("Title");
+        f.setCellFactory(new PropertyValueFactory<> ("Title"));
 
     }    
 
