@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="483.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="privatemoviecollection.GUI.Controller.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="rootPane2" prefHeight="483.0" prefWidth="692.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="privatemoviecollection.GUI.Controller.FXMLDocumentController">
     <children>
-        <Button layoutX="430.0" layoutY="14.0" onAction="#handleButtonAction" text="Search" />
+        <Button layoutX="430.0" layoutY="14.0" onAction="#handleSearch" text="Search" />
       <TableView fx:id="tbViewMovie" layoutX="26.0" layoutY="129.0" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn prefWidth="75.0" text="C1" />
@@ -29,5 +29,6 @@
          </font>
       </Label>
       <TextField fx:id="txtSearch" layoutX="511.0" layoutY="14.0" />
+      <Button layoutX="605.0" layoutY="426.0" mnemonicParsing="false" onAction="#chooseFile" text="open file" />
     </children>
 </AnchorPane>
