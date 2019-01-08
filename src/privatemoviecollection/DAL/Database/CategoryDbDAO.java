@@ -93,7 +93,7 @@ public class CategoryDbDAO
         }
     }
     
-    public List<Category> getAllCategorys ()
+    public List<Category> getAllCategories ()
     {
         List<Category> catList = new ArrayList<>();
         
