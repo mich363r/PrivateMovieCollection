@@ -7,9 +7,12 @@ package privatemoviecollection.GUI.Model;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import privatemoviecollection.BE.Category;
 import privatemoviecollection.BE.Movie;
 import privatemoviecollection.BLL.MovieManager;
 
@@ -20,6 +23,8 @@ import privatemoviecollection.BLL.MovieManager;
 public class MovieModel
 {
    private ObservableList <Movie> movieList;
+   private ObservableList <Category> categoryList;
+   private ObservableList <Movie> catMovie;
    private MovieManager mManager;
    
    public MovieModel () throws IOException, SQLException
@@ -57,5 +62,38 @@ public class MovieModel
     public ObservableList<Movie> searchMovies(String input)
     {
         return FXCollections.observableArrayList(mManager.searchMovies(input));
+    }
+    
+    public void addCategory(Category catToAdd)
+    {
+        mManager.addCategory(catToAdd);
+        categoryList.add(catToAdd);
+    }
+    
+    public void deleteCategory(Category catToDelete)
+    {
+        mManager.deleteCategory(catToDelete);
+        this.categoryList.remove(catToDelete);
+    }
+    
+    public void addToCategory(Movie movieToAdd, Category chosenCat)
+    {
+        mManager.addToCategory(movieToAdd, chosenCat);
+        catMovie.add(movieToAdd);        
+    }
+    
+    public void deleteFromCategory(Movie movieToDelete)
+    {
+        mManager.deleteFromCategory(movieToDelete);
+        catMovie.remove(movieToDelete);
+    }
+    
+    public List<Category> getAllCategories ()
+    {
+        List<Category> tempCatList = new ArrayList<>();
+        categoryList.clear();
+        categoryList.addAll(tempCatList);
+        return categoryList;
+        
     }
 }

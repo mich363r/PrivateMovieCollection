@@ -28,13 +28,13 @@ public class CategoryDbDAO
         ds = new DbConnectionProvider();
     }
     
-    public void addCategory(String name)
+    public void addCategory(Category catToAdd)
     {
         try (Connection con = ds.getConnection())
         {
            String sql = "INSERT INTO Category VALUES (?)";
             PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pstmt.setString(1, name);
+            pstmt.setString(1, catToAdd.getName());
             pstmt.execute();
             
         } 
@@ -44,12 +44,12 @@ public class CategoryDbDAO
         }
     }
     
-    public void deleteCategory(int id)
+    public void deleteCategory(Category catToDelete)
     {
         try (Connection con = ds.getConnection())
         {
             PreparedStatement pstmt = con.prepareStatement("DELETE FROM Category WHERE id = (?)");
-            pstmt.setInt(1, id);
+            pstmt.setInt(1, catToDelete.getId());
             pstmt.execute();
             
         } 

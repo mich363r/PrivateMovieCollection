@@ -22,6 +22,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import org.blinkenlights.jid3.ID3Exception;
 import org.blinkenlights.jid3.ID3Tag;
 import org.blinkenlights.jid3.MP3File;
@@ -29,6 +30,7 @@ import org.blinkenlights.jid3.v1.ID3V1Tag;
 import org.blinkenlights.jid3.v1.ID3V1_0Tag;
 import org.blinkenlights.jid3.v1.ID3V1_1Tag;
 import org.blinkenlights.jid3.v2.ID3V2_3_0Tag;
+import privatemoviecollection.BE.Category;
 import privatemoviecollection.BE.Movie;
 import privatemoviecollection.GUI.Model.MovieModel;
 
@@ -56,6 +58,8 @@ public class FXMLDocumentController implements Initializable
     private TableColumn<Movie, String> colTitle;
 
     MovieModel mModel;
+    @FXML
+    private TableView<?> tbViewCategory;
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -121,6 +125,19 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void handleSearch(ActionEvent event)
     {
+    }
+
+    @FXML
+    private void addCategory(ActionEvent event)
+    {
+        
+        String catName = JOptionPane.showInputDialog(null, "Category name", "add", JOptionPane.OK_OPTION);
+        Category newCat = new Category(0, catName);
+        if (catName == null || catName.equals(""))
+        {
+            return;
+        }
+        mModel.addCategory(newCat);
     }
     
 }
