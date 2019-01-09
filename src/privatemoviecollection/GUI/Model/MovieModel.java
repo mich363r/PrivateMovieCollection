@@ -68,7 +68,7 @@ public class MovieModel
     public void addCategory(Category catToAdd)
     {
         mManager.addCategory(catToAdd);
-        categoryList.add(catToAdd);
+//        categoryList.add(catToAdd);
     }
 
     public void deleteCategory(Category catToDelete)
@@ -80,7 +80,7 @@ public class MovieModel
     public void addToCategory(Movie movieToAdd, Category chosenCat)
     {
         mManager.addToCategory(movieToAdd, chosenCat);
-        catMovie.add(movieToAdd);
+//        catMovie.add(movieToAdd);
     }
 
     public void deleteFromCategory(Movie movieToDelete)
@@ -93,5 +93,12 @@ public class MovieModel
     {
         categoryList = FXCollections.observableArrayList(mManager.getAllCategories());
         return categoryList;
+    }
+    
+    public void addPersonalRating (Movie movieToRate, double personalRating)
+    {
+        mManager.addPersonalRating(movieToRate, personalRating);
+        movieToRate.setPersonalRating(personalRating);
+        
     }
 }

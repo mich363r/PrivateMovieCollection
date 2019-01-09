@@ -79,8 +79,9 @@ public List<Movie> getAllMovies () throws SQLServerException, SQLException
             String title = rs.getString("title");
             String location = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
+            double personalRating = rs.getDouble("personalRating");
             
-            movieList.add(new Movie (id, title, location, imdbRating));
+            movieList.add(new Movie (id, title, location, imdbRating, personalRating));
         }
     }
     catch (Exception e)
@@ -108,7 +109,8 @@ public Movie getMovie(int id)
             String title = rs.getString("title");
             String location = rs.getString("location");
             double imdbRating = rs.getDouble("imdbRating");
-            wantedMovie = new Movie(id, title, location, imdbRating);
+            double personalRating = rs.getDouble("personalRating");
+            wantedMovie = new Movie(id, title, location, imdbRating, personalRating);
             
         }
     } 
@@ -136,9 +138,10 @@ public List<Movie> searchMovies (String input)
             String title = rs.getString("title");
             String location = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
+            double personalRating = rs.getDouble("personalRating");
 //            String category = rs.getString("category");
 
-            movieList.add(new Movie (id, title, location, imdbRating));
+            movieList.add(new Movie (id, title, location, imdbRating, personalRating));
         
         }
     } 
@@ -148,4 +151,22 @@ public List<Movie> searchMovies (String input)
     }
     return movieList;
 }
+
+    public void addPersonalRating (Movie movieToRate, double personalRating)
+    {
+       
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement pstmt = con.prepareStatement("UPDATE Movie SET personalRating = (?) WHERE id = (?)");
+            pstmt.setDouble(1, personalRating);
+            pstmt.setInt(2, movieToRate.getId());
+            pstmt.execute();
+                       
+            
+        } 
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
 }

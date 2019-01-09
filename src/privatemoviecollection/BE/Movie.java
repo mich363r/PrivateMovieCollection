@@ -20,12 +20,13 @@ public class Movie
     private double imdbRating;
     private double personalRating;
 
-    public Movie(int id, String title, String location, double imdbRating)
+    public Movie(int id, String title, String location, double imdbRating, double personalRating)
     {
         this.id = id;
         this.title = title;
         this.location = location;
         this.imdbRating = imdbRating;
+        this.personalRating = personalRating;
         
     }
 

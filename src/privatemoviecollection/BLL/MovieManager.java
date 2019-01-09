@@ -77,5 +77,10 @@ public class MovieManager
     {
         return cDbDAO.getAllCategories();
     }
+    
+    public void addPersonalRating (Movie movieToRate, double personalRating)
+    {
+        mDbDAO.addPersonalRating(movieToRate, personalRating);
+    }
 }
 

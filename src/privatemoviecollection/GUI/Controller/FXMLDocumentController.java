@@ -104,51 +104,12 @@ public class FXMLDocumentController implements Initializable
         colImdbRating.setCellValueFactory(new PropertyValueFactory<> ("imdbRating"));
         colPersonalRating.setCellValueFactory(new PropertyValueFactory<> ("personalRating"));
         
-//        TableColumn<Movie, String> f = new TableColumn("Title");
-//        f.setCellFactory(new PropertyValueFactory<> ("Title"));
 
     }    
 
 
-//    @FXML
-//    private void chooseFile(ActionEvent event)
-//    {
-//        FileChooser fileChooser = new FileChooser();
-//        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Select a file (mp4)", "*.mp4");
-//        fileChooser.getExtensionFilters().add(filter);
-//        fileChooser.setTitle("Open Music File");
-//        Stage stage = (Stage) rootPane2.getScene().getWindow();
-//        File mediafile = fileChooser.showOpenDialog(stage);
-//        String title = null;
-//        String location = null;
-//
-//        MP3File mp3 = new MP3File(mediafile);
-//        try
-//        {
-//            for (ID3Tag tag : mp3.getTags())
-//            {
-//                if (tag instanceof ID3V1_0Tag || tag instanceof ID3V1_1Tag)
-//                {
-//                    ID3V1Tag id3Tag = (ID3V1Tag) tag;
-//                    title = id3Tag.getTitle();
-//                    location = mediafile.getPath();
-//                } else if (tag instanceof ID3V2_3_0Tag)
-//                {
-//                    ID3V2_3_0Tag id3Tag = (ID3V2_3_0Tag) tag;
-//                    title = id3Tag.getTitle();
-//                    location = mediafile.getPath();
-//
-//                }
-//            }
-//           
-//        } catch (ID3Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//    }
-
     @FXML
-    private void handleSearch(ActionEvent event) throws SQLException
+    public void handleSearch(ActionEvent event) throws SQLException
     {
         if (searchDone == false)
         {
@@ -165,7 +126,8 @@ public class FXMLDocumentController implements Initializable
         }
     }
 
-    private void addCategory(ActionEvent event)
+    @FXML
+    public void addCategory(ActionEvent event)
     {
         
         String catName = JOptionPane.showInputDialog(null, "Category name", "add new category", JOptionPane.OK_OPTION);
@@ -178,7 +140,7 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void addMovie(ActionEvent event) throws IOException
+    public void addMovie(ActionEvent event) throws IOException
     {
         Stage primeStage = (Stage) btnAddMovie.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/privatemoviecollection/GUI/View/addMovieWindow.fxml"));
@@ -195,23 +157,38 @@ public class FXMLDocumentController implements Initializable
         stageAddMovie.show();
     }
     
-//    Stage secondStage = (Stage) btnNewPlay.getScene().getWindow();
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("/mytunesamt/GUI/View/NewEditPlay.fxml"));
-//        Parent root = loader.load();
-//
-//        NewEditPlayController newEditPlayController = loader.getController();
-//        newEditPlayController.setModel(tModel);
-//
-//        Stage stageNewSong = new Stage();
-//        stageNewSong.setScene(new Scene(root));
-//
-//        stageNewSong.initModality(Modality.WINDOW_MODAL);
-//        stageNewSong.initOwner(secondStage);
-//        stageNewSong.show();
+    @FXML
+    public void deleteMovie () throws SQLException
+    {
+        int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this movie?", "Delete", JOptionPane.YES_NO_OPTION);
+        if (p == 0)
+        {
+            mModel.deleteMovie(tbViewMovie.getSelectionModel().getSelectedItem());
+ 
+        }
+    }
+    
+    @FXML
+    private void deleteCategory(ActionEvent event)
+    {
+        int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this category?", "Delete", JOptionPane.YES_NO_OPTION);
+        
+        if (p == 0)
+        {
+            mModel.deleteCategory(tbViewCategory.getSelectionModel().getSelectedItem());
+        }
+    }
 
     @FXML
-    private void chooseFile(ActionEvent event)
+    private void addPersonalRating(ActionEvent event)
     {
+        double p = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter a rating between 1 - 10", "Enter", JOptionPane.OK_CANCEL_OPTION));
+        
+        if (p == 0)
+        {
+            mModel.addPersonalRating(tbViewMovie.getSelectionModel().getSelectedItem(), p);
+        }
+        
     }
     
     
