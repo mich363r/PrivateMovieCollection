@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package privatemoviecollection.GUI.View;
+package privatemoviecollection.GUI.Controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,31 +56,51 @@ public class AddMovieWindowController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        try
-        {
-            mModel = new MovieModel();
-        } catch (IOException ex)
-        {
-            Logger.getLogger(AddMovieWindowController.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex)
-        {
-            Logger.getLogger(AddMovieWindowController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }    
+        
+    }
 
+    public AddMovieWindowController()
+    {
+    }
+    
+    
     @FXML
     private void openFile(ActionEvent event) throws SQLException
     {
+           FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Select a file (mp4)", "*.mp4");
+        fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setTitle("Open Music File");
+        Stage stage = (Stage) rootPane2.getScene().getWindow();
+        File mediafile = fileChooser.showOpenDialog(stage);
+        String title = null;
+        String location = null;
+
+        MP3File mp3 = new MP3File(mediafile);
+        try
+        {
+            for (ID3Tag tag : mp3.getTags())
+            {
+                if (tag instanceof ID3V1_0Tag || tag instanceof ID3V1_1Tag)
+                {
+                    ID3V1Tag id3Tag = (ID3V1Tag) tag;
+                    title = id3Tag.getTitle();
+                    location = mediafile.getPath();
+                } else if (tag instanceof ID3V2_3_0Tag)
+                {
+                    ID3V2_3_0Tag id3Tag = (ID3V2_3_0Tag) tag;
+                    title = id3Tag.getTitle();
+                    location = mediafile.getPath();
+
+                }
+            }
+           
+        } catch (ID3Exception e)
+        {
+            e.printStackTrace();
+        }
         
-        Stage primeStage = (Stage) btnOpenFile.getScene().getWindow();
         
-        String title = this.txtTitle.getText();
-        String location = this.txtFile.getText();
-        
-        Movie newMovie = new Movie(0, title, location, 0);
-        mModel.addMovie(newMovie);
-        
-        primeStage.close();
     }
     
 //    Stage primeStage = (Stage) btnSaveSong.getScene().getWindow();

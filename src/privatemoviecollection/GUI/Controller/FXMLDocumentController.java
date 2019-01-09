@@ -5,7 +5,6 @@
  */
 package privatemoviecollection.GUI.Controller;
 
-import privatemoviecollection.GUI.View.AddMovieWindowController;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
