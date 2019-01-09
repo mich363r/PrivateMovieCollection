@@ -125,16 +125,16 @@ public List<Movie> searchMovies (String input)
     List <Movie> movieList = new ArrayList <>();
     try (Connection con = ds.getConnection())
     {
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie WHERE titlt like ? or category like ?");
+        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie WHERE title like ?");
         pstmt.setString(1, "%" + input + "%");
-        pstmt.setString(2, "%" + input + "%");
+        
         
         ResultSet rs = pstmt.executeQuery();
         while (rs.next())
         {
             int id = rs.getInt("id");
             String title = rs.getString("title");
-            String location = rs.getString("location");
+            String location = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
 //            String category = rs.getString("category");
 
