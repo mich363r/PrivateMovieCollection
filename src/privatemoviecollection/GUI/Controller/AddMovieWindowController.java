@@ -74,6 +74,7 @@ public class AddMovieWindowController implements Initializable
         Stage stage = (Stage) rootPane2.getScene().getWindow();
         File mediafile = fileChooser.showOpenDialog(stage);
         String title = null;
+        String rating = null;
         String location = null;
 
         MP3File mp3 = new MP3File(mediafile);
@@ -94,6 +95,10 @@ public class AddMovieWindowController implements Initializable
 
                 }
             }
+            this.txtTitle.setText(title);
+            this.txtRating.setText(rating);
+            this.txtFile.setText(location);
+            
            
         } catch (ID3Exception e)
         {
