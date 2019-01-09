@@ -70,7 +70,18 @@ public class FXMLDocumentController implements Initializable
     private Button btnAddMovie;
     
     private Boolean searchDone;
+    @FXML
+    private AnchorPane rootPane2;
+    @FXML
     private Button btnSearch;
+    
+
+    public FXMLDocumentController()
+    {
+        searchDone = false;
+    }
+    
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -78,6 +89,8 @@ public class FXMLDocumentController implements Initializable
         try
         {
             mModel = new MovieModel();
+            tbViewMovie.setItems(mModel.getAllMovies());
+            tbViewCategory.setItems(mModel.getAllCategories());
         } catch (IOException ex)
         {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -86,9 +99,10 @@ public class FXMLDocumentController implements Initializable
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-//        colTitle.setCellFactory(new PropertyValueFactory<> ("Title"));
-//        colImdbRating.setCellFactory(new PropertyValueFactory<> ("Imdb Rating"));
-//        colPersonalRating.setCellFactory(new PropertyValueFactory<> ("Personal Rating"));
+        colCat.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colTitle.setCellValueFactory(new PropertyValueFactory<> ("title"));
+        colImdbRating.setCellValueFactory(new PropertyValueFactory<> ("imdbRating"));
+        colPersonalRating.setCellValueFactory(new PropertyValueFactory<> ("personalRating"));
         
 //        TableColumn<Movie, String> f = new TableColumn("Title");
 //        f.setCellFactory(new PropertyValueFactory<> ("Title"));
