@@ -183,12 +183,13 @@ public class FXMLDocumentController implements Initializable
     private void addPersonalRating(ActionEvent event)
     {
         double p = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter a rating between 1 - 10", "Enter", JOptionPane.OK_CANCEL_OPTION));
-        
-        if (p == 0)
-        {
+       
+      if( p >= 1 && p <= 10)
+      {
             mModel.addPersonalRating(tbViewMovie.getSelectionModel().getSelectedItem(), p);
-        }
-        
+      } 
+      else
+          JOptionPane.showMessageDialog(null, "You have to enter a number between 1 and 10", "Incorrect number", JOptionPane.ERROR_MESSAGE);
     }
     
     
