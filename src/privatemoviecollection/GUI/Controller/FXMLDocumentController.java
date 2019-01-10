@@ -30,17 +30,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
-import org.blinkenlights.jid3.ID3Exception;
-import org.blinkenlights.jid3.ID3Tag;
-import org.blinkenlights.jid3.MP3File;
-import org.blinkenlights.jid3.v1.ID3V1Tag;
-import org.blinkenlights.jid3.v1.ID3V1_0Tag;
-import org.blinkenlights.jid3.v1.ID3V1_1Tag;
-import org.blinkenlights.jid3.v2.ID3V2_3_0Tag;
 import privatemoviecollection.BE.Category;
 import privatemoviecollection.BE.Movie;
 import privatemoviecollection.GUI.Model.MovieModel;
@@ -69,26 +61,23 @@ public class FXMLDocumentController implements Initializable
     private TableColumn<Category, String> colCat;
     @FXML
     private TextField txtSearch;
-
-    MovieModel mModel;
-    
     @FXML
     private Button btnAddMovie;
-    
+
     private Boolean searchDone;
     @FXML
     private AnchorPane rootPane2;
     @FXML
     private Button btnSearch;
-    
+
+    private MovieModel mModel;
+    private Category currentCategory;
 
     public FXMLDocumentController()
     {
         searchDone = false;
     }
-    
-    
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -104,15 +93,13 @@ public class FXMLDocumentController implements Initializable
         {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         colCat.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colTitle.setCellValueFactory(new PropertyValueFactory<> ("title"));
-        colImdbRating.setCellValueFactory(new PropertyValueFactory<> ("imdbRating"));
-        colPersonalRating.setCellValueFactory(new PropertyValueFactory<> ("personalRating"));
-        
+        colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colImdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
+        colPersonalRating.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
 
-    }    
-
+    }
 
     @FXML
     public void handleSearch(ActionEvent event) throws SQLException
@@ -135,7 +122,7 @@ public class FXMLDocumentController implements Initializable
     @FXML
     public void addCategory(ActionEvent event)
     {
-        
+
         String catName = JOptionPane.showInputDialog(null, "Category name", "add new category", JOptionPane.OK_OPTION);
         Category newCat = new Category(0, catName);
         if (catName == null || catName.equals(""))
@@ -162,23 +149,28 @@ public class FXMLDocumentController implements Initializable
         stageAddMovie.initOwner(primeStage);
         stageAddMovie.show();
     }
-    
+
     @FXML
-    public void deleteMovie () throws SQLException
+    public void deleteMovie() throws SQLException
     {
         int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this movie?", "Delete", JOptionPane.YES_NO_OPTION);
         if (p == 0)
         {
             mModel.deleteMovie(tbViewMovie.getSelectionModel().getSelectedItem());
- 
+
         }
     }
-    
+
     @FXML
     public void deleteCategory(ActionEvent event)
     {
+        if(tbViewCategory.getSelectionModel().getSelectedItem() == null)
+        {
+            JOptionPane.showMessageDialog(null, "You have to select a category to delete");
+            return;
+        }
         int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this category?", "Delete", JOptionPane.YES_NO_OPTION);
-        
+
         if (p == 0)
         {
             mModel.deleteCategory(tbViewCategory.getSelectionModel().getSelectedItem());
@@ -189,20 +181,21 @@ public class FXMLDocumentController implements Initializable
     public void addPersonalRating(ActionEvent event)
     {
         double p = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter a rating between 1 - 10", "Enter", JOptionPane.OK_CANCEL_OPTION));
-       
-      if( p >= 1 && p <= 10)
-      {
+
+        if (p >= 1 && p <= 10)
+        {
             mModel.addPersonalRating(tbViewMovie.getSelectionModel().getSelectedItem(), p);
-      } 
-      else
-          JOptionPane.showMessageDialog(null, "You have to enter a number between 1 and 10", "Incorrect number", JOptionPane.ERROR_MESSAGE);
+        } else
+        {
+            JOptionPane.showMessageDialog(null, "You have to enter a number between 1 and 10", "Incorrect number", JOptionPane.ERROR_MESSAGE);
+        }
     }
-    
-    public void playMovie (Movie movieToPlay) throws IOException
+
+    public void playMovie(Movie movieToPlay) throws IOException
     {
         String moviePath = tbViewMovie.getSelectionModel().getSelectedItem().getFilelink();
         File movieFile = new File(moviePath);
-        Desktop.getDesktop().open(movieFile);           
+        Desktop.getDesktop().open(movieFile);
     }
 
     @FXML
@@ -212,19 +205,17 @@ public class FXMLDocumentController implements Initializable
         File movieFile = new File(moviePath);
         Movie movieToPlay = tbViewMovie.getSelectionModel().getSelectedItem();
         String lastview = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-        
-         
-        
+
         if (event.getButton().equals(MouseButton.PRIMARY))
         {
             if (event.getClickCount() == 2)
             {
-                Desktop.getDesktop().open(movieFile); 
+                Desktop.getDesktop().open(movieFile);
                 movieToPlay.setLastview(lastview);
-                mModel.lastview(movieToPlay);  
+                mModel.lastview(movieToPlay);
             }
         }
-        
+
     }
 
     @FXML
@@ -241,15 +232,34 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void showCat(MouseEvent event) throws SQLException 
+    private void selectCat(MouseEvent event) throws SQLException
     {
-    Category currentCategory = tbViewCategory.getSelectionModel().getSelectedItem(); 
-    tbViewMovie.getSelectionModel().getSelectedItems().clear();
-    tbViewMovie.setItems(mModel.getAllMoviesInCategory(currentCategory));
-        if (event.getButton().equals(MouseButton.PRIMARY)) {
-            if (event.getClickCount() == 2) {
+        if(!tbViewCategory.getSelectionModel().isEmpty())
+        {
+        currentCategory = tbViewCategory.getSelectionModel().getSelectedItem();
+        tbViewMovie.setItems(mModel.getAllMoviesInCategory(currentCategory));
+        if (event.getButton().equals(MouseButton.PRIMARY))
+        {
+            if (event.getClickCount() == 2)
+            {
                 tbViewMovie.setItems(mModel.getAllMovies());
+                tbViewCategory.getSelectionModel().clearSelection();
+                currentCategory = null;
             }
         }
+        }
+    }
+
+    @FXML
+    private void addToCategory(ActionEvent event)
+    {
+        if (tbViewMovie.getSelectionModel().getSelectedItem() == null || tbViewCategory.getSelectionModel().getSelectedItem() == null)
+        {
+            JOptionPane.showMessageDialog(null, "You have to select both a movie to add, and a category to add it to.", "Illegal selection", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        Movie selectedMovie = tbViewMovie.getSelectionModel().getSelectedItem();
+        Category selectedCat = tbViewCategory.getSelectionModel().getSelectedItem();
+        mModel.addToCategory(selectedMovie, selectedCat);
     }
 }

@@ -18,7 +18,7 @@
             <TableColumn fx:id="colTitle" prefWidth="170.0" text="Title" />
         </columns>
       </TableView>
-      <TableView fx:id="tbViewCategory" layoutX="411.0" layoutY="129.0" onMouseClicked="#showCat" prefHeight="204.0" prefWidth="254.0">
+      <TableView fx:id="tbViewCategory" layoutX="411.0" layoutY="129.0" onMouseClicked="#selectCat" prefHeight="204.0" prefWidth="254.0">
         <columns>
           <TableColumn fx:id="colCat" prefWidth="199.0" text="Category" />
         </columns>
@@ -35,5 +35,6 @@
       <Button layoutX="542.0" layoutY="360.0" mnemonicParsing="false" onAction="#deleteCategory" text="Delete category" />
       <Button layoutX="36.0" layoutY="442.0" mnemonicParsing="false" onAction="#addPersonalRating" text="Add personal rating" />
       <Button layoutX="571.0" layoutY="442.0" mnemonicParsing="false" onAction="#openImdb" text="Open Imdb" />
+      <Button layoutX="408.0" layoutY="398.0" mnemonicParsing="false" onAction="#addToCategory" prefHeight="31.0" prefWidth="132.0" text="Add to category" />
     </children>
 </AnchorPane>
