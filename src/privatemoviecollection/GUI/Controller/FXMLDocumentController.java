@@ -169,7 +169,7 @@ public class FXMLDocumentController implements Initializable
     }
     
     @FXML
-    private void deleteCategory(ActionEvent event)
+    public void deleteCategory(ActionEvent event)
     {
         int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this category?", "Delete", JOptionPane.YES_NO_OPTION);
         
@@ -180,7 +180,7 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void addPersonalRating(ActionEvent event)
+    public void addPersonalRating(ActionEvent event)
     {
         double p = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter a rating between 1 - 10", "Enter", JOptionPane.OK_CANCEL_OPTION));
        
@@ -192,5 +192,5 @@ public class FXMLDocumentController implements Initializable
           JOptionPane.showMessageDialog(null, "You have to enter a number between 1 and 10", "Incorrect number", JOptionPane.ERROR_MESSAGE);
     }
     
-    
+  
 }

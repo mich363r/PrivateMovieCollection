@@ -169,4 +169,13 @@ public List<Movie> searchMovies (String input)
             e.printStackTrace();
         }
     }
+    
+    public void playMovie (String[] s) throws IOException
+    {
+        Runtime runtime = Runtime.getRuntime();
+        
+        s = new String[] {"C:\\Program Files (x86)\\Windows Media Player"};
+        
+        Process process = runtime.exec(s);
+    }
 }

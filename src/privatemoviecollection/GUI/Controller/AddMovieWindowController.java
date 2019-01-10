@@ -50,6 +50,10 @@ public class AddMovieWindowController implements Initializable
     MovieModel mModel;
     @FXML
     private AnchorPane rootPane2;
+    @FXML
+    private Button btnCancelMovie;
+    @FXML
+    private Button btnSaveMovie;
     /**
      * Initializes the controller class.
      */
@@ -112,13 +116,28 @@ public class AddMovieWindowController implements Initializable
     }
 
     @FXML
-    private void saveMovie(ActionEvent event)
+    private void saveMovie(ActionEvent event) throws SQLException
     {
+//        Stage primeStage = (Stage) btnSaveMovie.getScene().getWindow();
+
+        String title = this.txtTitle.getText();
+        String rating = this.txtRating.getText();
+        String location = this.txtFile.getText();
+
+//        Movie newMovie = new Movie(0, title, location, 0, 0);
+//        mModel.addMovie(newMovie);
+
+//        primeStage.close();
     }
 
+    /** 
+     * Cancels add movie window.
+    */
     @FXML
     private void cancelMovie(ActionEvent event)
     {
+        Stage primeStage = (Stage) btnCancelMovie.getScene().getWindow();
+        primeStage.close();
     }
     
     }
