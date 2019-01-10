@@ -66,50 +66,7 @@ public class AddMovieWindowController implements Initializable
     public AddMovieWindowController()
     {
     }
-    
-    
-    @FXML
-    private void openFile(ActionEvent event) throws SQLException
-    {
-           FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Select a file (mp4)", "*.mp4");
-        fileChooser.getExtensionFilters().add(filter);
-        fileChooser.setTitle("Open Music File");
-        Stage stage = (Stage) rootPane2.getScene().getWindow();
-        File mediafile = fileChooser.showOpenDialog(stage);
-        String title = null;
-        String rating = null;
-        String location = null;
-
-        MP3File mp3 = new MP3File(mediafile);
-        try
-        {
-            for (ID3Tag tag : mp3.getTags())
-            {
-                if (tag instanceof ID3V1_0Tag || tag instanceof ID3V1_1Tag)
-                {
-                    ID3V1Tag id3Tag = (ID3V1Tag) tag;
-                    title = id3Tag.getTitle();
-                    location = mediafile.getPath();
-                } else if (tag instanceof ID3V2_3_0Tag)
-                {
-                    ID3V2_3_0Tag id3Tag = (ID3V2_3_0Tag) tag;
-                    title = id3Tag.getTitle();
-                    location = mediafile.getPath();
-
-                }
-            }
-            this.txtTitle.setText(title);
-            this.txtRating.setText(rating);
-            this.txtFile.setText(location);
-            
-           
-        } catch (ID3Exception e)
-        {
-            e.printStackTrace();
-        }  
-    }
-
+        
     public void setModel (MovieModel mModel)
     {
         this.mModel = mModel;
@@ -118,16 +75,18 @@ public class AddMovieWindowController implements Initializable
     @FXML
     private void saveMovie(ActionEvent event) throws SQLException
     {
-//        Stage primeStage = (Stage) btnSaveMovie.getScene().getWindow();
+        Stage primeStage = (Stage) btnSaveMovie.getScene().getWindow();
 
         String title = this.txtTitle.getText();
         String rating = this.txtRating.getText();
+        double doubleRating = Double.parseDouble(rating);
         String location = this.txtFile.getText();
+        
 
-//        Movie newMovie = new Movie(0, title, location, 0, 0);
-//        mModel.addMovie(newMovie);
+        Movie newMovie = new Movie(0, title, location, doubleRating, 0);
+        mModel.addMovie(newMovie);
 
-//        primeStage.close();
+        primeStage.close();
     }
 
     /** 
@@ -138,6 +97,21 @@ public class AddMovieWindowController implements Initializable
     {
         Stage primeStage = (Stage) btnCancelMovie.getScene().getWindow();
         primeStage.close();
+    }
+
+    @FXML
+    private void chooseFile(ActionEvent event)
+    {
+           FileChooser fileChooser = new FileChooser();
+        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Select a file (mp4)", "*.mp4");
+        fileChooser.getExtensionFilters().add(filter);
+        fileChooser.setTitle("Open Music File");
+        Stage stage = (Stage) rootPane2.getScene().getWindow();
+        File mediafile = fileChooser.showOpenDialog(stage);
+        String location = mediafile.getPath();
+
+            this.txtFile.setText(location);
+           
     }
     
     }

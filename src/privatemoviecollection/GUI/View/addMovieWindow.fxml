@@ -6,12 +6,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="rootPane2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="privatemoviecollection.GUI.Controller.AddMovieWindowController">
+<AnchorPane fx:id="rootPane2" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="305.0" prefWidth="449.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="privatemoviecollection.GUI.Controller.AddMovieWindowController">
    <children>
       <TextField fx:id="txtTitle" layoutX="131.0" layoutY="77.0" />
       <Label layoutX="38.0" layoutY="82.0" text="Title" />
       <TextField fx:id="txtFile" layoutX="131.0" layoutY="178.0" />
-      <Button fx:id="btnOpenFile" layoutX="28.0" layoutY="178.0" mnemonicParsing="false" onAction="#openFile" text="open file" />
+      <Button fx:id="btnOpenFile" layoutX="28.0" layoutY="178.0" mnemonicParsing="false" onAction="#chooseFile" text="open file" />
       <Label layoutX="119.0" layoutY="21.0" text="Add Movie">
          <font>
             <Font size="28.0" />
