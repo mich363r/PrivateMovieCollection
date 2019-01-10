@@ -87,5 +87,10 @@ public class MovieManager
     {
         mDbDAO.lastview(movieToEdit);
     }
+    
+    public List<Movie> getAllMoviesInCategory(Category chosenCat)
+    {
+       return cDbDAO.getCategorySongs(chosenCat);
+    }
 }
 

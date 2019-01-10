@@ -5,15 +5,19 @@
  */
 package privatemoviecollection.BE;
 
+import java.util.List;
+
 /**
  *
  * @author Asvør
  */
 public class Category
 {
-    int id;
-    String name;
-    
+
+    private int id;
+    private String name;
+    private List<Movie> movieList;
+
     public Category(int id, String name)
     {
         this.id = id;
@@ -30,10 +34,19 @@ public class Category
         return name;
     }
 
-    public void setName(String name)
+    public void setName(String name) 
     {
         this.name = name;
     }
-    
-    
+
+    public List<Movie> getMovieList() 
+    {
+        return movieList;
+    }
+
+    public void setMovieList(List<Movie> movieList)
+    {
+        this.movieList = movieList;
+    }
+
 }

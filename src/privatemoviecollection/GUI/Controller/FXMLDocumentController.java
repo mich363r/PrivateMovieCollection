@@ -239,4 +239,17 @@ public class FXMLDocumentController implements Initializable
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void showCat(MouseEvent event) throws SQLException 
+    {
+    Category currentCategory = tbViewCategory.getSelectionModel().getSelectedItem(); 
+    tbViewMovie.getSelectionModel().getSelectedItems().clear();
+    tbViewMovie.setItems(mModel.getAllMoviesInCategory(currentCategory));
+        if (event.getButton().equals(MouseButton.PRIMARY)) {
+            if (event.getClickCount() == 2) {
+                tbViewMovie.setItems(mModel.getAllMovies());
+            }
+        }
+    }
 }

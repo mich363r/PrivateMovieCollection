@@ -116,4 +116,18 @@ public class CategoryDbDAO
         }
         return catList;
     }
+    
+    public List<Movie> getCategorySongs(Category chosenCat)
+    {
+        List<Movie> catMovieList = new ArrayList<>();
+        try(Connection con = ds.getConnection()) 
+        {
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie INNER JOIN catMovie ON Movie.id = catMovie.id WHERE categoryId = (?)");
+            pstmt.setInt(1, chosenCat.getId());
+        } catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        return catMovieList;
+    }
 }

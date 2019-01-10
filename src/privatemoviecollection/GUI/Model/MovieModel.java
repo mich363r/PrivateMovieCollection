@@ -105,4 +105,12 @@ public class MovieModel
     {
         mManager.lastview(movieToEdit);
     }
+    
+    public ObservableList<Movie> getAllMoviesInCategory(Category chosenCat)
+    {
+          List<Movie> tempMovies = mManager.getAllMoviesInCategory(chosenCat);
+        catMovie.clear();
+        catMovie.addAll(tempMovies);
+        return catMovie;
+    }
 }
