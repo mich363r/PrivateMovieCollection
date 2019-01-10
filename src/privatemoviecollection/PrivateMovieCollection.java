@@ -5,7 +5,9 @@
  */
 package privatemoviecollection;
 
+import java.awt.Desktop;
 import java.io.IOException;
+import java.net.URI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -37,7 +39,8 @@ public class PrivateMovieCollection extends Application {
     {
         launch(args);
         
-//        Process p = Runtime.getRuntime().exec("C:\\Program Files (x86)\\Windows Media Player\\wmplayer.exe");
+//        Process p = Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+        
         
     }
     

@@ -34,5 +34,6 @@
       <Button layoutX="408.0" layoutY="360.0" mnemonicParsing="false" onAction="#addCategory" text="Add category" />
       <Button layoutX="542.0" layoutY="360.0" mnemonicParsing="false" onAction="#deleteCategory" text="Delete category" />
       <Button layoutX="36.0" layoutY="442.0" mnemonicParsing="false" onAction="#addPersonalRating" text="Add personal rating" />
+      <Button layoutX="571.0" layoutY="442.0" mnemonicParsing="false" onAction="#openImdb" text="Open Imdb" />
     </children>
 </AnchorPane>

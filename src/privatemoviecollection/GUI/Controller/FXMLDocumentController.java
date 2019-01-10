@@ -8,6 +8,7 @@ package privatemoviecollection.GUI.Controller;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -220,10 +221,22 @@ public class FXMLDocumentController implements Initializable
             {
                 Desktop.getDesktop().open(movieFile); 
                 movieToPlay.setLastview(lastview);
-                mModel.lastview(movieToPlay);
-                
+                mModel.lastview(movieToPlay);  
             }
         }
         
+    }
+
+    @FXML
+    private void openImdb(ActionEvent event)
+    {
+        try
+        {
+            String url = "https://www.imdb.com/";
+            Desktop.getDesktop().browse(URI.create(url));
+        } catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
