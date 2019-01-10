@@ -82,5 +82,10 @@ public class MovieManager
     {
         mDbDAO.addPersonalRating(movieToRate, personalRating);
     }
+    
+    public void lastview (Movie movieToEdit)
+    {
+        mDbDAO.lastview(movieToEdit);
+    }
 }
 

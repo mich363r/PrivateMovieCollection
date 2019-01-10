@@ -179,12 +179,20 @@ public List<Movie> searchMovies (String input)
         }
     }
     
-    public void playMovie (String[] s) throws IOException
+    public void lastview (Movie movieToEdit)
     {
-        Runtime runtime = Runtime.getRuntime();
+        String lastSeen = movieToEdit.getLastview();
         
-        s = new String[] {"C:\\Program Files (x86)\\Windows Media Player"};
-        
-        Process process = runtime.exec(s);
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement pstmt = con.prepareStatement("UPDATE Movie SET Lastview = (?) WHERE id = (?)");
+            pstmt.setString(1, lastSeen);
+            pstmt.setInt(2, movieToEdit.getId());
+            pstmt.execute();
+        } 
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

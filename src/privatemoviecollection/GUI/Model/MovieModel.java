@@ -98,7 +98,11 @@ public class MovieModel
     public void addPersonalRating (Movie movieToRate, double personalRating)
     {
         mManager.addPersonalRating(movieToRate, personalRating);
-        movieToRate.setPersonalRating(personalRating);
-        
+        movieToRate.setPersonalRating(personalRating);   
+    }
+    
+    public void lastview (Movie movieToEdit)
+    {
+        mManager.lastview(movieToEdit);
     }
 }

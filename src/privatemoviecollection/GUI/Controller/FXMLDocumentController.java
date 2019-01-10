@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -207,6 +209,9 @@ public class FXMLDocumentController implements Initializable
     {
         String moviePath = tbViewMovie.getSelectionModel().getSelectedItem().getFilelink();
         File movieFile = new File(moviePath);
+        Movie movieToPlay = tbViewMovie.getSelectionModel().getSelectedItem();
+        String lastview = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        
          
         
         if (event.getButton().equals(MouseButton.PRIMARY))
@@ -214,6 +219,9 @@ public class FXMLDocumentController implements Initializable
             if (event.getClickCount() == 2)
             {
                 Desktop.getDesktop().open(movieFile); 
+                movieToPlay.setLastview(lastview);
+                mModel.lastview(movieToPlay);
+                
             }
         }
         

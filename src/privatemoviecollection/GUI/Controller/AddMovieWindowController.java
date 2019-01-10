@@ -104,15 +104,22 @@ public class AddMovieWindowController implements Initializable
     private void chooseFile(ActionEvent event)
     {
            FileChooser fileChooser = new FileChooser();
-        FileChooser.ExtensionFilter filter = new FileChooser.ExtensionFilter("Select a file (mp4)", "*.mp4");
-        fileChooser.getExtensionFilters().add(filter);
-        fileChooser.setTitle("Open Music File");
+        FileChooser.ExtensionFilter filterMp4 = new FileChooser.ExtensionFilter("Select a file (mp4)", "*.mp4");
+        FileChooser.ExtensionFilter filterMpeg4 = new FileChooser.ExtensionFilter("Select a mpeg4", "*.mpeg4");
+        fileChooser.getExtensionFilters().add(filterMp4);
+        fileChooser.getExtensionFilters().add(filterMpeg4);
+        fileChooser.setTitle("Open movie");
         Stage stage = (Stage) rootPane2.getScene().getWindow();
         File mediafile = fileChooser.showOpenDialog(stage);
         String location = mediafile.getPath();
 
             this.txtFile.setText(location);
            
+    }
+    
+    public void warningMessage()
+    {
+        
     }
     
     }
