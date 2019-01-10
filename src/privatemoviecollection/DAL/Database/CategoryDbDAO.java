@@ -33,7 +33,7 @@ public class CategoryDbDAO
         String name = catToAdd.getName();
         try (Connection con = ds.getConnection())
         {
-           String sql = "INSERT INTO Category VALUES (?)";
+            String sql = "INSERT INTO Category VALUES (?)";
             PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pstmt.setString(1, name);
             pstmt.execute();
