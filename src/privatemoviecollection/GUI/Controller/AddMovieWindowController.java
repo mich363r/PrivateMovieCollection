@@ -80,10 +80,11 @@ public class AddMovieWindowController implements Initializable
         String title = this.txtTitle.getText();
         String rating = this.txtRating.getText();
         double doubleRating = Double.parseDouble(rating);
-        String location = this.txtFile.getText();
+        String filelink = this.txtFile.getText();
+        String lastview = null;
         
 
-        Movie newMovie = new Movie(0, title, location, doubleRating, 0);
+        Movie newMovie = new Movie(0, title, doubleRating, 0, filelink, lastview);
         mModel.addMovie(newMovie);
 
         primeStage.close();

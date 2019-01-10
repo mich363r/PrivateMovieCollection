@@ -14,19 +14,21 @@ import java.util.List;
 public class Movie
 {
     private String title;
-    private String location;
+    private String filelink;
 //    private List <Category> category;
     private int id;
     private double imdbRating;
     private double personalRating;
+    private String lastview;
 
-    public Movie(int id, String title, String location, double imdbRating, double personalRating)
+    public Movie(int id, String title, double imdbRating, double personalRating, String filelink, String lastview)
     {
         this.id = id;
         this.title = title;
-        this.location = location;
+        this.filelink = filelink;
         this.imdbRating = imdbRating;
         this.personalRating = personalRating;
+        this.lastview = lastview;
         
     }
 
@@ -60,18 +62,29 @@ public class Movie
         this.title = title;
     }
 
-    public String getLocation()
+    public String getFilelink()
     {
-        return location;
+        return filelink;
     }
 
-    public void setLocation(String location)
+    public void setFilelink(String filelink)
     {
-        this.location = location;
+        this.filelink = filelink;
     }
 
     public int getId()
     {
         return id;
     }
+
+    public String getLastview()
+    {
+        return lastview;
+    }
+
+    public void setLastview(String lastview)
+    {
+        this.lastview = lastview;
+    }
+    
 }

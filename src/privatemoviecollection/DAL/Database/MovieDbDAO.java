@@ -32,14 +32,20 @@ public class MovieDbDAO
 public void addMovie(Movie movieToAdd) throws SQLServerException, SQLException
 {
     String title = movieToAdd.getTitle();
-    String location = movieToAdd.getLocation();
+    String filelink = movieToAdd.getFilelink();
+    double imdbRating = movieToAdd.getImdbRating();
+    double personalRating = movieToAdd.getPersonalRating();
+    String lastview = movieToAdd.getLastview();
     
     try (Connection con = ds.getConnection())
     {
-        String sql = "INSERT INTO Movie VALUES (?, ?)";
+        String sql = "INSERT INTO Movie VALUES (?, ?, ?, ?, ?)";
         PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pstmt.setString(1, title);
-        pstmt.setString(2, location);
+        pstmt.setDouble(2, imdbRating);
+        pstmt.setDouble(3, personalRating);
+        pstmt.setString(4, filelink);
+        pstmt.setString(5, lastview);
         pstmt.execute();
     }
     catch (Exception e)
@@ -77,11 +83,12 @@ public List<Movie> getAllMovies () throws SQLServerException, SQLException
         {
             int id = rs.getInt("id");
             String title = rs.getString("title");
-            String location = rs.getString("filelink");
+            String filelink = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
             double personalRating = rs.getDouble("personalRating");
+            String lastview = rs.getString("lastview");
             
-            movieList.add(new Movie (id, title, location, imdbRating, personalRating));
+            movieList.add(new Movie (id, title, imdbRating, personalRating, filelink, lastview));
         }
     }
     catch (Exception e)
@@ -107,10 +114,11 @@ public Movie getMovie(int id)
         {
             id = rs.getInt("id");
             String title = rs.getString("title");
-            String location = rs.getString("location");
+            String filelink = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
             double personalRating = rs.getDouble("personalRating");
-            wantedMovie = new Movie(id, title, location, imdbRating, personalRating);
+            String lastview = rs.getString("lastview");
+            wantedMovie = new Movie(id, title, imdbRating, personalRating, filelink, lastview);
             
         }
     } 
@@ -136,12 +144,13 @@ public List<Movie> searchMovies (String input)
         {
             int id = rs.getInt("id");
             String title = rs.getString("title");
-            String location = rs.getString("filelink");
+            String filelink = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
             double personalRating = rs.getDouble("personalRating");
+            String lastview = rs.getString("lastview");
 //            String category = rs.getString("category");
 
-            movieList.add(new Movie (id, title, location, imdbRating, personalRating));
+            movieList.add(new Movie (id, title, imdbRating, personalRating, filelink, lastview));
         
         }
     } 

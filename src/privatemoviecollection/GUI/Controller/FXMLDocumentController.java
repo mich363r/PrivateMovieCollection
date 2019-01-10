@@ -5,6 +5,7 @@
  */
 package privatemoviecollection.GUI.Controller;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -23,6 +24,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
@@ -192,5 +195,27 @@ public class FXMLDocumentController implements Initializable
           JOptionPane.showMessageDialog(null, "You have to enter a number between 1 and 10", "Incorrect number", JOptionPane.ERROR_MESSAGE);
     }
     
-  
+    public void playMovie (Movie movieToPlay) throws IOException
+    {
+        String moviePath = tbViewMovie.getSelectionModel().getSelectedItem().getFilelink();
+        File movieFile = new File(moviePath);
+        Desktop.getDesktop().open(movieFile);           
+    }
+
+    @FXML
+    private void clickPlayMovie(MouseEvent event) throws IOException
+    {
+        String moviePath = tbViewMovie.getSelectionModel().getSelectedItem().getFilelink();
+        File movieFile = new File(moviePath);
+         
+        
+        if (event.getButton().equals(MouseButton.PRIMARY))
+        {
+            if (event.getClickCount() == 2)
+            {
+                Desktop.getDesktop().open(movieFile); 
+            }
+        }
+        
+    }
 }

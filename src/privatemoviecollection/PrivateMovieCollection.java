@@ -37,7 +37,7 @@ public class PrivateMovieCollection extends Application {
     {
         launch(args);
         
-        Process p = Runtime.getRuntime().exec("C:\\Program Files\\Windows Media Player\\wmplayer.exe\\");
+//        Process p = Runtime.getRuntime().exec("C:\\Program Files (x86)\\Windows Media Player\\wmplayer.exe");
         
     }
     
