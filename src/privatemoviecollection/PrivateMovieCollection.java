@@ -38,10 +38,6 @@ public class PrivateMovieCollection extends Application {
     public static void main(String[] args) throws IOException 
     {
         launch(args);
-        
-//        Process p = Runtime.getRuntime().exec("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
-        
-        
     }
     
 }

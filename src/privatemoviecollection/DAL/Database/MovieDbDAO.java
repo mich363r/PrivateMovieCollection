@@ -195,4 +195,19 @@ public List<Movie> searchMovies (String input)
             e.printStackTrace();
         }
     }
+    
+    public Movie checkDuplicate (Movie movieToCheck)
+    {
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement pstmt = con.prepareStatement("SELECT FROM Movie WHERE title = (?)");
+            pstmt.setString(1, movieToCheck.getTitle());
+            pstmt.execute();
+        } 
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+            
+    }
 }
