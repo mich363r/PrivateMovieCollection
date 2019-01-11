@@ -39,6 +39,11 @@ public void addMovie(Movie movieToAdd) throws SQLServerException, SQLException
     
     try (Connection con = ds.getConnection())
     {
+        String sql1 = "DELETE FROM Movie WHERE title = (?)";
+        PreparedStatement pstmt1 = con.prepareStatement(sql1);
+        pstmt1.setString(1, title);
+        pstmt1.execute();
+        
         String sql = "INSERT INTO Movie VALUES (?, ?, ?, ?, ?)";
         PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pstmt.setString(1, title);
@@ -200,7 +205,7 @@ public List<Movie> searchMovies (String input)
     {
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement pstmt = con.prepareStatement("SELECT FROM Movie WHERE title = (?)");
+            PreparedStatement pstmt = con.prepareStatement("SELECT title FROM Movie WHERE title = (?)");
             pstmt.setString(1, movieToCheck.getTitle());
             pstmt.execute();
         } 
@@ -208,6 +213,6 @@ public List<Movie> searchMovies (String input)
         {
             e.printStackTrace();
         }
-            
+            return movieToCheck;
     }
 }

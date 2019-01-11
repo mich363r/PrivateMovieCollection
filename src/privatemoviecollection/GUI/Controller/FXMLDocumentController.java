@@ -72,6 +72,16 @@ public class FXMLDocumentController implements Initializable
 
     private MovieModel mModel;
     private Category currentCategory;
+    @FXML
+    private TableView<Movie> tbViewCatMovies;
+    @FXML
+    private Button deleteFromCategory;
+    @FXML
+    private TableColumn<Movie, String> colCatTitle;
+    @FXML
+    private TableColumn<Movie, String> colCatImdb;
+    @FXML
+    private TableColumn<Movie, String> colCatPersonal;
 
     public FXMLDocumentController()
     {
@@ -98,6 +108,9 @@ public class FXMLDocumentController implements Initializable
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colImdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         colPersonalRating.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
+        colCatTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        colCatImdb.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
+        colCatPersonal.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
 
     }
 
@@ -237,12 +250,12 @@ public class FXMLDocumentController implements Initializable
         if(!tbViewCategory.getSelectionModel().isEmpty())
         {
         currentCategory = tbViewCategory.getSelectionModel().getSelectedItem();
-        tbViewMovie.setItems(mModel.getAllMoviesInCategory(currentCategory));
+        tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory));
         if (event.getButton().equals(MouseButton.PRIMARY))
         {
             if (event.getClickCount() == 2)
             {
-                tbViewMovie.setItems(mModel.getAllMovies());
+                
                 tbViewCategory.getSelectionModel().clearSelection();
                 currentCategory = null;
             }
@@ -261,5 +274,18 @@ public class FXMLDocumentController implements Initializable
         Movie selectedMovie = tbViewMovie.getSelectionModel().getSelectedItem();
         Category selectedCat = tbViewCategory.getSelectionModel().getSelectedItem();
         mModel.addToCategory(selectedMovie, selectedCat);
+    }
+
+    @FXML
+    private void deleteFromCategory(ActionEvent event)
+    {
+        int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this movie from this category", "Delete", JOptionPane.YES_NO_OPTION);
+        
+        if (p == 0)
+        {
+            mModel.deleteFromCategory(tbViewCatMovies.getSelectionModel().getSelectedItem());
+            tbViewCatMovies.getItems().clear();
+            tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory)); // gets the new list of songs minus the deleted ones
+        }
     }
 }
