@@ -93,9 +93,5 @@ public class MovieManager
        return cDbDAO.getCategorySongs(chosenCat);
     }
     
-    public Movie checkDuplicate (Movie movieToCheck)
-    {
-        return mDbDAO.checkDuplicate(movieToCheck);
-    }
 }
 

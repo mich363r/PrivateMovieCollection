@@ -91,6 +91,8 @@ public class FXMLDocumentController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        
+        
         try
         {
             mModel = new MovieModel();
@@ -111,6 +113,8 @@ public class FXMLDocumentController implements Initializable
         colCatTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colCatImdb.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         colCatPersonal.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
+        
+        
 
     }
 
@@ -212,7 +216,7 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void clickPlayMovie(MouseEvent event) throws IOException
+    public void clickPlayMovie(MouseEvent event) throws IOException
     {
         String moviePath = tbViewMovie.getSelectionModel().getSelectedItem().getFilelink();
         File movieFile = new File(moviePath);
@@ -232,7 +236,7 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void openImdb(ActionEvent event)
+    public void openImdb(ActionEvent event)
     {
         try
         {
@@ -245,7 +249,7 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void selectCat(MouseEvent event) throws SQLException
+    public void selectCat(MouseEvent event) throws SQLException
     {
         if(!tbViewCategory.getSelectionModel().isEmpty())
         {
@@ -264,7 +268,7 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void addToCategory(ActionEvent event)
+    public void addToCategory(ActionEvent event)
     {
         if (tbViewMovie.getSelectionModel().getSelectedItem() == null || tbViewCategory.getSelectionModel().getSelectedItem() == null)
         {
@@ -277,7 +281,7 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void deleteFromCategory(ActionEvent event)
+    public void deleteFromCategory(ActionEvent event)
     {
         int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this movie from this category", "Delete", JOptionPane.YES_NO_OPTION);
         
@@ -288,4 +292,11 @@ public class FXMLDocumentController implements Initializable
             tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory)); // gets the new list of songs minus the deleted ones
         }
     }
+    
+    public void refreshTableview ()
+    {
+        tbViewMovie.refresh();
+    }
+    
+    
 }

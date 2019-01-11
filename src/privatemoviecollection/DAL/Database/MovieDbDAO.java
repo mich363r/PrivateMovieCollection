@@ -140,8 +140,9 @@ public List<Movie> searchMovies (String input)
     List <Movie> movieList = new ArrayList <>();
     try (Connection con = ds.getConnection())
     {
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie WHERE title like ?");
+        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie WHERE title like ? or imdbRating = ?");
         pstmt.setString(1, "%" + input + "%");
+        pstmt.setString(2, "%" + input + "%");
         
         
         ResultSet rs = pstmt.executeQuery();
@@ -201,18 +202,4 @@ public List<Movie> searchMovies (String input)
         }
     }
     
-    public Movie checkDuplicate (Movie movieToCheck)
-    {
-        try (Connection con = ds.getConnection())
-        {
-            PreparedStatement pstmt = con.prepareStatement("SELECT title FROM Movie WHERE title = (?)");
-            pstmt.setString(1, movieToCheck.getTitle());
-            pstmt.execute();
-        } 
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-            return movieToCheck;
-    }
 }

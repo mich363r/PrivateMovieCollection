@@ -17,6 +17,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 import privatemoviecollection.BE.Movie;
 import privatemoviecollection.GUI.Model.MovieModel;
 
@@ -35,14 +36,15 @@ public class AddMovieWindowController implements Initializable {
     private Button btnOpenFile;
     @FXML
     private TextField txtRating;
-
-    MovieModel mModel;
     @FXML
     private AnchorPane rootPane2;
     @FXML
     private Button btnCancelMovie;
     @FXML
     private Button btnSaveMovie;
+    
+    MovieModel mModel;
+    FXMLDocumentController dController;
 
     /**
      * Initializes the controller class.
@@ -52,11 +54,18 @@ public class AddMovieWindowController implements Initializable {
 
     }
 
-    public AddMovieWindowController() {
+    public AddMovieWindowController() 
+    {
+        
     }
 
     public void setModel(MovieModel mModel) {
         this.mModel = mModel;
+    }
+    
+    public void setController (FXMLDocumentController dController)
+    {
+        this.dController = dController;
     }
 
     @FXML
@@ -72,6 +81,7 @@ public class AddMovieWindowController implements Initializable {
         Movie newMovie = new Movie(0, title, doubleRating, 0, filelink, lastview);
         mModel.addMovie(newMovie);
 
+//        dController.refreshTableview();
         primeStage.close();
     }
 
@@ -100,8 +110,6 @@ public class AddMovieWindowController implements Initializable {
 
     }
 
-    public void warningMessage() {
-
-    }
+    
 
 }
