@@ -293,10 +293,7 @@ public class FXMLDocumentController implements Initializable
         }
     }
     
-    public void refreshTableview ()
-    {
-        tbViewMovie.refresh();
-    }
+  
     
     
 }

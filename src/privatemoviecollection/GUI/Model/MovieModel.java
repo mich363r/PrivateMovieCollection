@@ -39,8 +39,11 @@ public class MovieModel
     public void addMovie(Movie movieToAdd) throws SQLException
     {
         mManager.addMovie(movieToAdd);
-        movieList.add(movieToAdd); 
+        movieList.clear();
+        movieList.addAll(mManager.getAllMovies()); 
+        
     }
+    
 
     public void deleteMovie(Movie movieToDelete) throws SQLException
     {
