@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -91,8 +93,7 @@ public class FXMLDocumentController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        
-        
+
         try
         {
             mModel = new MovieModel();
@@ -113,8 +114,6 @@ public class FXMLDocumentController implements Initializable
         colCatTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colCatImdb.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         colCatPersonal.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
-        
-        
 
     }
 
@@ -181,7 +180,7 @@ public class FXMLDocumentController implements Initializable
     @FXML
     public void deleteCategory(ActionEvent event)
     {
-        if(tbViewCategory.getSelectionModel().getSelectedItem() == null)
+        if (tbViewCategory.getSelectionModel().getSelectedItem() == null)
         {
             JOptionPane.showMessageDialog(null, "You have to select a category to delete");
             return;
@@ -208,33 +207,39 @@ public class FXMLDocumentController implements Initializable
         }
     }
 
-    public void playMovie(Movie movieToPlay) throws IOException
-    {
-        String moviePath = tbViewMovie.getSelectionModel().getSelectedItem().getFilelink();
-        File movieFile = new File(moviePath);
-        Desktop.getDesktop().open(movieFile);
-    }
-
     @FXML
     public void clickPlayMovie(MouseEvent event) throws IOException
     {
-        String moviePath = tbViewMovie.getSelectionModel().getSelectedItem().getFilelink();
-        File movieFile = new File(moviePath);
-        Movie movieToPlay = tbViewMovie.getSelectionModel().getSelectedItem();
-        String lastview = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
-
-        if (event.getButton().equals(MouseButton.PRIMARY))
+        if (!tbViewMovie.getSelectionModel().isEmpty())
         {
-            if (event.getClickCount() == 2)
+            String moviePath = tbViewMovie.getSelectionModel().getSelectedItem().getFilelink();
+            File movieFile = new File(moviePath);
+            Movie movieToPlay = tbViewMovie.getSelectionModel().getSelectedItem();
+
+            Date lastview = new Date();
+            if (event.getButton().equals(MouseButton.PRIMARY))
             {
-                Desktop.getDesktop().open(movieFile);
-                movieToPlay.setLastview(lastview);
-                mModel.lastview(movieToPlay);
+                if (event.getClickCount() == 2)
+                {
+                    Desktop.getDesktop().open(movieFile);
+                    movieToPlay.setLastview(lastview);
+                    mModel.setLastviewed(movieToPlay);
+                }
             }
         }
-
     }
-
+public Movie selectTableviewMovies(Movie movieToWatch)
+{
+    if (!tbViewMovie.getSelectionModel().isEmpty())
+    {
+        movieToWatch = tbViewMovie.getSelectionModel().getSelectedItem();
+    }
+    else if (!tbViewCatMovies.getSelectionModel().isEmpty())
+    {
+        movieToWatch = tbViewCatMovies.getSelectionModel().getSelectedItem();
+    }
+    return movieToWatch;
+}
     @FXML
     public void openImdb(ActionEvent event)
     {
@@ -251,19 +256,19 @@ public class FXMLDocumentController implements Initializable
     @FXML
     public void selectCat(MouseEvent event) throws SQLException
     {
-        if(!tbViewCategory.getSelectionModel().isEmpty())
+        if (!tbViewCategory.getSelectionModel().isEmpty())
         {
-        currentCategory = tbViewCategory.getSelectionModel().getSelectedItem();
-        tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory));
-        if (event.getButton().equals(MouseButton.PRIMARY))
-        {
-            if (event.getClickCount() == 2)
+            currentCategory = tbViewCategory.getSelectionModel().getSelectedItem();
+            tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory));
+            if (event.getButton().equals(MouseButton.PRIMARY))
             {
-                
-                tbViewCategory.getSelectionModel().clearSelection();
-                currentCategory = null;
+                if (event.getClickCount() == 2)
+                {
+
+                    tbViewCategory.getSelectionModel().clearSelection();
+                    currentCategory = null;
+                }
             }
-        }
         }
     }
 
@@ -284,7 +289,7 @@ public class FXMLDocumentController implements Initializable
     public void deleteFromCategory(ActionEvent event)
     {
         int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this movie from this category", "Delete", JOptionPane.YES_NO_OPTION);
-        
+
         if (p == 0)
         {
             mModel.deleteFromCategory(tbViewCatMovies.getSelectionModel().getSelectedItem());
@@ -292,11 +297,10 @@ public class FXMLDocumentController implements Initializable
             tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory)); // gets the new list of songs minus the deleted ones
         }
     }
-    
-    public void refreshTableview ()
+
+    public void refreshTableview()
     {
         tbViewMovie.refresh();
     }
-    
-    
+
 }

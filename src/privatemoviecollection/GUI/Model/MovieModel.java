@@ -102,9 +102,9 @@ public class MovieModel
         movieToRate.setPersonalRating(personalRating);   
     }
     
-    public void lastview (Movie movieToEdit)
+    public void setLastviewed (Movie movieToEdit)
     {
-        mManager.lastview(movieToEdit);
+        mManager.setLastviewed(movieToEdit);
     }
     
     public ObservableList<Movie> getAllMoviesInCategory(Category chosenCat)
