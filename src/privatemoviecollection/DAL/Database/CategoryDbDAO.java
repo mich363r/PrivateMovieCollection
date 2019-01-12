@@ -7,6 +7,7 @@ package privatemoviecollection.DAL.Database;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -129,7 +130,7 @@ public class CategoryDbDAO
                 double imdbRating = rs.getDouble("imdbRating");
                 double personalRating = rs.getDouble("personalRating");
                 String filelink = rs.getString("filelink");
-                String lastview = rs.getString("lastview");
+                Date lastview = rs.getDate("lastview");
 
                 catMovieList.add(new Movie(id, title, imdbRating, personalRating,filelink,lastview));
             }

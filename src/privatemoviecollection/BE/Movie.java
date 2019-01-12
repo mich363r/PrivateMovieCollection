@@ -5,6 +5,7 @@
  */
 package privatemoviecollection.BE;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,21 +16,27 @@ public class Movie
 {
     private String title;
     private String filelink;
-//    private List <Category> category;
     private int id;
     private double imdbRating;
     private double personalRating;
-    private String lastview;
+    private Date lastview;
 
-    public Movie(int id, String title, double imdbRating, double personalRating, String filelink, String lastview)
+    public Movie(int id, String title, double imdbRating, double personalRating, String filelink)
     {
         this.id = id;
         this.title = title;
         this.filelink = filelink;
         this.imdbRating = imdbRating;
         this.personalRating = personalRating;
-        this.lastview = lastview;
         
+    }
+    public Movie(int id, String title, double imdbRating, double personalRating, String filelink, Date lastview)
+    {
+        this.id = id;
+        this.title = title;
+        this.filelink = filelink;
+        this.imdbRating = imdbRating;
+        this.personalRating = personalRating;
     }
 
     public String getTitle()
@@ -77,12 +84,12 @@ public class Movie
         return id;
     }
 
-    public String getLastview()
+    public Date getLastview()
     {
         return lastview;
     }
 
-    public void setLastview(String lastview)
+    public void setLastview(Date lastview)
     {
         this.lastview = lastview;
     }

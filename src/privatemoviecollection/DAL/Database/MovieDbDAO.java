@@ -8,6 +8,7 @@ package privatemoviecollection.DAL.Database;
 import com.microsoft.sqlserver.jdbc.SQLServerException;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -35,7 +36,7 @@ public void addMovie(Movie movieToAdd) throws SQLServerException, SQLException
     String filelink = movieToAdd.getFilelink();
     double imdbRating = movieToAdd.getImdbRating();
     double personalRating = movieToAdd.getPersonalRating();
-    String lastview = movieToAdd.getLastview();
+    Date lastview = null;
     
     try (Connection con = ds.getConnection())
     {
@@ -50,7 +51,7 @@ public void addMovie(Movie movieToAdd) throws SQLServerException, SQLException
         pstmt.setDouble(2, imdbRating);
         pstmt.setDouble(3, personalRating);
         pstmt.setString(4, filelink);
-        pstmt.setString(5, lastview);
+        pstmt.setDate(5, lastview);
         pstmt.execute();
     }
     catch (Exception e)
@@ -91,7 +92,7 @@ public List<Movie> getAllMovies () throws SQLServerException, SQLException
             String filelink = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
             double personalRating = rs.getDouble("personalRating");
-            String lastview = rs.getString("lastview");
+            Date lastview = rs.getDate("lastview");
             
             movieList.add(new Movie (id, title, imdbRating, personalRating, filelink, lastview));
         }
@@ -122,7 +123,7 @@ public Movie getMovie(int id)
             String filelink = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
             double personalRating = rs.getDouble("personalRating");
-            String lastview = rs.getString("lastview");
+            Date lastview = rs.getDate("lastview");
             wantedMovie = new Movie(id, title, imdbRating, personalRating, filelink, lastview);
             
         }
@@ -153,10 +154,10 @@ public List<Movie> searchMovies (String input)
             String filelink = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
             double personalRating = rs.getDouble("personalRating");
-            String lastview = rs.getString("lastview");
-//            String category = rs.getString("category");
+//            Date lastview = rs.getDate("lastview");
 
-            movieList.add(new Movie (id, title, imdbRating, personalRating, filelink, lastview));
+
+            movieList.add(new Movie (id, title, imdbRating, personalRating, filelink));
         
         }
     } 
@@ -185,14 +186,15 @@ public List<Movie> searchMovies (String input)
         }
     }
     
-    public void lastview (Movie movieToEdit)
+    public void setLastviewed (Movie movieToEdit)
     {
-        String lastSeen = movieToEdit.getLastview();
-        
+        java.util.Date dateToConvert = movieToEdit.getLastview();
+        java.sql.Date dateConverter = new java.sql.Date(dateToConvert.getTime());
+        Date lastSeen = dateConverter;
         try (Connection con = ds.getConnection())
         {
             PreparedStatement pstmt = con.prepareStatement("UPDATE Movie SET Lastview = (?) WHERE id = (?)");
-            pstmt.setString(1, lastSeen);
+            pstmt.setDate(1, lastSeen);
             pstmt.setInt(2, movieToEdit.getId());
             pstmt.execute();
         } 

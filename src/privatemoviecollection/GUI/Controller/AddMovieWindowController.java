@@ -8,6 +8,7 @@ package privatemoviecollection.GUI.Controller;
 import java.io.File;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -76,7 +77,7 @@ public class AddMovieWindowController implements Initializable {
         String rating = this.txtRating.getText();
         double doubleRating = Double.parseDouble(rating);
         String filelink = this.txtFile.getText();
-        String lastview = null;
+        Date lastview = null;
 
         Movie newMovie = new Movie(0, title, doubleRating, 0, filelink, lastview);
         mModel.addMovie(newMovie);

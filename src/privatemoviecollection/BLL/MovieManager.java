@@ -83,9 +83,9 @@ public class MovieManager
         mDbDAO.addPersonalRating(movieToRate, personalRating);
     }
     
-    public void lastview (Movie movieToEdit)
+    public void setLastviewed (Movie movieToEdit)
     {
-        mDbDAO.lastview(movieToEdit);
+        mDbDAO.setLastviewed(movieToEdit);
     }
     
     public List<Movie> getAllMoviesInCategory(Category chosenCat)
