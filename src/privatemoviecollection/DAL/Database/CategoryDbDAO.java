@@ -24,12 +24,19 @@ public class CategoryDbDAO
 {
 
     DbConnectionProvider ds;
-
+    
+    /*
+    this constructor establishes the connection to our database
+    */
     public CategoryDbDAO() throws IOException
     {
         ds = new DbConnectionProvider();
     }
-
+    
+    /*
+    adds a category to our database
+    @param catToAdd
+    */
     public void addCategory(Category catToAdd)
     {
         String name = catToAdd.getName();
@@ -45,7 +52,11 @@ public class CategoryDbDAO
             e.printStackTrace();
         }
     }
-
+    
+    /*
+    deletes a category from our database
+    @param catToDelete
+    */
     public void deleteCategory(Category catToDelete)
     {
         try (Connection con = ds.getConnection())
@@ -60,6 +71,11 @@ public class CategoryDbDAO
         }
     }
 
+    /*
+    adds a movie to our chosen category in the database.
+    @param movieToAdd
+    @param chosenCat
+    */
     public void addToCategory(Movie movieToAdd, Category chosenCat)
     {
 
@@ -76,7 +92,11 @@ public class CategoryDbDAO
             e.printStackTrace();
         }
     }
-
+    
+    /*
+    deletes a movie from our category
+    @param movieToDelete
+    */
     public void deleteFromCategory(Movie movieToDelete)
     {
         int id = movieToDelete.getId();
@@ -91,7 +111,11 @@ public class CategoryDbDAO
             e.printStackTrace();
         }
     }
-
+    
+    /*
+    retrieves all the categories from the database
+    and returns them as a list of categories
+    */
     public List<Category> getAllCategories()
     {
         List<Category> catList = new ArrayList<>();
@@ -114,8 +138,12 @@ public class CategoryDbDAO
         }
         return catList;
     }
-
-    public List<Movie> getCategorySongs(Category chosenCat)
+    
+    /*
+    retrieves from the database a list of movies within the chosen category
+    @param chosenCat the category from which we retrieve the movies
+    */
+    public List<Movie> getCategoryMovies(Category chosenCat)
     {
         List<Movie> catMovieList = new ArrayList<>();
         try (Connection con = ds.getConnection())

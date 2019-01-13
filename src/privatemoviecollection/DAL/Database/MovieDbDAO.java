@@ -24,12 +24,21 @@ import privatemoviecollection.BE.Movie;
 public class MovieDbDAO
 {
     DbConnectionProvider ds;
-
+    
+    /*
+    establishes a connection to the database
+    */
     public MovieDbDAO() throws IOException
     {
         ds = new DbConnectionProvider();
     }
     
+    /*
+    adds a movie to the database
+    @param movieToAdd
+    @throws SQLServerException
+    @throws SQLException
+    */
 public void addMovie(Movie movieToAdd) throws SQLServerException, SQLException
 {
     String title = movieToAdd.getTitle();
@@ -59,7 +68,13 @@ public void addMovie(Movie movieToAdd) throws SQLServerException, SQLException
         e.printStackTrace();
     }
 }
-    
+
+    /*
+    deletes a movie from the database
+    @param movieToDelete
+    @throws SQLServerException
+    @throws SQLException
+    */
 public void deleteMovie(Movie movieToDelete) throws SQLServerException, SQLException   
 {
     int id = movieToDelete.getId();
@@ -76,6 +91,11 @@ public void deleteMovie(Movie movieToDelete) throws SQLServerException, SQLExcep
     }
 }
 
+/*
+gets all the movies from the database and returns them as a list of movies
+@throws SQLServerException
+@throws SQLException
+*/
 public List<Movie> getAllMovies () throws SQLServerException, SQLException
 {
     List<Movie> movieList = new ArrayList<>();
@@ -105,6 +125,10 @@ public List<Movie> getAllMovies () throws SQLServerException, SQLException
     return movieList;
 }
 
+/*
+ gets a movie from the database by matching the id
+@param id the id of the movie to get
+*/
 public Movie getMovie(int id)
 {
     Movie wantedMovie = null;
@@ -135,7 +159,10 @@ public Movie getMovie(int id)
     
     return wantedMovie;
 }
-
+/*
+searches the database based on the input and returns the result as alist of movies
+@param input the searched query
+*/
 public List<Movie> searchMovies (String input)
 {
     List <Movie> movieList = new ArrayList <>();
@@ -154,10 +181,10 @@ public List<Movie> searchMovies (String input)
             String filelink = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
             double personalRating = rs.getDouble("personalRating");
-//            Date lastview = rs.getDate("lastview");
+            Date lastview = rs.getDate("lastview");
 
 
-            movieList.add(new Movie (id, title, imdbRating, personalRating, filelink));
+            movieList.add(new Movie (id, title, imdbRating, personalRating, filelink, lastview));
         
         }
     } 
@@ -168,6 +195,11 @@ public List<Movie> searchMovies (String input)
     return movieList;
 }
 
+    /*
+    adds a personal rating to a movie
+    @param  movieToRate
+    @param personalRating the input rating
+    */
     public void addPersonalRating (Movie movieToRate, double personalRating)
     {
        
@@ -186,6 +218,10 @@ public List<Movie> searchMovies (String input)
         }
     }
     
+    /*
+    converts the date to sql and updates the movie's lastview in the database
+    @param movieToEdit
+    */
     public void setLastviewed (Movie movieToEdit)
     {
         java.util.Date dateToConvert = movieToEdit.getLastview();
