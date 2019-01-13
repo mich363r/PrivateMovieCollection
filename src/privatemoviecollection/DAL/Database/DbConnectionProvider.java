@@ -21,6 +21,9 @@ public class DbConnectionProvider
     private static final String PROP_FILE = "Database_Settings.txt";
     private final SQLServerDataSource ds;
 
+    /*
+    establishes a connection to the database based on the Database_Settings file
+    */
     public DbConnectionProvider() throws FileNotFoundException, IOException
     {
         Properties databaseProperties = new Properties();

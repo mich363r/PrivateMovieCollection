@@ -55,20 +55,16 @@ public class AddMovieWindowController implements Initializable {
 
     }
 
-    public AddMovieWindowController() 
-    {
-        
-    }
-
+    /*
+    sets the model 
+    */
     public void setModel(MovieModel mModel) {
         this.mModel = mModel;
     }
     
-    public void setController (FXMLDocumentController dController)
-    {
-        this.dController = dController;
-    }
-
+    /*
+    takes the input from the textfields and adds a movie based on said input
+    */
     @FXML
     private void saveMovie(ActionEvent event) throws SQLException {
         Stage primeStage = (Stage) btnSaveMovie.getScene().getWindow();
@@ -82,7 +78,6 @@ public class AddMovieWindowController implements Initializable {
         Movie newMovie = new Movie(0, title, doubleRating, 0, filelink, lastview);
         mModel.addMovie(newMovie);
 
-//        dController.refreshTableview();
         primeStage.close();
     }
 
@@ -94,7 +89,10 @@ public class AddMovieWindowController implements Initializable {
         Stage primeStage = (Stage) btnCancelMovie.getScene().getWindow();
         primeStage.close();
     }
-
+    
+    /*
+    chooses which mp4 or mpeg4 file to add
+    */
     @FXML
     private void chooseFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();

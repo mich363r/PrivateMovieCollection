@@ -6,7 +6,6 @@
 package privatemoviecollection.BE;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -21,15 +20,6 @@ public class Movie
     private double personalRating;
     private Date lastview;
 
-    public Movie(int id, String title, double imdbRating, double personalRating, String filelink)
-    {
-        this.id = id;
-        this.title = title;
-        this.filelink = filelink;
-        this.imdbRating = imdbRating;
-        this.personalRating = personalRating;
-        
-    }
     public Movie(int id, String title, double imdbRating, double personalRating, String filelink, Date lastview)
     {
         this.id = id;
