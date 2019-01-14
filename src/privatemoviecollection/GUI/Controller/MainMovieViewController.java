@@ -44,7 +44,7 @@ import privatemoviecollection.GUI.Model.MovieModel;
  *
  * @author Asvør
  */
-public class FXMLDocumentController implements Initializable
+public class MainMovieViewController implements Initializable
 {
 
 //    @FXML
@@ -85,7 +85,7 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private TableColumn<Movie, String> colCatPersonal;
 
-    public FXMLDocumentController()
+    public MainMovieViewController()
     {
         searchDone = false;
     }
@@ -103,7 +103,7 @@ public class FXMLDocumentController implements Initializable
             tbViewCategory.setItems(mModel.getAllCategories());
         } catch (IOException | SQLException ex)
         {
-            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         colCat.setCellValueFactory(new PropertyValueFactory<>("name"));
