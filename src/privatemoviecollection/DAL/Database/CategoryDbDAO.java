@@ -170,4 +170,36 @@ public class CategoryDbDAO
         }
         return catMovieList;
     }
+    
+    /**
+ *  Search for movies in categories
+ */
+    public List<Movie> searchMoviesInCat (String input)
+    {
+        List<Movie> searchCatMovie = new ArrayList<>();
+        try (Connection con = ds.getConnection())
+        {
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie INNER JOIN CatMovie ON Movie.id = CatMovie.movieId Where Movie.title = (?)");
+            pstmt.setString(1, input);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next())
+            {
+                int id = rs.getInt("id");
+                String title = rs.getString("title");
+                double imdbRating = rs.getDouble("imdbRating");
+                double personalRating = rs.getDouble("personalRating");
+                String filelink = rs.getString("filelink");
+                Date lastview = rs.getDate("lastview");
+
+                searchCatMovie.add(new Movie(id, title, imdbRating, personalRating,filelink,lastview));
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return searchCatMovie;
+    }
 }
+

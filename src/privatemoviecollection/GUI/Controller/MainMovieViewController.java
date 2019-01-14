@@ -135,14 +135,15 @@ public class MainMovieViewController implements Initializable
         {
             searchDone = true;
             String input = txtSearch.getText();
-            tbViewMovie.setItems(mModel.searchMovies(input));
-            tbViewCatMovies.setItems(mModel.searchMovies(input));
+//            tbViewMovie.setItems(mModel.searchMovies(input));
+            tbViewCatMovies.setItems(mModel.searchMoviesInCat(input));
             btnSearch.setText("Clear");
         } else if (searchDone == true)
         {
             searchDone = false;
             btnSearch.setText("Search");
-            tbViewMovie.setItems(mModel.getAllMovies());
+//            tbViewMovie.setItems(mModel.getAllMovies());
+            tbViewCatMovies.setItems(mModel.getAllMovies());
             txtSearch.clear();
         }
     }

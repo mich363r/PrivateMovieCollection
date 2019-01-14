@@ -153,5 +153,10 @@ public class MovieManager
         return mDbDAO.searchImdbRating(lowImdb, highImdb);
     }
     
+    public List<Movie> searchMoviesInCat (String input)
+    {
+        return cDbDAO.searchMoviesInCat(input);
+    }
+    
 }
 

@@ -173,4 +173,9 @@ public class MovieModel
         movieList.addAll(FXCollections.observableArrayList(mManager.searchImdbRating(lowImdb, highImdb)));
         return movieList;
     }
+    
+    public ObservableList<Movie> searchMoviesInCat (String input)
+    {
+        return FXCollections.observableArrayList(mManager.searchMoviesInCat(input));
+    }
 }
