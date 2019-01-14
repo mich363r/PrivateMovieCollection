@@ -5,7 +5,10 @@
  */
 package privatemoviecollection.GUI.Controller;
 
+import java.awt.Desktop;
 import java.io.File;
+import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
@@ -45,6 +48,8 @@ public class AddMovieWindowController implements Initializable {
     private Button btnSaveMovie;
     
     MovieModel mModel;
+    @FXML
+    private Button btnSearchImdb;
 
     /**
      * Initializes the controller class.
@@ -107,7 +112,21 @@ public class AddMovieWindowController implements Initializable {
         this.txtFile.setText(location);
 
     }
-
+    /*
+    Searches imdb based on the title input field
+    */
+    @FXML
+    private void searchImdbTitle(ActionEvent event) throws IOException
+    {
+        if (txtTitle.getLength() == 0)
+        {
+            JOptionPane.showMessageDialog(null, "You have to write a title first","title field is empty", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+            String url = "https://www.imdb.com/find?ref_=nv_sr_fn&q=" + txtTitle.getText();
+            Desktop.getDesktop().browse(URI.create(url));
+    
+    }
     
 
 }

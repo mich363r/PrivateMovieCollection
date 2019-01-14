@@ -21,5 +21,6 @@
       <TextField fx:id="txtRating" layoutX="131.0" layoutY="130.0" />
       <Button fx:id="btnSaveMovie" layoutX="31.0" layoutY="243.0" mnemonicParsing="false" onAction="#saveMovie" text="Save" />
       <Button fx:id="btnCancelMovie" layoutX="368.0" layoutY="243.0" mnemonicParsing="false" onAction="#cancelMovie" text="Cancel" />
+      <Button fx:id="btnSearchImdb" layoutX="336.0" layoutY="130.0" mnemonicParsing="false" onAction="#searchImdbTitle" text="Search Imdb" />
    </children>
 </AnchorPane>
