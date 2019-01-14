@@ -118,9 +118,9 @@ public class MovieModel
     removes a movie from our database of movies within a category.
     It also from the movie from our observableList of movies within a category.
     */
-    public void deleteFromCategory(Movie movieToDelete)
+    public void deleteFromCategory(Movie movieToDelete, Category chosenCategory)
     {
-        mManager.deleteFromCategory(movieToDelete);
+        mManager.deleteFromCategory(movieToDelete, chosenCategory);
         catMovie.remove(movieToDelete);
     }
     
@@ -159,5 +159,10 @@ public class MovieModel
         catMovie.clear();
         catMovie.addAll(tempMovies);
         return catMovie;
+    }
+    
+    public ObservableList<Movie> searchImdbRating (double lowImdb, double highImdb)
+    {
+        return FXCollections.observableArrayList(mManager.searchImdbRating(lowImdb, highImdb));
     }
 }

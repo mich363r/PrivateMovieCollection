@@ -123,6 +123,14 @@ public class FXMLDocumentController implements Initializable
     @FXML
     public void handleSearch(ActionEvent event) throws SQLException
     {
+        double highImdb = 10;
+        double lowImdb = Double.parseDouble(txtSearch.getText());
+        
+//        if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
+//        {
+            mModel.searchImdbRating(lowImdb, highImdb);
+//        }
+        
         if (searchDone == false)
         {
             searchDone = true;
@@ -325,7 +333,7 @@ public class FXMLDocumentController implements Initializable
 
         if (p == 0)
         {
-            mModel.deleteFromCategory(tbViewCatMovies.getSelectionModel().getSelectedItem());
+            mModel.deleteFromCategory(tbViewCatMovies.getSelectionModel().getSelectedItem(), tbViewCategory.getSelectionModel().getSelectedItem());
             tbViewCatMovies.getItems().clear();
             tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory)); // gets the new list of songs minus the deleted ones
         }

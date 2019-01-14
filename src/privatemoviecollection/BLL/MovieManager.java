@@ -108,9 +108,9 @@ public class MovieManager
     tells the CategoryDbDAO class to delete a movie from a category
     @param movieToDelete the movie we want removed
     */
-    public void deleteFromCategory(Movie movieToDelete)
+    public void deleteFromCategory(Movie movieToDelete, Category chosenCategory)
     {
-        cDbDAO.deleteFromCategory(movieToDelete);
+        cDbDAO.deleteFromCategory(movieToDelete, chosenCategory);
     }
     
     /*
@@ -146,6 +146,11 @@ public class MovieManager
     public List<Movie> getAllMoviesInCategory(Category chosenCat)
     {
        return cDbDAO.getCategoryMovies(chosenCat);
+    }
+    
+    public List<Movie> searchImdbRating (double lowImdb, double highImdb)
+    {
+        return mDbDAO.searchImdbRating(lowImdb, highImdb);
     }
     
 }

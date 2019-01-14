@@ -81,6 +81,10 @@ public void deleteMovie(Movie movieToDelete) throws SQLServerException, SQLExcep
     
     try (Connection con = ds.getConnection())
     {
+        PreparedStatement pstmt1 = con.prepareStatement("DELETE FROM CatMovie WHERE movieId = (?)");
+        pstmt1.setInt(1, id);
+        pstmt1.execute();
+        
         PreparedStatement pstmt = con.prepareStatement("DELETE FROM Movie WHERE id = (?)");
         pstmt.setInt(1, id);
         pstmt.execute();
@@ -168,9 +172,8 @@ public List<Movie> searchMovies (String input)
     List <Movie> movieList = new ArrayList <>();
     try (Connection con = ds.getConnection())
     {
-        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie WHERE title like ? or imdbRating = ?");
+        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie WHERE title like ?");
         pstmt.setString(1, "%" + input + "%");
-        pstmt.setString(2, "%" + input + "%");
         
         
         ResultSet rs = pstmt.executeQuery();
@@ -178,9 +181,9 @@ public List<Movie> searchMovies (String input)
         {
             int id = rs.getInt("id");
             String title = rs.getString("title");
-            String filelink = rs.getString("filelink");
             double imdbRating = rs.getDouble("imdbRating");
             double personalRating = rs.getDouble("personalRating");
+            String filelink = rs.getString("filelink");
             Date lastview = rs.getDate("lastview");
 
 
@@ -193,6 +196,38 @@ public List<Movie> searchMovies (String input)
         e.printStackTrace();
     }
     return movieList;
+}
+
+public List<Movie> searchImdbRating (double lowImdb, double highImdb)
+{
+    List <Movie> movieToSearch = new ArrayList <>();
+    
+    try ( Connection con = ds.getConnection())
+    {
+        PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie WHERE imdbRating BETWEEN (?) AND (?)");
+        pstmt.setDouble(1, lowImdb);
+        pstmt.setDouble(2, highImdb);
+        ResultSet rs = pstmt.executeQuery();
+        
+        while (rs.next())
+        {
+            int id = rs.getInt("id");
+            String title = rs.getString("title");
+            double imdbRating = rs.getDouble("imdbRating");
+            double personalRating = rs.getDouble("personalRating");
+            String filelink = rs.getString("filelink");
+            Date lastview = rs.getDate("lastview");
+            
+            movieToSearch.add(new Movie (id, title, imdbRating, personalRating, filelink, lastview));
+        }
+        
+    } 
+    catch (Exception e)
+    {
+        e.printStackTrace();
+    }
+    
+    return movieToSearch;
 }
 
     /*

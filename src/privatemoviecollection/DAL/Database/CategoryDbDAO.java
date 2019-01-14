@@ -97,13 +97,15 @@ public class CategoryDbDAO
     deletes a movie from our category
     @param movieToDelete
     */
-    public void deleteFromCategory(Movie movieToDelete)
+    public void deleteFromCategory(Movie movieToDelete, Category chosenCategory)
     {
         int id = movieToDelete.getId();
+        int catId = chosenCategory.getId();
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement pstmt = con.prepareStatement("DELETE FROM CatMovie WHERE movieId = (?)");
+            PreparedStatement pstmt = con.prepareStatement("DELETE FROM CatMovie WHERE movieId = (?) AND categoryId = (?)");
             pstmt.setInt(1, id);
+            pstmt.setInt(2, catId);
             pstmt.execute();
 
         } catch (Exception e)
