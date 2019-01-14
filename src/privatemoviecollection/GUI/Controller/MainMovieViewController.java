@@ -169,7 +169,7 @@ public class MainMovieViewController implements Initializable
     public void addMovie(ActionEvent event) throws IOException
     {
         Stage primeStage = (Stage) btnAddMovie.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/privatemoviecollection/GUI/View/addMovieWindow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/privatemoviecollection/GUI/View/AddMovieWindow.fxml"));
         Parent root = loader.load();
 
         AddMovieWindowController addMovieController = loader.getController();
