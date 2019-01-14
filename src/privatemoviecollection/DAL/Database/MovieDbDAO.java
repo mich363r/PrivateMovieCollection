@@ -172,6 +172,10 @@ public List<Movie> searchMovies (String input)
     List <Movie> movieList = new ArrayList <>();
     try (Connection con = ds.getConnection())
     {
+        PreparedStatement pstmt1 = con.prepareStatement("SELECT * FROM CatMovie WHERE movieId = (?)");
+        pstmt1.setString(1, "%" + input + "%");
+
+        
         PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie WHERE title like ?");
         pstmt.setString(1, "%" + input + "%");
         
