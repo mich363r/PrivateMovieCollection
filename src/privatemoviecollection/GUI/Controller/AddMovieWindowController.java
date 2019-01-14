@@ -45,7 +45,6 @@ public class AddMovieWindowController implements Initializable {
     private Button btnSaveMovie;
     
     MovieModel mModel;
-    FXMLDocumentController dController;
 
     /**
      * Initializes the controller class.
@@ -66,7 +65,7 @@ public class AddMovieWindowController implements Initializable {
     takes the input from the textfields and adds a movie based on said input
     */
     @FXML
-    private void saveMovie(ActionEvent event) throws SQLException {
+    public void saveMovie(ActionEvent event) throws SQLException {
         Stage primeStage = (Stage) btnSaveMovie.getScene().getWindow();
 
         String title = this.txtTitle.getText();
@@ -85,7 +84,7 @@ public class AddMovieWindowController implements Initializable {
      * Cancels add movie window.
      */
     @FXML
-    private void cancelMovie(ActionEvent event) {
+    public void cancelMovie(ActionEvent event) {
         Stage primeStage = (Stage) btnCancelMovie.getScene().getWindow();
         primeStage.close();
     }
@@ -94,7 +93,7 @@ public class AddMovieWindowController implements Initializable {
     chooses which mp4 or mpeg4 file to add
     */
     @FXML
-    private void chooseFile(ActionEvent event) {
+    public void chooseFile(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         FileChooser.ExtensionFilter filterMp4 = new FileChooser.ExtensionFilter("Select a file (mp4)", "*.mp4");
         FileChooser.ExtensionFilter filterMpeg4 = new FileChooser.ExtensionFilter("Select a mpeg4", "*.mpeg4");
