@@ -198,15 +198,23 @@ public List<Movie> searchMovies (String input)
     return movieList;
 }
 
+/*
+searches for movies based on IMDB rating
+@param highImdb
+@param  lowImdb
+@return List<Movie>
+*/
 public List<Movie> searchImdbRating (double lowImdb, double highImdb)
 {
     List <Movie> movieToSearch = new ArrayList <>();
+    double lowRating = lowImdb;
+    double highRating = highImdb;
     
     try ( Connection con = ds.getConnection())
     {
         PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie WHERE imdbRating BETWEEN (?) AND (?)");
-        pstmt.setDouble(1, lowImdb);
-        pstmt.setDouble(2, highImdb);
+        pstmt.setDouble(1, lowRating);
+        pstmt.setDouble(2, highRating);
         ResultSet rs = pstmt.executeQuery();
         
         while (rs.next())

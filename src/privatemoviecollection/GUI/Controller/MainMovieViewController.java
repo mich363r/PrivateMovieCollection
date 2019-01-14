@@ -126,24 +126,24 @@ public class MainMovieViewController implements Initializable
         double highImdb = 10;
         double lowImdb = Double.parseDouble(txtSearch.getText());
         
-//        if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
-//        {
+        if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
+        {
             mModel.searchImdbRating(lowImdb, highImdb);
-//        }
-        
-        if (searchDone == false)
-        {
-            searchDone = true;
-            String input = txtSearch.getText();
-            tbViewMovie.setItems(mModel.searchMovies(input));
-            btnSearch.setText("Clear");
-        } else if (searchDone == true)
-        {
-            searchDone = false;
-            btnSearch.setText("Search");
-            tbViewMovie.setItems(mModel.getAllMovies());
-            txtSearch.clear();
         }
+        
+//        if (searchDone == false)
+//        {
+//            searchDone = true;
+//            String input = txtSearch.getText();
+//            tbViewMovie.setItems(mModel.searchMovies(input));
+//            btnSearch.setText("Clear");
+//        } else if (searchDone == true)
+//        {
+//            searchDone = false;
+//            btnSearch.setText("Search");
+//            tbViewMovie.setItems(mModel.getAllMovies());
+//            txtSearch.clear();
+//        }
     }
     /*
     creates a new category if the input is valid

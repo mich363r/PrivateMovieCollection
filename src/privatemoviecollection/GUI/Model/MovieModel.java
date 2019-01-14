@@ -161,8 +161,16 @@ public class MovieModel
         return catMovie;
     }
     
+    /*
+    searches for movies based on imdb rating and then refreshes the list based on the result
+    @param lowImdb the input from the user
+    @param highImdb the roof for the search, in this case 10, based on imdb's rating system
+    @return movieList
+    */
     public ObservableList<Movie> searchImdbRating (double lowImdb, double highImdb)
     {
-        return FXCollections.observableArrayList(mManager.searchImdbRating(lowImdb, highImdb));
+        movieList.clear();
+        movieList.addAll(FXCollections.observableArrayList(mManager.searchImdbRating(lowImdb, highImdb)));
+        return movieList;
     }
 }

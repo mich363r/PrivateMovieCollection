@@ -23,7 +23,7 @@ public class PrivateMovieCollection extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("GUI/View/FXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("GUI/View/MainMovieView.fxml"));
         
         Scene scene = new Scene(root);
         
