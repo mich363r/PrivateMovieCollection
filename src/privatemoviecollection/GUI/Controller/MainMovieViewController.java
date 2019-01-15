@@ -84,6 +84,10 @@ public class MainMovieViewController implements Initializable
     private TableColumn<Movie, String> colCatImdb;
     @FXML
     private TableColumn<Movie, String> colCatPersonal;
+    @FXML
+    private TableColumn<?, ?> colLastview;
+    @FXML
+    private TextField txtSearchRatings;
 
     public MainMovieViewController()
     {
@@ -123,13 +127,7 @@ public class MainMovieViewController implements Initializable
     @FXML
     public void handleSearch(ActionEvent event) throws SQLException
     {
-//        double highImdb = 10;
-//        double lowImdb = Double.parseDouble(txtSearch.getText());
-//        
-//        if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
-//        {
-//            mModel.searchImdbRating(lowImdb, highImdb);
-//        }
+        
         
         if (searchDone == false)
         {
@@ -338,6 +336,18 @@ public class MainMovieViewController implements Initializable
             mModel.deleteFromCategory(tbViewCatMovies.getSelectionModel().getSelectedItem(), tbViewCategory.getSelectionModel().getSelectedItem());
             tbViewCatMovies.getItems().clear();
             tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory)); // gets the new list of songs minus the deleted ones
+        }
+    }
+
+    @FXML
+    public void searchRatings(ActionEvent event)
+    {
+        double highImdb = 10;
+        double lowImdb = Double.parseDouble(txtSearch.getText());
+        
+        if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
+        {
+            mModel.searchImdbRating(lowImdb, highImdb);
         }
     }
 }
