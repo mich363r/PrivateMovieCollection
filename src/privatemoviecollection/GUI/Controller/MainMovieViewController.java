@@ -85,7 +85,7 @@ public class MainMovieViewController implements Initializable
     @FXML
     private TableColumn<Movie, String> colCatPersonal;
     @FXML
-    private TableColumn<?, ?> colLastview;
+    private TableColumn<Movie, String> colLastview;
     @FXML
     private TextField txtSearchRatings;
 
@@ -109,11 +109,18 @@ public class MainMovieViewController implements Initializable
         {
             Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
+        //populates category table
         colCat.setCellValueFactory(new PropertyValueFactory<>("name"));
+       
+        //populates movie table
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colImdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         colPersonalRating.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
+        colLastview.setCellValueFactory(new PropertyValueFactory<>("lastview"));
+        
+        
+        //populates catmovie table
         colCatTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colCatImdb.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         colCatPersonal.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
@@ -131,18 +138,46 @@ public class MainMovieViewController implements Initializable
         
         if (searchDone == false)
         {
+            if (txtSearch.getText().length() == 0 && txtSearchRatings.getText().length() != 0)
+            {  
+                double highImdb = 10;
+                double lowImdb = Double.parseDouble(txtSearchRatings.getText());
+        
+                if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
+                {
+                    mModel.searchImdbRating(lowImdb, highImdb);
+                    String input = txtSearchRatings.getText();
+                    tbViewMovie.setItems(mModel.searchMovies(input));
+                }
+            }
+            if (txtSearch.getText().length() != 0 && txtSearchRatings.getText().length() == 0)
+            {
+                String input = txtSearch.getText();
+                tbViewMovie.setItems(mModel.searchMovies(input));
+                
+                
+                if (!tbViewCategory.getSelectionModel().isEmpty())
+                {
+                    tbViewCatMovies.setItems(mModel.searchMoviesInCat(input, currentCategory));
+                }
+            }
+            
+            
             searchDone = true;
-            String input = txtSearch.getText();
-            tbViewMovie.setItems(mModel.searchMovies(input));
-            tbViewCatMovies.setItems(mModel.searchMoviesInCat(input, currentCategory));
             btnSearch.setText("Clear");
-        } else if (searchDone == true)
+        
+        }
+            else if (searchDone == true)
         {
+            if (!tbViewCategory.getSelectionModel().isEmpty())
+            {
+                tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory));
+            }
             searchDone = false;
             btnSearch.setText("Search");
             tbViewMovie.setItems(mModel.getAllMovies());
-            tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory));
             txtSearch.clear();
+            txtSearchRatings.clear();
         }
     }
     /*
@@ -265,6 +300,8 @@ public class MainMovieViewController implements Initializable
         }
     }
     
+    
+    
     /*
     opens imdb's homepage
     */
@@ -339,7 +376,6 @@ public class MainMovieViewController implements Initializable
         }
     }
 
-    @FXML
     public void searchRatings(ActionEvent event)
     {
         double highImdb = 10;
@@ -348,6 +384,28 @@ public class MainMovieViewController implements Initializable
         if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
         {
             mModel.searchImdbRating(lowImdb, highImdb);
+        }
+    }
+
+    @FXML
+    private void playMovieInCategory(MouseEvent event) throws IOException
+    {
+        if (!tbViewCatMovies.getSelectionModel().isEmpty())
+        {
+            String moviePath = tbViewCatMovies.getSelectionModel().getSelectedItem().getFilelink();
+            File movieFile = new File(moviePath);
+            Movie movieToPlay = tbViewCatMovies.getSelectionModel().getSelectedItem();
+
+            Date lastview = new Date();
+            if (event.getButton().equals(MouseButton.PRIMARY))
+            {
+                if (event.getClickCount() == 2)
+                {
+                    Desktop.getDesktop().open(movieFile);
+                    movieToPlay.setLastview(lastview);
+                    mModel.setLastviewed(movieToPlay);
+                }
+            }
         }
     }
 }

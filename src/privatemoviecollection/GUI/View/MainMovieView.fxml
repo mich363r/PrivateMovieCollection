@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="rootPane2" prefHeight="483.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="privatemoviecollection.GUI.Controller.MainMovieViewController">
+<AnchorPane id="AnchorPane" fx:id="rootPane2" prefHeight="483.0" prefWidth="1028.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1" fx:controller="privatemoviecollection.GUI.Controller.MainMovieViewController">
     <children>
         <Button fx:id="btnSearch" layoutX="593.0" layoutY="14.0" onAction="#handleSearch" text="Search" />
       <TableView fx:id="tbViewMovie" layoutX="27.0" layoutY="134.0" onMouseClicked="#clickPlayMovie" prefHeight="215.0" prefWidth="363.0">
@@ -36,7 +36,7 @@
       <Button layoutX="551.0" layoutY="360.0" mnemonicParsing="false" onAction="#deleteCategory" text="Delete category" />
       <Button layoutX="27.0" layoutY="442.0" mnemonicParsing="false" onAction="#addPersonalRating" text="Add personal rating" />
       <Button layoutX="909.0" layoutY="442.0" mnemonicParsing="false" onAction="#openImdb" text="Open Imdb" />
-      <TableView fx:id="tbViewCatMovies" layoutX="709.0" layoutY="134.0" prefHeight="215.0" prefWidth="297.0">
+      <TableView fx:id="tbViewCatMovies" layoutX="709.0" layoutY="134.0" onMouseClicked="#playMovieInCategory" prefHeight="215.0" prefWidth="297.0">
         <columns>
           <TableColumn fx:id="colCatTitle" prefWidth="79.0" text="Title" />
             <TableColumn fx:id="colCatImdb" prefWidth="70.0" text="Imdb" />
@@ -46,7 +46,7 @@
       <Label layoutX="717.0" layoutY="100.0" text="Movies in category" />
       <Button layoutX="709.0" layoutY="360.0" mnemonicParsing="false" onAction="#addToCategory" text="Add to category" />
       <Button fx:id="deleteFromCategory" layoutX="846.0" layoutY="360.0" mnemonicParsing="false" onAction="#deleteFromCategory" text="delete from category" />
-      <TextField fx:id="txtSearchRatings" layoutX="926.0" layoutY="14.0" onAction="#searchRatings" prefHeight="31.0" prefWidth="82.0" promptText="Rating" />
+      <TextField fx:id="txtSearchRatings" layoutX="926.0" layoutY="14.0" prefHeight="31.0" prefWidth="82.0" promptText="Rating" />
       <Label layoutX="888.0" layoutY="19.0" text="or" />
     </children>
 </AnchorPane>
