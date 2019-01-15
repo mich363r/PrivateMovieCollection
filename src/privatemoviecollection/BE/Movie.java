@@ -27,6 +27,7 @@ public class Movie
         this.filelink = filelink;
         this.imdbRating = imdbRating;
         this.personalRating = personalRating;
+        this.lastview = lastview;
     }
 
     public String getTitle()
