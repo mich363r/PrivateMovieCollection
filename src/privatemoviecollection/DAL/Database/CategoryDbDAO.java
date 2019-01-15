@@ -174,13 +174,14 @@ public class CategoryDbDAO
     /**
  *  Search for movies in categories
  */
-    public List<Movie> searchMoviesInCat (String input)
+    public List<Movie> searchMoviesInCat (String input, Category chosenCat)
     {
         List<Movie> searchCatMovie = new ArrayList<>();
         try (Connection con = ds.getConnection())
         {
-            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie INNER JOIN CatMovie ON Movie.id = CatMovie.movieId Where Movie.title = (?)");
-            pstmt.setString(1, input);
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM Movie INNER JOIN CatMovie ON Movie.id = CatMovie.movieId Where Movie.title LIKE (?) AND CatMovie.categoryId = (?)");
+            pstmt.setString(1, "%" + input + "%");
+            pstmt.setInt(2, chosenCat.getId());
             ResultSet rs = pstmt.executeQuery();
             
             while (rs.next())

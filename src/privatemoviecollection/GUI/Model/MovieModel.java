@@ -174,8 +174,11 @@ public class MovieModel
         return movieList;
     }
     
-    public ObservableList<Movie> searchMoviesInCat (String input)
+    public ObservableList<Movie> searchMoviesInCat (String input, Category chosenCat)
     {
-        return FXCollections.observableArrayList(mManager.searchMoviesInCat(input));
+        catMovie.clear();
+        catMovie.addAll(FXCollections.observableArrayList(mManager.searchMoviesInCat(input, chosenCat)));
+        return catMovie;
+        
     }
 }
