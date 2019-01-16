@@ -105,8 +105,7 @@ public class MovieModel
     public void addCategory(Category catToAdd)
     {
         mManager.addCategory(catToAdd);
-        categoryList.clear();
-        categoryList.addAll(mManager.getAllCategories());
+        categoryList.add(catToAdd);
     }
     
     /*
@@ -163,12 +162,10 @@ public class MovieModel
     @param movieToRate
     @param personalRating
     */
-    public void addPersonalRating (Movie movieToRate, double personalRating) throws SQLException
-    {   
+    public void addPersonalRating (Movie movieToRate, double personalRating)
+    {
         mManager.addPersonalRating(movieToRate, personalRating);
         movieToRate.setPersonalRating(personalRating);   
-        movieList.clear();
-        movieList.addAll(mManager.getAllMovies());
     }
     
     /*
