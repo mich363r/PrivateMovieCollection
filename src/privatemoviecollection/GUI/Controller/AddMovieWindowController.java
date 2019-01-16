@@ -16,7 +16,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -78,16 +80,24 @@ public class AddMovieWindowController implements Initializable {
     public void saveMovie(ActionEvent event) throws SQLException, DALException {
         Stage primeStage = (Stage) btnSaveMovie.getScene().getWindow();
 
+        if (txtTitle.getText().length() == 0 || txtRating.getText().length() == 0 || txtFile.getText().length() == 0)
+        {
+            Alert alert = new Alert (Alert.AlertType.CONFIRMATION, "You have to fill out all fields!", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
         String title = this.txtTitle.getText();
         String rating = this.txtRating.getText();
         double doubleRating = Double.parseDouble(rating);
         String filelink = this.txtFile.getText();
         Date lastview = null;
-
+      
         Movie newMovie = new Movie(0, title, doubleRating, 0, filelink, lastview);
         mModel.addMovie(newMovie);
 
         primeStage.close();
+        
+        
     }
 
     /**

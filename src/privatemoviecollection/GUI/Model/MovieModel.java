@@ -47,8 +47,7 @@ public class MovieModel
     public void addMovie(Movie movieToAdd) throws SQLException, DALException
     {
         mManager.addMovie(movieToAdd);
-        movieList.clear();
-        movieList.addAll(mManager.getAllMovies()); 
+        movieList.add(movieToAdd); 
     }
     
     /*
@@ -107,6 +106,8 @@ public class MovieModel
     {
         mManager.addCategory(catToAdd);
         categoryList.add(catToAdd);
+        categoryList.clear();
+        categoryList.addAll(mManager.getAllCategories());
     }
     
     /*
@@ -163,10 +164,12 @@ public class MovieModel
     @param movieToRate
     @param personalRating
     */
-    public void addPersonalRating (Movie movieToRate, double personalRating) throws DALException
+    public void addPersonalRating (Movie movieToRate, double personalRating) throws DALException, SQLException
     {
         mManager.addPersonalRating(movieToRate, personalRating);
         movieToRate.setPersonalRating(personalRating);   
+        movieList.clear();
+        movieList.addAll(mManager.getAllMovies());
     }
     
     /*
@@ -174,9 +177,11 @@ public class MovieModel
     
     @param movieToEdit
     */
-    public void setLastviewed (Movie movieToEdit) throws DALException
+    public void setLastviewed (Movie movieToEdit) throws DALException, SQLException
     {
         mManager.setLastviewed(movieToEdit);
+        movieList.clear();
+        movieList.addAll(mManager.getAllMovies());
     }
     
     /*

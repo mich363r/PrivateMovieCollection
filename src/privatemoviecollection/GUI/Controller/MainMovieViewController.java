@@ -215,9 +215,12 @@ public class MainMovieViewController implements Initializable
                     return;
                 }
             }
-            Category newCat = new Category(0, catName);
+           Category newCat = new Category(0, catName);
             mModel.addCategory(newCat);
+            tbViewCategory.getSelectionModel().clearSelection();
+            tbViewCategory.setItems(mModel.getAllCategories());
         }
+         
 
     }
 
@@ -253,12 +256,13 @@ public class MainMovieViewController implements Initializable
         {
             Alert alert = new Alert(AlertType.ERROR, "You have to select a movie to delete", ButtonType.OK);
             alert.showAndWait();
+            return;
         }
-
-        if (!tbViewMovie.getSelectionModel().isEmpty())
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected movie?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.YES)
         {
-            Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected movie?", ButtonType.YES, ButtonType.NO);
-            alert.showAndWait();
             mModel.deleteMovie(tbViewMovie.getSelectionModel().getSelectedItem());
         }
     }
@@ -273,12 +277,13 @@ public class MainMovieViewController implements Initializable
         {
             Alert alert = new Alert(AlertType.ERROR, "You have to select a category to delete", ButtonType.OK);
             alert.showAndWait();
+            return;
         }
-
-        if (!tbViewCategory.getSelectionModel().isEmpty())
-        {
-            Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected category?", ButtonType.YES, ButtonType.NO);
-            alert.showAndWait();
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected category?", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.YES)
+        { 
             mModel.deleteCategory(tbViewCategory.getSelectionModel().getSelectedItem());
         }
     }
@@ -287,40 +292,51 @@ public class MainMovieViewController implements Initializable
     adds a personal rating to the selected movie between 1 and 10
      */
     @FXML
-    public void addPersonalRating(ActionEvent event)
+    public void addPersonalRating(ActionEvent event) throws SQLException, DALException
     {
-//        if (tbViewMovie.getSelectionModel().isEmpty())
-//        {
-//            JOptionPane.showMessageDialog(null, "you have to select a movie", "invalid selection", JOptionPane.ERROR_MESSAGE);
-//           return;
-//        }
-
         if (tbViewMovie.getSelectionModel().isEmpty())
         {
             Alert alert = new Alert(AlertType.ERROR, "You have to select a movie to rate", ButtonType.OK);
             alert.showAndWait();
+            return;
         }
 
-        TextInputDialog p = new TextInputDialog();
-//        double p = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter a rating between 1 - 10", "Enter", JOptionPane.OK_CANCEL_OPTION));
-//        p = Double.parseDouble();
-//        
-//        if (p >= 1 && p <= 10)
-//        {
-//            mModel.addPersonalRating(tbViewMovie.getSelectionModel().getSelectedItem(), p);
-//        } else
-//        {
-//            JOptionPane.showMessageDialog(null, "You have to enter a number between 1 and 10", "Incorrect number", JOptionPane.ERROR_MESSAGE);
+        if (!tbViewMovie.getSelectionModel().isEmpty())
+        {
+            textInputRating();
+        }
+    }
+    
+    public void textInputRating () throws SQLException, DALException
+    {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Personal rating");
+        dialog.setContentText("Enter a rating between 1 - 10");
+        
+        Optional <String> s = dialog.showAndWait();
+        if (s.isPresent())
+        {
+            double p = Double.parseDouble(s.get());
+            
+            if (p >= 1 && p <= 10)
+            {
+                mModel.addPersonalRating(tbViewMovie.getSelectionModel().getSelectedItem(), p);
+            }
+        }
+        
+        double p = Double.parseDouble(s.get());
+        if (p > 10)
+        {
         Alert alert = new Alert(AlertType.ERROR, "You have to enter a number between 1 and 10", ButtonType.OK);
         alert.showAndWait();
-//        }
+        }
     }
 
     /*
     plays the tableview movie when you click it twice
      */
     @FXML
-    public void clickPlayMovie(MouseEvent event) throws IOException, DALException
+    public void clickPlayMovie(MouseEvent event) throws IOException, DALException, SQLException
     {
         if (!tbViewMovie.getSelectionModel().isEmpty())
         {
@@ -389,7 +405,9 @@ public class MainMovieViewController implements Initializable
         {
             Alert alert = new Alert(AlertType.ERROR, "You have to select both a movie to add, and a category to add it to.", ButtonType.OK);
             alert.showAndWait();
+            return;
         }
+
         Movie selectedMovie = tbViewMovie.getSelectionModel().getSelectedItem();
         Category selectedCat = tbViewCategory.getSelectionModel().getSelectedItem();
         mModel.addToCategory(selectedMovie, selectedCat);
@@ -405,12 +423,14 @@ public class MainMovieViewController implements Initializable
         {
             Alert alert = new Alert(AlertType.ERROR, "You have to select a movie from the list of category movies to delete", ButtonType.OK);
             alert.showAndWait();
+            return;
         }
-        if (!tbViewCatMovies.getSelectionModel().isEmpty())
+        
+        Alert alert = new Alert(AlertType.CONFIRMATION, "Do you want to delete this movie from this category", ButtonType.YES, ButtonType.NO);
+        Optional<ButtonType> result = alert.showAndWait();
+            
+        if (result.get() == ButtonType.YES)
         {
-            Alert alert = new Alert(AlertType.CONFIRMATION, "Do you want to delete this movie from this category", ButtonType.YES, ButtonType.NO);
-            alert.showAndWait();
-
             mModel.deleteFromCategory(tbViewCatMovies.getSelectionModel().getSelectedItem(), tbViewCategory.getSelectionModel().getSelectedItem());
             tbViewCatMovies.getItems().clear();
             tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory)); // gets the new list of songs minus the deleted ones.
@@ -429,7 +449,7 @@ public class MainMovieViewController implements Initializable
     }
 
     @FXML
-    private void playMovieInCategory(MouseEvent event) throws IOException, DALException
+    private void playMovieInCategory(MouseEvent event) throws IOException, DALException, SQLException
     {
         if (!tbViewCatMovies.getSelectionModel().isEmpty())
         {
