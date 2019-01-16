@@ -20,7 +20,6 @@ import privatemoviecollection.BLL.MovieManager;
  */
 public class MovieModel
 {
-    
     private ObservableList<Movie> movieList;
     private ObservableList<Category> categoryList;
     private ObservableList<Movie> catMovie;
@@ -41,6 +40,8 @@ public class MovieModel
     
     /*
     adds a movie to our database and then clears our observableList and sets it again, thus refreshing the list
+    
+    @param movieToAdd
     */
     public void addMovie(Movie movieToAdd) throws SQLException
     {
@@ -51,6 +52,8 @@ public class MovieModel
     
     /*
     deletes a movie and removes it from our observableList
+    
+    @param movieToDelete
     */
     public void deleteMovie(Movie movieToDelete) throws SQLException
     {
@@ -61,6 +64,8 @@ public class MovieModel
     /*
     retrieves all our movies and stores them in a temporary list.
     Furthermore, it clears our observableList, sets it anew.
+    
+    @return movieList
     */
     public ObservableList<Movie> getAllMovies() throws SQLException
     {
@@ -72,6 +77,9 @@ public class MovieModel
     
     /*
     calls on the manager to retrieve a specific movie
+    
+    @param movie
+    @return
     */
     public Movie getMovie(Movie movie)
     {
@@ -80,6 +88,9 @@ public class MovieModel
 
     /*
     retrieves a list from the manager and then converts it into an observableList.
+    
+    @param input
+    @return 
     */
     public ObservableList<Movie> searchMovies(String input)
     {
@@ -88,6 +99,8 @@ public class MovieModel
 
     /*
     adds a category to our database as well as our observableList
+    
+    @param catToAdd
     */
     public void addCategory(Category catToAdd)
     {
@@ -97,6 +110,8 @@ public class MovieModel
     
     /*
     removes a category from our database as well as our observableList.
+    
+    @param catToDelete
     */
     public void deleteCategory(Category catToDelete)
     {
@@ -107,6 +122,9 @@ public class MovieModel
     /*
     adds a movie to our database of movies within a category.
     It also adds the movie to our observableList of movies within a category.
+    
+    @param movieToAdd
+    @param chosenCat
     */
     public void addToCategory(Movie movieToAdd, Category chosenCat)
     {
@@ -117,6 +135,9 @@ public class MovieModel
     /*
     removes a movie from our database of movies within a category.
     It also from the movie from our observableList of movies within a category.
+    
+    @param movieToDelete
+    @param chosenCategory
     */
     public void deleteFromCategory(Movie movieToDelete, Category chosenCategory)
     {
@@ -126,6 +147,8 @@ public class MovieModel
     
     /*
     Retrieves and converts the list of categories from the manager and returns it
+    
+    @return categoryList an observableList with all the categories
     */
     public ObservableList<Category> getAllCategories()
     {
@@ -135,6 +158,9 @@ public class MovieModel
     
     /*
     adds a personal rating to the chosen movie
+    
+    @param movieToRate
+    @param personalRating
     */
     public void addPersonalRating (Movie movieToRate, double personalRating)
     {
@@ -144,6 +170,8 @@ public class MovieModel
     
     /*
     sets the date of the last time the chosen movie was watched
+    
+    @param movieToEdit
     */
     public void setLastviewed (Movie movieToEdit)
     {
@@ -152,6 +180,9 @@ public class MovieModel
     
     /*
     makes a temporary list of movies, refreshes the observableList and returns it.
+    
+    @param chosenCat
+    @return catMovie a list containing all the movies linked to the chosen category
     */
     public ObservableList<Movie> getAllMoviesInCategory(Category chosenCat)
     {
@@ -174,6 +205,13 @@ public class MovieModel
         return movieList;
     }
     
+    /*
+    searches on movies based on the current chosen category
+    
+    @param input
+    @param chosenCat the chosen category
+    @return catMovie the list containing the result of the search query
+    */
     public ObservableList<Movie> searchMoviesInCat (String input, Category chosenCat)
     {
         catMovie.clear();

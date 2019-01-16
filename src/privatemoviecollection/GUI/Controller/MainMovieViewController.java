@@ -146,11 +146,9 @@ public class MainMovieViewController implements Initializable
                 if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
                 {
                     mModel.searchImdbRating(lowImdb, highImdb);
-                    String input = txtSearchRatings.getText();
-                    tbViewMovie.setItems(mModel.searchMovies(input));
                 }
             }
-            if (txtSearch.getText().length() != 0 && txtSearchRatings.getText().length() == 0)
+            if (txtSearchRatings.getText().length() == 0)
             {
                 String input = txtSearch.getText();
                 tbViewMovie.setItems(mModel.searchMovies(input));
