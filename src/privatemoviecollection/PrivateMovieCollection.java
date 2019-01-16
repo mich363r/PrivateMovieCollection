@@ -29,8 +29,14 @@ public class PrivateMovieCollection extends Application {
         
         stage.setScene(scene);
         stage.show();
+<<<<<<< HEAD
     }
     
+=======
+    
+    }
+
+>>>>>>> parent of 65bd240... Revert "joptionpane to textinputdialog"
     /**
      * @param args the command line arguments
      */
