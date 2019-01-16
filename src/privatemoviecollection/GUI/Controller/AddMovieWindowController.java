@@ -107,9 +107,12 @@ public class AddMovieWindowController implements Initializable {
         fileChooser.setTitle("Open movie");
         Stage stage = (Stage) rootPane2.getScene().getWindow();
         File mediafile = fileChooser.showOpenDialog(stage);
+       if(mediafile != null)
+       {
         String location = mediafile.getPath();
-
         this.txtFile.setText(location);
+       }
+        
 
     }
     /*
