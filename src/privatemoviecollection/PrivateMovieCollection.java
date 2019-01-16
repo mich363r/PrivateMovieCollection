@@ -29,17 +29,14 @@ public class PrivateMovieCollection extends Application {
         
         stage.setScene(scene);
         stage.show();
-        
-//        wait(10);
-        //warningMessage();
-        
-        
+<<<<<<< HEAD
     }
-    public void warningMessage() 
-    {
-        JOptionPane.showMessageDialog(null, "Remember to delete movies you have not watched in 2 years with a personal rating under 6");
+    
+=======
+    
     }
 
+>>>>>>> parent of 65bd240... Revert "joptionpane to textinputdialog"
     /**
      * @param args the command line arguments
      */
