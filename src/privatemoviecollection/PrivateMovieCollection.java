@@ -31,7 +31,7 @@ public class PrivateMovieCollection extends Application {
         stage.show();
         
 //        wait(10);
-        warningMessage();
+        //warningMessage();
         
         
     }
