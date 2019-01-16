@@ -29,7 +29,15 @@ public class PrivateMovieCollection extends Application {
         
         stage.setScene(scene);
         stage.show();
-    
+        
+//        wait(10);
+        warningMessage();
+        
+        
+    }
+    public void warningMessage() 
+    {
+        JOptionPane.showMessageDialog(null, "Remember to delete movies you have not watched in 2 years with a personal rating under 6");
     }
 
     /**
