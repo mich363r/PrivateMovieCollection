@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -196,7 +197,7 @@ public class MainMovieViewController implements Initializable
     @FXML
     public void addCategory(ActionEvent event)
     {
-        
+        List<Category> nameList = mModel.getAllCategories();
         TextInputDialog dialog = new TextInputDialog ();
         dialog.setTitle("Add new category");
         dialog.setContentText("Enter category name");
@@ -211,6 +212,13 @@ public class MainMovieViewController implements Initializable
             if (catName.equals("") || catName.equals(" "))
             {
                 return;
+            }
+            for (Category DuplicateName : nameList)
+            {
+                if (DuplicateName.getName().toLowerCase().equals(catName.toLowerCase()))
+                {
+                    return;
+                }
             }
             Category newCat = new Category (0, catName);
             mModel.addCategory(newCat);

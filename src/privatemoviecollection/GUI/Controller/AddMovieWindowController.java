@@ -53,6 +53,8 @@ public class AddMovieWindowController implements Initializable {
 
     /**
      * Initializes the controller class.
+     * @param url
+     * @param rb
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,6 +63,8 @@ public class AddMovieWindowController implements Initializable {
 
     /*
     sets the model 
+    
+    @param mModel
     */
     public void setModel(MovieModel mModel) {
         this.mModel = mModel;
@@ -86,7 +90,7 @@ public class AddMovieWindowController implements Initializable {
     }
 
     /**
-     * Cancels add movie window.
+     * Closes the add movie window.
      */
     @FXML
     public void cancelMovie(ActionEvent event) {
@@ -121,7 +125,7 @@ public class AddMovieWindowController implements Initializable {
     @FXML
     private void searchImdbTitle(ActionEvent event) throws IOException
     {
-        if (txtTitle.getLength() == 0)
+        if (txtTitle.getLength() == 0 || txtTitle.getText().equals(" "))
         {
             JOptionPane.showMessageDialog(null, "You have to write a title first","title field is empty", JOptionPane.ERROR_MESSAGE);
             return;
