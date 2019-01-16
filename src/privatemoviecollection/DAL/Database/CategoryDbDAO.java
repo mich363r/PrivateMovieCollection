@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import privatemoviecollection.BE.Category;
 import privatemoviecollection.BE.Movie;
+import privatemoviecollection.DAL.Exception.DALException;
 
 /**
  *
@@ -37,7 +38,7 @@ public class CategoryDbDAO
     adds a category to our database
     @param catToAdd
     */
-    public void addCategory(Category catToAdd)
+    public void addCategory(Category catToAdd) throws DALException
     {
         String name = catToAdd.getName();
         try (Connection con = ds.getConnection())
@@ -49,7 +50,7 @@ public class CategoryDbDAO
 
         } catch (Exception e)
         {
-            e.printStackTrace();
+           throw new DALException("Could not access the database",e);
         }
     }
     
@@ -57,7 +58,7 @@ public class CategoryDbDAO
     deletes a category from our database
     @param catToDelete
     */
-    public void deleteCategory(Category catToDelete)
+    public void deleteCategory(Category catToDelete) throws DALException
     {
         try (Connection con = ds.getConnection())
         {
@@ -71,7 +72,7 @@ public class CategoryDbDAO
 
         } catch (Exception e)
         {
-            e.printStackTrace();
+            throw new DALException("Could not access the database",e);
         }
     }
 
@@ -80,7 +81,7 @@ public class CategoryDbDAO
     @param movieToAdd
     @param chosenCat
     */
-    public void addToCategory(Movie movieToAdd, Category chosenCat)
+    public void addToCategory(Movie movieToAdd, Category chosenCat) throws DALException
     {
 
         try (Connection con = ds.getConnection())
@@ -93,7 +94,7 @@ public class CategoryDbDAO
 
         } catch (Exception e)
         {
-            e.printStackTrace();
+           throw new DALException("Could not access the database",e);
         }
     }
     
@@ -101,7 +102,7 @@ public class CategoryDbDAO
     deletes a movie from our category
     @param movieToDelete
     */
-    public void deleteFromCategory(Movie movieToDelete, Category chosenCategory)
+    public void deleteFromCategory(Movie movieToDelete, Category chosenCategory) throws DALException
     {
         int id = movieToDelete.getId();
         int catId = chosenCategory.getId();
@@ -114,7 +115,7 @@ public class CategoryDbDAO
 
         } catch (Exception e)
         {
-            e.printStackTrace();
+           throw new DALException("Could not access the database",e);
         }
     }
     
@@ -122,7 +123,7 @@ public class CategoryDbDAO
     retrieves all the categories from the database
     and returns them as a list of categories
     */
-    public List<Category> getAllCategories()
+    public List<Category> getAllCategories() throws DALException
     {
         List<Category> catList = new ArrayList<>();
 
@@ -140,7 +141,7 @@ public class CategoryDbDAO
             }
         } catch (Exception e)
         {
-            e.printStackTrace();
+           throw new DALException("Could not access the database",e);
         }
         return catList;
     }
@@ -149,7 +150,7 @@ public class CategoryDbDAO
     retrieves from the database a list of movies within the chosen category
     @param chosenCat the category from which we retrieve the movies
     */
-    public List<Movie> getCategoryMovies(Category chosenCat)
+    public List<Movie> getCategoryMovies(Category chosenCat) throws DALException
     {
         List<Movie> catMovieList = new ArrayList<>();
         try (Connection con = ds.getConnection())
@@ -170,7 +171,7 @@ public class CategoryDbDAO
             }
         } catch (Exception e)
         {
-            e.printStackTrace();
+            throw new DALException("Could not access the database",e);
         }
         return catMovieList;
     }
@@ -178,7 +179,7 @@ public class CategoryDbDAO
     /**
  *  Search for movies in categories
  */
-    public List<Movie> searchMoviesInCat (String input, Category chosenCat)
+    public List<Movie> searchMoviesInCat (String input, Category chosenCat) throws DALException
     {
         List<Movie> searchCatMovie = new ArrayList<>();
         try (Connection con = ds.getConnection())
@@ -202,7 +203,7 @@ public class CategoryDbDAO
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            throw new DALException("Could not access the database",e);
         }
         return searchCatMovie;
     }

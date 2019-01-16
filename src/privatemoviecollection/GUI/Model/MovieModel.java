@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import privatemoviecollection.BE.Category;
 import privatemoviecollection.BE.Movie;
 import privatemoviecollection.BLL.MovieManager;
+import privatemoviecollection.DAL.Exception.DALException;
 
 /**
  *
@@ -28,7 +29,7 @@ public class MovieModel
     /*
     Initiates the lists and creates a new instance of the manager class.
     */
-    public MovieModel() throws IOException, SQLException
+    public MovieModel() throws IOException, SQLException, DALException
     {
         mManager = new MovieManager();
         catMovie = FXCollections.observableArrayList();
@@ -43,7 +44,7 @@ public class MovieModel
     
     @param movieToAdd
     */
-    public void addMovie(Movie movieToAdd) throws SQLException
+    public void addMovie(Movie movieToAdd) throws SQLException, DALException
     {
         mManager.addMovie(movieToAdd);
         movieList.clear();
@@ -55,7 +56,7 @@ public class MovieModel
     
     @param movieToDelete
     */
-    public void deleteMovie(Movie movieToDelete) throws SQLException
+    public void deleteMovie(Movie movieToDelete) throws SQLException, DALException
     {
         mManager.deleteMovie(movieToDelete);
         this.movieList.remove(movieToDelete);
@@ -67,7 +68,7 @@ public class MovieModel
     
     @return movieList
     */
-    public ObservableList<Movie> getAllMovies() throws SQLException
+    public ObservableList<Movie> getAllMovies() throws SQLException, DALException
     {
         List<Movie> tempMovieList = mManager.getAllMovies();
         movieList.clear();
@@ -81,7 +82,7 @@ public class MovieModel
     @param movie
     @return
     */
-    public Movie getMovie(Movie movie)
+    public Movie getMovie(Movie movie) throws DALException
     {
         return mManager.getMovie(movie);
     }
@@ -92,7 +93,7 @@ public class MovieModel
     @param input
     @return 
     */
-    public ObservableList<Movie> searchMovies(String input)
+    public ObservableList<Movie> searchMovies(String input) throws DALException
     {
         return FXCollections.observableArrayList(mManager.searchMovies(input));
     }
@@ -102,7 +103,7 @@ public class MovieModel
     
     @param catToAdd
     */
-    public void addCategory(Category catToAdd)
+    public void addCategory(Category catToAdd) throws DALException
     {
         mManager.addCategory(catToAdd);
         categoryList.add(catToAdd);
@@ -113,7 +114,7 @@ public class MovieModel
     
     @param catToDelete
     */
-    public void deleteCategory(Category catToDelete)
+    public void deleteCategory(Category catToDelete) throws DALException
     {
         mManager.deleteCategory(catToDelete);
         this.categoryList.remove(catToDelete);
@@ -126,7 +127,7 @@ public class MovieModel
     @param movieToAdd
     @param chosenCat
     */
-    public void addToCategory(Movie movieToAdd, Category chosenCat)
+    public void addToCategory(Movie movieToAdd, Category chosenCat) throws DALException
     {
         mManager.addToCategory(movieToAdd, chosenCat);
         catMovie.add(movieToAdd);
@@ -139,7 +140,7 @@ public class MovieModel
     @param movieToDelete
     @param chosenCategory
     */
-    public void deleteFromCategory(Movie movieToDelete, Category chosenCategory)
+    public void deleteFromCategory(Movie movieToDelete, Category chosenCategory) throws DALException
     {
         mManager.deleteFromCategory(movieToDelete, chosenCategory);
         catMovie.remove(movieToDelete);
@@ -150,7 +151,7 @@ public class MovieModel
     
     @return categoryList an observableList with all the categories
     */
-    public ObservableList<Category> getAllCategories()
+    public ObservableList<Category> getAllCategories() throws DALException
     {
         categoryList = FXCollections.observableArrayList(mManager.getAllCategories());
         return categoryList;
@@ -162,7 +163,7 @@ public class MovieModel
     @param movieToRate
     @param personalRating
     */
-    public void addPersonalRating (Movie movieToRate, double personalRating)
+    public void addPersonalRating (Movie movieToRate, double personalRating) throws DALException
     {
         mManager.addPersonalRating(movieToRate, personalRating);
         movieToRate.setPersonalRating(personalRating);   
@@ -173,7 +174,7 @@ public class MovieModel
     
     @param movieToEdit
     */
-    public void setLastviewed (Movie movieToEdit)
+    public void setLastviewed (Movie movieToEdit) throws DALException
     {
         mManager.setLastviewed(movieToEdit);
     }
@@ -184,7 +185,7 @@ public class MovieModel
     @param chosenCat
     @return catMovie a list containing all the movies linked to the chosen category
     */
-    public ObservableList<Movie> getAllMoviesInCategory(Category chosenCat)
+    public ObservableList<Movie> getAllMoviesInCategory(Category chosenCat) throws DALException
     {
           List<Movie> tempMovies = mManager.getAllMoviesInCategory(chosenCat);
         catMovie.clear();
@@ -198,7 +199,7 @@ public class MovieModel
     @param highImdb the roof for the search, in this case 10, based on imdb's rating system
     @return movieList
     */
-    public ObservableList<Movie> searchImdbRating (double lowImdb, double highImdb)
+    public ObservableList<Movie> searchImdbRating (double lowImdb, double highImdb) throws DALException
     {
         movieList.clear();
         movieList.addAll(FXCollections.observableArrayList(mManager.searchImdbRating(lowImdb, highImdb)));
@@ -212,7 +213,7 @@ public class MovieModel
     @param chosenCat the chosen category
     @return catMovie the list containing the result of the search query
     */
-    public ObservableList<Movie> searchMoviesInCat (String input, Category chosenCat)
+    public ObservableList<Movie> searchMoviesInCat (String input, Category chosenCat) throws DALException
     {
         catMovie.clear();
         catMovie.addAll(FXCollections.observableArrayList(mManager.searchMoviesInCat(input, chosenCat)));

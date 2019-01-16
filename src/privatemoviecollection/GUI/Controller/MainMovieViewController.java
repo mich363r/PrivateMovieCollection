@@ -15,8 +15,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,9 +35,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 import privatemoviecollection.BE.Category;
 import privatemoviecollection.BE.Movie;
+import privatemoviecollection.DAL.Exception.DALException;
 import privatemoviecollection.GUI.Model.MovieModel;
 
 /**
@@ -107,9 +105,10 @@ public class MainMovieViewController implements Initializable
             mModel = new MovieModel();
             tbViewMovie.setItems(mModel.getAllMovies());
             tbViewCategory.setItems(mModel.getAllCategories());
-        } catch (IOException | SQLException ex)
+        } catch (IOException | SQLException | DALException ex)
         {
-            Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
+            Alert alert = new Alert(AlertType.ERROR, "Something went wrong either inside the database or with your connection to it");
+            alert.showAndWait();
         }
 
         //populates category table
@@ -142,7 +141,7 @@ public class MainMovieViewController implements Initializable
     the second click will clear the input field.
      */
     @FXML
-    public void handleSearch(ActionEvent event) throws SQLException
+    public void handleSearch(ActionEvent event) throws SQLException, DALException
     {
 
         if (searchDone == false)
@@ -189,7 +188,7 @@ public class MainMovieViewController implements Initializable
     creates a new category if the input is valid
      */
     @FXML
-    public void addCategory(ActionEvent event)
+    public void addCategory(ActionEvent event) throws DALException
     {
         List<Category> nameList = mModel.getAllCategories();
         TextInputDialog dialog = new TextInputDialog();
@@ -248,7 +247,7 @@ public class MainMovieViewController implements Initializable
     Deletes the selected movie
      */
     @FXML
-    public void deleteMovie() throws SQLException
+    public void deleteMovie() throws SQLException, DALException
     {
         if (tbViewMovie.getSelectionModel().isEmpty())
         {
@@ -268,7 +267,7 @@ public class MainMovieViewController implements Initializable
     Deletes the selected category
      */
     @FXML
-    public void deleteCategory(ActionEvent event)
+    public void deleteCategory(ActionEvent event) throws DALException
     {
         if (tbViewCategory.getSelectionModel().isEmpty())
         {
@@ -321,7 +320,7 @@ public class MainMovieViewController implements Initializable
     plays the tableview movie when you click it twice
      */
     @FXML
-    public void clickPlayMovie(MouseEvent event) throws IOException
+    public void clickPlayMovie(MouseEvent event) throws IOException, DALException
     {
         if (!tbViewMovie.getSelectionModel().isEmpty())
         {
@@ -362,7 +361,7 @@ public class MainMovieViewController implements Initializable
     selects which category's items are shown
      */
     @FXML
-    public void selectCat(MouseEvent event) throws SQLException
+    public void selectCat(MouseEvent event) throws SQLException, DALException
     {
         if (!tbViewCategory.getSelectionModel().isEmpty())
         {
@@ -384,7 +383,7 @@ public class MainMovieViewController implements Initializable
     adds selected movie to the selected category
      */
     @FXML
-    public void addToCategory(ActionEvent event)
+    public void addToCategory(ActionEvent event) throws DALException
     {
         if (tbViewMovie.getSelectionModel().getSelectedItem() == null || tbViewCategory.getSelectionModel().getSelectedItem() == null)
         {
@@ -400,7 +399,7 @@ public class MainMovieViewController implements Initializable
     removes the selected movie from the selected category
      */
     @FXML
-    public void deleteFromCategory(ActionEvent event)
+    public void deleteFromCategory(ActionEvent event) throws DALException
     {
         if (tbViewCatMovies.getSelectionModel().isEmpty())
         {
@@ -418,7 +417,7 @@ public class MainMovieViewController implements Initializable
         }
     }
 
-    public void searchRatings(ActionEvent event)
+    public void searchRatings(ActionEvent event) throws DALException
     {
         double highImdb = 10;
         double lowImdb = Double.parseDouble(txtSearch.getText());
@@ -430,7 +429,7 @@ public class MainMovieViewController implements Initializable
     }
 
     @FXML
-    private void playMovieInCategory(MouseEvent event) throws IOException
+    private void playMovieInCategory(MouseEvent event) throws IOException, DALException
     {
         if (!tbViewCatMovies.getSelectionModel().isEmpty())
         {

@@ -16,6 +16,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import privatemoviecollection.BE.Movie;
+import privatemoviecollection.DAL.Exception.DALException;
 
 /**
  *
@@ -39,7 +40,7 @@ public class MovieDbDAO
     @throws SQLServerException
     @throws SQLException
     */
-public void addMovie(Movie movieToAdd) throws SQLServerException, SQLException
+public void addMovie(Movie movieToAdd) throws SQLServerException, SQLException, DALException
 {
     String title = movieToAdd.getTitle();
     String filelink = movieToAdd.getFilelink();
@@ -65,7 +66,7 @@ public void addMovie(Movie movieToAdd) throws SQLServerException, SQLException
     }
     catch (Exception e)
     {
-        e.printStackTrace();
+        throw new DALException("Could not access the database",e);
     }
 }
 
@@ -75,7 +76,7 @@ public void addMovie(Movie movieToAdd) throws SQLServerException, SQLException
     @throws SQLServerException
     @throws SQLException
     */
-public void deleteMovie(Movie movieToDelete) throws SQLServerException, SQLException   
+public void deleteMovie(Movie movieToDelete) throws SQLServerException, SQLException, DALException   
 {
     int id = movieToDelete.getId();
     
@@ -91,7 +92,7 @@ public void deleteMovie(Movie movieToDelete) throws SQLServerException, SQLExcep
     }
     catch (Exception e)
     {
-        e.printStackTrace();
+       throw new DALException("Could not access the database",e);
     }
 }
 
@@ -101,7 +102,7 @@ gets all the movies from the database and returns them as a list of movies
 @throws SQLException
 @return
 */
-public List<Movie> getAllMovies () throws SQLServerException, SQLException
+public List<Movie> getAllMovies () throws SQLServerException, SQLException, DALException
 {
     List<Movie> movieList = new ArrayList<>();
     
@@ -124,7 +125,7 @@ public List<Movie> getAllMovies () throws SQLServerException, SQLException
     }
     catch (Exception e)
     {
-        e.printStackTrace();
+       throw new DALException("Could not access the database",e);
     }
     
     return movieList;
@@ -136,7 +137,7 @@ public List<Movie> getAllMovies () throws SQLServerException, SQLException
 @param id the id of the movie to get
 @return
 */
-public Movie getMovie(int id)
+public Movie getMovie(int id) throws DALException
 {
     Movie wantedMovie = null;
     
@@ -161,7 +162,7 @@ public Movie getMovie(int id)
     } 
     catch (Exception e)
     {
-        e.printStackTrace();
+        throw new DALException("Could not access the database",e);
     }
     
     return wantedMovie;
@@ -172,7 +173,7 @@ searches the database based on the input and returns the result as alist of movi
 @param input the searched query
 @return
 */
-public List<Movie> searchMovies (String input)
+public List<Movie> searchMovies (String input) throws DALException
 {
     List <Movie> movieList = new ArrayList <>();
     try (Connection con = ds.getConnection())
@@ -199,7 +200,7 @@ public List<Movie> searchMovies (String input)
     } 
     catch (Exception e)
     {
-        e.printStackTrace();
+        throw new DALException("Could not access the database",e);
     }
     return movieList;
 }
@@ -214,7 +215,7 @@ searches for movies based on IMDB rating
 @param lowImdb
 @return movieToSearch
 */
-public List<Movie> searchImdbRating (double lowImdb, double highImdb)
+public List<Movie> searchImdbRating (double lowImdb, double highImdb) throws DALException
 {
     List <Movie> movieToSearch = new ArrayList <>();
     double lowRating = lowImdb;
@@ -242,7 +243,7 @@ public List<Movie> searchImdbRating (double lowImdb, double highImdb)
     } 
     catch (Exception e)
     {
-        e.printStackTrace();
+       throw new DALException("Could not access the database",e);
     }
     
     return movieToSearch;
@@ -253,7 +254,7 @@ public List<Movie> searchImdbRating (double lowImdb, double highImdb)
     @param movieToRate
     @param personalRating the input rating
     */
-    public void addPersonalRating (Movie movieToRate, double personalRating)
+    public void addPersonalRating (Movie movieToRate, double personalRating) throws DALException
     {
        
         try (Connection con = ds.getConnection())
@@ -267,7 +268,7 @@ public List<Movie> searchImdbRating (double lowImdb, double highImdb)
         } 
         catch (Exception e)
         {
-            e.printStackTrace();
+           throw new DALException("Could not access the database",e);
         }
     }
     
@@ -275,7 +276,7 @@ public List<Movie> searchImdbRating (double lowImdb, double highImdb)
     converts the date to sql and updates the movie's lastview in the database
     @param movieToEdit
     */
-    public void setLastviewed (Movie movieToEdit)
+    public void setLastviewed (Movie movieToEdit) throws DALException
     {
         java.util.Date dateToConvert = movieToEdit.getLastview();
         java.sql.Date dateConverter = new java.sql.Date(dateToConvert.getTime());
@@ -289,7 +290,7 @@ public List<Movie> searchImdbRating (double lowImdb, double highImdb)
         } 
         catch (Exception e)
         {
-            e.printStackTrace();
+            throw new DALException("Could not access the database",e);
         }
     }
     
