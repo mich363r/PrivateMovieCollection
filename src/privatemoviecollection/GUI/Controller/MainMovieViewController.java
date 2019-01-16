@@ -84,7 +84,7 @@ public class MainMovieViewController implements Initializable
     private TableColumn<Movie, Date> colLastview;
     @FXML
     private TextField txtSearchRatings;
-    
+
     private MovieModel mModel;
     private Category currentCategory;
     private Boolean searchDone;
@@ -96,42 +96,39 @@ public class MainMovieViewController implements Initializable
 
     /*
     Creates a new object of the MovieModel class and populates the tableviews
-    */
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
         alertMessage();
-        
+
         try
         {
             mModel = new MovieModel();
             tbViewMovie.setItems(mModel.getAllMovies());
-            tbViewCategory.setItems(mModel.getAllCategories());  
-        } 
-        catch (IOException | SQLException ex)
+            tbViewCategory.setItems(mModel.getAllCategories());
+        } catch (IOException | SQLException ex)
         {
             Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         //populates category table
         colCat.setCellValueFactory(new PropertyValueFactory<>("name"));
-       
+
         //populates movie table
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colImdbRating.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         colPersonalRating.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
         colLastview.setCellValueFactory(new PropertyValueFactory<>("lastview"));
-        
-        
+
         //populates catmovie table
         colCatTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colCatImdb.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         colCatPersonal.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
-        
-        
+
     }
-    
-    public void alertMessage ()
+
+    public void alertMessage()
     {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
@@ -143,19 +140,18 @@ public class MainMovieViewController implements Initializable
     /*
     sends a search input to the model and inserts the responce into the tableview
     the second click will clear the input field.
-    */
+     */
     @FXML
     public void handleSearch(ActionEvent event) throws SQLException
     {
-        
-        
+
         if (searchDone == false)
         {
             if (txtSearch.getText().length() == 0 && txtSearchRatings.getText().length() != 0)
-            {  
+            {
                 double highImdb = 10;
                 double lowImdb = Double.parseDouble(txtSearchRatings.getText());
-        
+
                 if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
                 {
                     mModel.searchImdbRating(lowImdb, highImdb);
@@ -165,20 +161,17 @@ public class MainMovieViewController implements Initializable
             {
                 String input = txtSearch.getText();
                 tbViewMovie.setItems(mModel.searchMovies(input));
-                
-                
+
                 if (!tbViewCategory.getSelectionModel().isEmpty())
                 {
                     tbViewCatMovies.setItems(mModel.searchMoviesInCat(input, currentCategory));
                 }
             }
-            
-            
+
             searchDone = true;
             btnSearch.setText("Clear");
-        
-        }
-            else if (searchDone == true)
+
+        } else if (searchDone == true)
         {
             if (!tbViewCategory.getSelectionModel().isEmpty())
             {
@@ -191,21 +184,22 @@ public class MainMovieViewController implements Initializable
             txtSearchRatings.clear();
         }
     }
+
     /*
     creates a new category if the input is valid
-    */
+     */
     @FXML
     public void addCategory(ActionEvent event)
     {
         List<Category> nameList = mModel.getAllCategories();
-        TextInputDialog dialog = new TextInputDialog ();
+        TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Add new category");
         dialog.setContentText("Enter category name");
-        
-        Optional <String> result = dialog.showAndWait();
-        
+
+        Optional<String> result = dialog.showAndWait();
+
         String catName = "";
-        
+
         if (result.isPresent())
         {
             catName = result.get();
@@ -217,18 +211,23 @@ public class MainMovieViewController implements Initializable
             {
                 if (DuplicateName.getName().toLowerCase().equals(catName.toLowerCase()))
                 {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Duplicate found, aborting.");
+                    alert.showAndWait();
                     return;
                 }
             }
-            Category newCat = new Category (0, catName);
+            Category newCat = new Category(0, catName);
             mModel.addCategory(newCat);
         }
-        
+
     }
+
     /*
     opens a new window which is then used to add a new movie
     @throws IOException
-    */
+     */
     @FXML
     public void addMovie(ActionEvent event) throws IOException
     {
@@ -246,51 +245,50 @@ public class MainMovieViewController implements Initializable
         stageAddMovie.initOwner(primeStage);
         stageAddMovie.show();
     }
-    
+
     /*
     Deletes the selected movie
-    */
+     */
     @FXML
     public void deleteMovie() throws SQLException
     {
-            if (tbViewMovie.getSelectionModel().isEmpty())
-            {
-                Alert alert = new Alert (AlertType.ERROR, "You have to select a movie to delete", ButtonType.OK);
-                alert.showAndWait();
-            }
-            
-            
-            if (!tbViewMovie.getSelectionModel().isEmpty() )
-            {
-                Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected movie?", ButtonType.YES, ButtonType.NO);
-                alert.showAndWait();
-                mModel.deleteMovie(tbViewMovie.getSelectionModel().getSelectedItem());
-            }      
+        if (tbViewMovie.getSelectionModel().isEmpty())
+        {
+            Alert alert = new Alert(AlertType.ERROR, "You have to select a movie to delete", ButtonType.OK);
+            alert.showAndWait();
+        }
+
+        if (!tbViewMovie.getSelectionModel().isEmpty())
+        {
+            Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected movie?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+            mModel.deleteMovie(tbViewMovie.getSelectionModel().getSelectedItem());
+        }
     }
-    
+
     /*
     Deletes the selected category
-    */
+     */
     @FXML
     public void deleteCategory(ActionEvent event)
-    {   
+    {
         if (tbViewCategory.getSelectionModel().isEmpty())
-            {
-                Alert alert = new Alert (AlertType.ERROR, "You have to select a category to delete", ButtonType.OK);
-                alert.showAndWait();
-            }
-            
-            
-            if (!tbViewCategory.getSelectionModel().isEmpty() )
-            {
-                Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected category?", ButtonType.YES, ButtonType.NO);
-                alert.showAndWait();
-                mModel.deleteCategory(tbViewCategory.getSelectionModel().getSelectedItem());
-            } 
+        {
+            Alert alert = new Alert(AlertType.ERROR, "You have to select a category to delete", ButtonType.OK);
+            alert.showAndWait();
+        }
+
+        if (!tbViewCategory.getSelectionModel().isEmpty())
+        {
+            Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected category?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+            mModel.deleteCategory(tbViewCategory.getSelectionModel().getSelectedItem());
+        }
     }
+
     /*
     adds a personal rating to the selected movie between 1 and 10
-    */
+     */
     @FXML
     public void addPersonalRating(ActionEvent event)
     {
@@ -299,14 +297,13 @@ public class MainMovieViewController implements Initializable
 //            JOptionPane.showMessageDialog(null, "you have to select a movie", "invalid selection", JOptionPane.ERROR_MESSAGE);
 //           return;
 //        }
-        
-        
+
         if (tbViewMovie.getSelectionModel().isEmpty())
         {
-            Alert alert = new Alert (AlertType.ERROR, "You have to select a movie to rate", ButtonType.OK);
+            Alert alert = new Alert(AlertType.ERROR, "You have to select a movie to rate", ButtonType.OK);
             alert.showAndWait();
         }
-        
+
         TextInputDialog p = new TextInputDialog();
 //        double p = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter a rating between 1 - 10", "Enter", JOptionPane.OK_CANCEL_OPTION));
 //        p = Double.parseDouble();
@@ -317,14 +314,14 @@ public class MainMovieViewController implements Initializable
 //        } else
 //        {
 //            JOptionPane.showMessageDialog(null, "You have to enter a number between 1 and 10", "Incorrect number", JOptionPane.ERROR_MESSAGE);
-            Alert alert = new Alert (AlertType.ERROR, "You have to enter a number between 1 and 10", ButtonType.OK);
-            alert.showAndWait();
+        Alert alert = new Alert(AlertType.ERROR, "You have to enter a number between 1 and 10", ButtonType.OK);
+        alert.showAndWait();
 //        }
     }
-    
+
     /*
     plays the tableview movie when you click it twice
-    */
+     */
     @FXML
     public void clickPlayMovie(MouseEvent event) throws IOException
     {
@@ -346,12 +343,10 @@ public class MainMovieViewController implements Initializable
             }
         }
     }
-    
-    
-    
+
     /*
     opens imdb's homepage
-    */
+     */
     @FXML
     public void openImdb(ActionEvent event)
     {
@@ -367,7 +362,7 @@ public class MainMovieViewController implements Initializable
 
     /*
     selects which category's items are shown
-    */
+     */
     @FXML
     public void selectCat(MouseEvent event) throws SQLException
     {
@@ -386,16 +381,16 @@ public class MainMovieViewController implements Initializable
             }
         }
     }
-    
+
     /*
     adds selected movie to the selected category
-    */
+     */
     @FXML
     public void addToCategory(ActionEvent event)
     {
         if (tbViewMovie.getSelectionModel().getSelectedItem() == null || tbViewCategory.getSelectionModel().getSelectedItem() == null)
         {
-            Alert alert = new Alert (AlertType.ERROR, "You have to select both a movie to add, and a category to add it to.", ButtonType.OK);
+            Alert alert = new Alert(AlertType.ERROR, "You have to select both a movie to add, and a category to add it to.", ButtonType.OK);
             alert.showAndWait();
         }
         Movie selectedMovie = tbViewMovie.getSelectionModel().getSelectedItem();
@@ -405,20 +400,20 @@ public class MainMovieViewController implements Initializable
 
     /*
     removes the selected movie from the selected category
-    */
+     */
     @FXML
     public void deleteFromCategory(ActionEvent event)
     {
         if (tbViewCatMovies.getSelectionModel().isEmpty())
         {
-            Alert alert = new Alert (AlertType.ERROR, "You have to select a movie from the list of category movies to delete", ButtonType.OK);
+            Alert alert = new Alert(AlertType.ERROR, "You have to select a movie from the list of category movies to delete", ButtonType.OK);
             alert.showAndWait();
         }
         if (!tbViewCatMovies.getSelectionModel().isEmpty())
         {
-            Alert alert = new Alert (AlertType.CONFIRMATION, "Do you want to delete this movie from this category", ButtonType.YES, ButtonType.NO);
+            Alert alert = new Alert(AlertType.CONFIRMATION, "Do you want to delete this movie from this category", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
-            
+
             mModel.deleteFromCategory(tbViewCatMovies.getSelectionModel().getSelectedItem(), tbViewCategory.getSelectionModel().getSelectedItem());
             tbViewCatMovies.getItems().clear();
             tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory)); // gets the new list of songs minus the deleted ones.
@@ -429,7 +424,7 @@ public class MainMovieViewController implements Initializable
     {
         double highImdb = 10;
         double lowImdb = Double.parseDouble(txtSearch.getText());
-        
+
         if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
         {
             mModel.searchImdbRating(lowImdb, highImdb);
