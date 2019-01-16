@@ -105,7 +105,8 @@ public class MainMovieViewController implements Initializable
             mModel = new MovieModel();
             tbViewMovie.setItems(mModel.getAllMovies());
             tbViewCategory.setItems(mModel.getAllCategories());
-        } catch (IOException | SQLException | DALException ex)
+        } 
+        catch (IOException | SQLException | DALException ex)
         {
             Alert alert = new Alert(AlertType.ERROR, "Something went wrong either inside the database or with your connection to it");
             alert.showAndWait();
@@ -156,6 +157,7 @@ public class MainMovieViewController implements Initializable
                     mModel.searchImdbRating(lowImdb, highImdb);
                 }
             }
+            
             if (txtSearchRatings.getText().length() == 0)
             {
                 String input = txtSearch.getText();
@@ -170,7 +172,8 @@ public class MainMovieViewController implements Initializable
             searchDone = true;
             btnSearch.setText("Clear");
 
-        } else if (searchDone == true)
+        } 
+        else if (searchDone == true)
         {
             if (!tbViewCategory.getSelectionModel().isEmpty())
             {
@@ -202,6 +205,7 @@ public class MainMovieViewController implements Initializable
         if (result.isPresent())
         {
             catName = result.get();
+            
             if (catName.equals("") || catName.equals(" "))
             {
                 return;
@@ -215,7 +219,8 @@ public class MainMovieViewController implements Initializable
                     return;
                 }
             }
-           Category newCat = new Category(0, catName);
+            
+            Category newCat = new Category(0, catName);
             mModel.addCategory(newCat);
             tbViewCategory.getSelectionModel().clearSelection();
             tbViewCategory.setItems(mModel.getAllCategories());
@@ -261,6 +266,7 @@ public class MainMovieViewController implements Initializable
         
         Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected movie?", ButtonType.YES, ButtonType.NO);
         Optional<ButtonType> result = alert.showAndWait();
+        
         if (result.get() == ButtonType.YES)
         {
             mModel.deleteMovie(tbViewMovie.getSelectionModel().getSelectedItem());
@@ -331,7 +337,6 @@ public class MainMovieViewController implements Initializable
                 alert.showAndWait();
         
             }
-            
         } 
     }
 
@@ -370,7 +375,8 @@ public class MainMovieViewController implements Initializable
         {
             String url = "https://www.imdb.com/";
             Desktop.getDesktop().browse(URI.create(url));
-        } catch (IOException e)
+        } 
+        catch (IOException e)
         {
             e.printStackTrace();
         }
