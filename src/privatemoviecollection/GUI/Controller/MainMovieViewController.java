@@ -25,6 +25,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -66,15 +67,10 @@ public class MainMovieViewController implements Initializable
     private TextField txtSearch;
     @FXML
     private Button btnAddMovie;
-
-    private Boolean searchDone;
     @FXML
     private AnchorPane rootPane2;
     @FXML
     private Button btnSearch;
-
-    private MovieModel mModel;
-    private Category currentCategory;
     @FXML
     private TableView<Movie> tbViewCatMovies;
     @FXML
@@ -89,6 +85,10 @@ public class MainMovieViewController implements Initializable
     private TableColumn<Movie, Date> colLastview;
     @FXML
     private TextField txtSearchRatings;
+    
+    private MovieModel mModel;
+    private Category currentCategory;
+    private Boolean searchDone;
 
     public MainMovieViewController()
     {
@@ -248,16 +248,19 @@ public class MainMovieViewController implements Initializable
     @FXML
     public void deleteMovie() throws SQLException
     {
-        if (tbViewMovie.getSelectionModel().isEmpty())
-        {
-            JOptionPane.showMessageDialog(null, "You have to select a movie to delete", "Invalid selection", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this movie?", "Delete", JOptionPane.YES_NO_OPTION);
-        if (p == 0)
-        {
-            mModel.deleteMovie(tbViewMovie.getSelectionModel().getSelectedItem());
-        }
+            if (tbViewMovie.getSelectionModel().isEmpty())
+            {
+                Alert alert = new Alert (AlertType.CONFIRMATION, "You have to select a movie to delete", ButtonType.OK);
+                alert.showAndWait();
+            }
+            
+            
+            if (!tbViewMovie.getSelectionModel().isEmpty() )
+            {
+                Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected movie?", ButtonType.YES, ButtonType.NO);
+                alert.showAndWait();
+                mModel.deleteMovie(tbViewMovie.getSelectionModel().getSelectedItem());
+            }      
     }
     
     /*
@@ -265,18 +268,20 @@ public class MainMovieViewController implements Initializable
     */
     @FXML
     public void deleteCategory(ActionEvent event)
-    {
-        if (tbViewCategory.getSelectionModel().getSelectedItem() == null)
-        {
-            JOptionPane.showMessageDialog(null, "You have to select a category to delete");
-            return;
-        }
-        int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this category?", "Delete", JOptionPane.YES_NO_OPTION);
-
-        if (p == 0)
-        {
-            mModel.deleteCategory(tbViewCategory.getSelectionModel().getSelectedItem());
-        }
+    {   
+        if (tbViewCategory.getSelectionModel().isEmpty())
+            {
+                Alert alert = new Alert (AlertType.CONFIRMATION, "You have to select a category to delete", ButtonType.OK);
+                alert.showAndWait();
+            }
+            
+            
+            if (!tbViewCategory.getSelectionModel().isEmpty() )
+            {
+                Alert alert = new Alert(AlertType.CONFIRMATION, "Delete selected category?", ButtonType.YES, ButtonType.NO);
+                alert.showAndWait();
+                mModel.deleteCategory(tbViewCategory.getSelectionModel().getSelectedItem());
+            } 
     }
     /*
     adds a personal rating to the selected movie between 1 and 10

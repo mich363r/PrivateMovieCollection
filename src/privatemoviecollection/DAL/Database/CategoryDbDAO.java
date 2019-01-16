@@ -61,6 +61,10 @@ public class CategoryDbDAO
     {
         try (Connection con = ds.getConnection())
         {
+            PreparedStatement pstmt1 = con.prepareStatement("DELETE FROM CatMovie WHERE categoryId = (?)");
+            pstmt1.setInt(1, catToDelete.getId());
+            pstmt1.execute();
+                    
             PreparedStatement pstmt = con.prepareStatement("DELETE FROM Category WHERE id = (?)");
             pstmt.setInt(1, catToDelete.getId());
             pstmt.execute();
