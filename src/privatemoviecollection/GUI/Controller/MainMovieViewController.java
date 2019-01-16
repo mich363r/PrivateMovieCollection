@@ -202,14 +202,6 @@ public class MainMovieViewController implements Initializable
     @FXML
     public void addCategory(ActionEvent event)
     {
-
-//        String catName = JOptionPane.showInputDialog(null, "Category name", "add new category", JOptionPane.OK_OPTION);
-//        Category newCat = new Category(0, catName);
-//        if (catName == null || catName.equals(""))
-//        {
-//            return;
-//        }
-//        mModel.addCategory(newCat);
         
         TextInputDialog dialog = new TextInputDialog ();
         dialog.setTitle("Add new category");
