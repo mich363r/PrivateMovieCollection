@@ -15,6 +15,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,10 +25,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
@@ -85,7 +89,7 @@ public class MainMovieViewController implements Initializable
     @FXML
     private TableColumn<Movie, String> colCatPersonal;
     @FXML
-    private TableColumn<Movie, String> colLastview;
+    private TableColumn<Movie, Date> colLastview;
     @FXML
     private TextField txtSearchRatings;
 
@@ -100,12 +104,15 @@ public class MainMovieViewController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
+        alertMessage();
+        
         try
         {
             mModel = new MovieModel();
             tbViewMovie.setItems(mModel.getAllMovies());
-            tbViewCategory.setItems(mModel.getAllCategories());
-        } catch (IOException | SQLException ex)
+            tbViewCategory.setItems(mModel.getAllCategories());  
+        } 
+        catch (IOException | SQLException ex)
         {
             Logger.getLogger(MainMovieViewController.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -124,7 +131,18 @@ public class MainMovieViewController implements Initializable
         colCatTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
         colCatImdb.setCellValueFactory(new PropertyValueFactory<>("imdbRating"));
         colCatPersonal.setCellValueFactory(new PropertyValueFactory<>("personalRating"));
+        
+        
+    }
+    
+    public void alertMessage ()
+    {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText("Remember to delete movies you have not watched in 2 years with a personal rating under 6");
 
+        alert.showAndWait();
     }
 
     /*
@@ -187,13 +205,33 @@ public class MainMovieViewController implements Initializable
     public void addCategory(ActionEvent event)
     {
 
-        String catName = JOptionPane.showInputDialog(null, "Category name", "add new category", JOptionPane.OK_OPTION);
-        Category newCat = new Category(0, catName);
-        if (catName == null || catName.equals(""))
+//        String catName = JOptionPane.showInputDialog(null, "Category name", "add new category", JOptionPane.OK_OPTION);
+//        Category newCat = new Category(0, catName);
+//        if (catName == null || catName.equals(""))
+//        {
+//            return;
+//        }
+//        mModel.addCategory(newCat);
+        
+        TextInputDialog dialog = new TextInputDialog ();
+        dialog.setTitle("Add new category");
+        dialog.setContentText("Enter category name");
+        
+        Optional <String> result = dialog.showAndWait();
+        
+        String catName = "";
+        
+        if (result.isPresent())
         {
-            return;
+            catName = result.get();
+            if (catName.equals("") || catName.equals(" "))
+            {
+                return;
+            }
+            Category newCat = new Category (0, catName);
+            mModel.addCategory(newCat);
         }
-        mModel.addCategory(newCat);
+        
     }
     /*
     opens a new window which is then used to add a new movie
