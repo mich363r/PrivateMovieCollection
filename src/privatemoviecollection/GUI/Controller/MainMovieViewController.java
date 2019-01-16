@@ -314,6 +314,8 @@ public class MainMovieViewController implements Initializable
         dialog.setContentText("Enter a rating between 1 - 10");
         
         Optional <String> s = dialog.showAndWait();
+        
+        
         if (s.isPresent())
         {
             double p = Double.parseDouble(s.get());
@@ -322,14 +324,15 @@ public class MainMovieViewController implements Initializable
             {
                 mModel.addPersonalRating(tbViewMovie.getSelectionModel().getSelectedItem(), p);
             }
-        }
+            
+            if (p > 10)
+            {
+                Alert alert = new Alert(AlertType.ERROR, "You have to enter a number between 1 and 10", ButtonType.OK);
+                alert.showAndWait();
         
-        double p = Double.parseDouble(s.get());
-        if (p > 10)
-        {
-        Alert alert = new Alert(AlertType.ERROR, "You have to enter a number between 1 and 10", ButtonType.OK);
-        alert.showAndWait();
-        }
+            }
+            
+        } 
     }
 
     /*
