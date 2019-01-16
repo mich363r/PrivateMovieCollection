@@ -74,8 +74,6 @@ public class MainMovieViewController implements Initializable
     @FXML
     private TableView<Movie> tbViewCatMovies;
     @FXML
-    private Button deleteFromCategory;
-    @FXML
     private TableColumn<Movie, String> colCatTitle;
     @FXML
     private TableColumn<Movie, String> colCatImdb;
@@ -136,7 +134,6 @@ public class MainMovieViewController implements Initializable
     {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
-        alert.setHeaderText(null);
         alert.setContentText("Remember to delete movies you have not watched in 2 years with a personal rating under 6");
 
         alert.showAndWait();
@@ -250,7 +247,7 @@ public class MainMovieViewController implements Initializable
     {
             if (tbViewMovie.getSelectionModel().isEmpty())
             {
-                Alert alert = new Alert (AlertType.CONFIRMATION, "You have to select a movie to delete", ButtonType.OK);
+                Alert alert = new Alert (AlertType.ERROR, "You have to select a movie to delete", ButtonType.OK);
                 alert.showAndWait();
             }
             
@@ -271,7 +268,7 @@ public class MainMovieViewController implements Initializable
     {   
         if (tbViewCategory.getSelectionModel().isEmpty())
             {
-                Alert alert = new Alert (AlertType.CONFIRMATION, "You have to select a category to delete", ButtonType.OK);
+                Alert alert = new Alert (AlertType.ERROR, "You have to select a category to delete", ButtonType.OK);
                 alert.showAndWait();
             }
             
@@ -289,20 +286,32 @@ public class MainMovieViewController implements Initializable
     @FXML
     public void addPersonalRating(ActionEvent event)
     {
+//        if (tbViewMovie.getSelectionModel().isEmpty())
+//        {
+//            JOptionPane.showMessageDialog(null, "you have to select a movie", "invalid selection", JOptionPane.ERROR_MESSAGE);
+//           return;
+//        }
+        
+        
         if (tbViewMovie.getSelectionModel().isEmpty())
         {
-            JOptionPane.showMessageDialog(null, "you have to select a movie", "invalid selection", JOptionPane.ERROR_MESSAGE);
-           return;
+            Alert alert = new Alert (AlertType.ERROR, "You have to select a movie to rate", ButtonType.OK);
+            alert.showAndWait();
         }
-        double p = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter a rating between 1 - 10", "Enter", JOptionPane.OK_CANCEL_OPTION));
-
-        if (p >= 1 && p <= 10)
-        {
-            mModel.addPersonalRating(tbViewMovie.getSelectionModel().getSelectedItem(), p);
-        } else
-        {
-            JOptionPane.showMessageDialog(null, "You have to enter a number between 1 and 10", "Incorrect number", JOptionPane.ERROR_MESSAGE);
-        }
+        
+        TextInputDialog p = new TextInputDialog();
+//        double p = Double.parseDouble(JOptionPane.showInputDialog(null, "Enter a rating between 1 - 10", "Enter", JOptionPane.OK_CANCEL_OPTION));
+//        p = Double.parseDouble();
+//        
+//        if (p >= 1 && p <= 10)
+//        {
+//            mModel.addPersonalRating(tbViewMovie.getSelectionModel().getSelectedItem(), p);
+//        } else
+//        {
+//            JOptionPane.showMessageDialog(null, "You have to enter a number between 1 and 10", "Incorrect number", JOptionPane.ERROR_MESSAGE);
+            Alert alert = new Alert (AlertType.ERROR, "You have to enter a number between 1 and 10", ButtonType.OK);
+            alert.showAndWait();
+//        }
     }
     
     /*
@@ -378,8 +387,8 @@ public class MainMovieViewController implements Initializable
     {
         if (tbViewMovie.getSelectionModel().getSelectedItem() == null || tbViewCategory.getSelectionModel().getSelectedItem() == null)
         {
-            JOptionPane.showMessageDialog(null, "You have to select both a movie to add, and a category to add it to.", "Illegal selection", JOptionPane.ERROR_MESSAGE);
-            return;
+            Alert alert = new Alert (AlertType.ERROR, "You have to select both a movie to add, and a category to add it to.", ButtonType.OK);
+            alert.showAndWait();
         }
         Movie selectedMovie = tbViewMovie.getSelectionModel().getSelectedItem();
         Category selectedCat = tbViewCategory.getSelectionModel().getSelectedItem();
@@ -392,17 +401,19 @@ public class MainMovieViewController implements Initializable
     @FXML
     public void deleteFromCategory(ActionEvent event)
     {
-        if (tbViewCatMovies.getSelectionModel().getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "You have to select a movie from the list of category movies to delete", "Illegal selection", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        int p = JOptionPane.showConfirmDialog(null, "Do you want to delete this movie from this category", "Delete", JOptionPane.YES_NO_OPTION);
-
-        if (p == 0)
+        if (tbViewCatMovies.getSelectionModel().isEmpty())
         {
+            Alert alert = new Alert (AlertType.ERROR, "You have to select a movie from the list of category movies to delete", ButtonType.OK);
+            alert.showAndWait();
+        }
+        if (!tbViewCatMovies.getSelectionModel().isEmpty())
+        {
+            Alert alert = new Alert (AlertType.CONFIRMATION, "Do you want to delete this movie from this category", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+            
             mModel.deleteFromCategory(tbViewCatMovies.getSelectionModel().getSelectedItem(), tbViewCategory.getSelectionModel().getSelectedItem());
             tbViewCatMovies.getItems().clear();
-            tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory)); // gets the new list of songs minus the deleted ones
+            tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory)); // gets the new list of songs minus the deleted ones.
         }
     }
 
