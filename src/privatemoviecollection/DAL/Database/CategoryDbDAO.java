@@ -25,19 +25,21 @@ public class CategoryDbDAO
 {
 
     DbConnectionProvider ds;
-    
+
     /*
     this constructor establishes the connection to our database
-    */
+    @throws IOException
+     */
     public CategoryDbDAO() throws IOException
     {
         ds = new DbConnectionProvider();
     }
-    
+
     /*
     adds a category to our database
     @param catToAdd
-    */
+    @throws DALException
+     */
     public void addCategory(Category catToAdd) throws DALException
     {
         String name = catToAdd.getName();
@@ -50,14 +52,15 @@ public class CategoryDbDAO
 
         } catch (Exception e)
         {
-           throw new DALException("Could not access the database",e);
+            throw new DALException("Could not access the database", e);
         }
     }
-    
+
     /*
     deletes a category from our database
     @param catToDelete
-    */
+    @throws DALException
+     */
     public void deleteCategory(Category catToDelete) throws DALException
     {
         try (Connection con = ds.getConnection())
@@ -65,14 +68,14 @@ public class CategoryDbDAO
             PreparedStatement pstmt1 = con.prepareStatement("DELETE FROM CatMovie WHERE categoryId = (?)");
             pstmt1.setInt(1, catToDelete.getId());
             pstmt1.execute();
-                    
+
             PreparedStatement pstmt = con.prepareStatement("DELETE FROM Category WHERE id = (?)");
             pstmt.setInt(1, catToDelete.getId());
             pstmt.execute();
 
         } catch (Exception e)
         {
-            throw new DALException("Could not access the database",e);
+            throw new DALException("Could not access the database", e);
         }
     }
 
@@ -80,7 +83,8 @@ public class CategoryDbDAO
     adds a movie to our chosen category in the database.
     @param movieToAdd
     @param chosenCat
-    */
+    @throws DALException
+     */
     public void addToCategory(Movie movieToAdd, Category chosenCat) throws DALException
     {
 
@@ -94,14 +98,15 @@ public class CategoryDbDAO
 
         } catch (Exception e)
         {
-           throw new DALException("Could not access the database",e);
+            throw new DALException("Could not access the database", e);
         }
     }
-    
+
     /*
     deletes a movie from our category
     @param movieToDelete
-    */
+    @throws DALException
+     */
     public void deleteFromCategory(Movie movieToDelete, Category chosenCategory) throws DALException
     {
         int id = movieToDelete.getId();
@@ -115,14 +120,17 @@ public class CategoryDbDAO
 
         } catch (Exception e)
         {
-           throw new DALException("Could not access the database",e);
+            throw new DALException("Could not access the database", e);
         }
     }
-    
+
     /*
     retrieves all the categories from the database
     and returns them as a list of categories
-    */
+    
+    @return
+    @throws DALException
+     */
     public List<Category> getAllCategories() throws DALException
     {
         List<Category> catList = new ArrayList<>();
@@ -141,15 +149,18 @@ public class CategoryDbDAO
             }
         } catch (Exception e)
         {
-           throw new DALException("Could not access the database",e);
+            throw new DALException("Could not access the database", e);
         }
         return catList;
     }
-    
+
     /*
     retrieves from the database a list of movies within the chosen category
+    
     @param chosenCat the category from which we retrieve the movies
-    */
+    @return
+    @throws DALException
+     */
     public List<Movie> getCategoryMovies(Category chosenCat) throws DALException
     {
         List<Movie> catMovieList = new ArrayList<>();
@@ -167,19 +178,25 @@ public class CategoryDbDAO
                 String filelink = rs.getString("filelink");
                 Date lastview = rs.getDate("lastview");
 
-                catMovieList.add(new Movie(id, title, imdbRating, personalRating,filelink,lastview));
+                catMovieList.add(new Movie(id, title, imdbRating, personalRating, filelink, lastview));
             }
         } catch (Exception e)
         {
-            throw new DALException("Could not access the database",e);
+            throw new DALException("Could not access the database", e);
         }
         return catMovieList;
     }
-    
-    /**
- *  Search for movies in categories
- */
-    public List<Movie> searchMoviesInCat (String input, Category chosenCat) throws DALException
+
+    /*
+      Search for movies in categories
+      
+      @param input
+      @param chosenCat
+      @return 
+      @throws DALException
+      
+     */
+    public List<Movie> searchMoviesInCat(String input, Category chosenCat) throws DALException
     {
         List<Movie> searchCatMovie = new ArrayList<>();
         try (Connection con = ds.getConnection())
@@ -188,7 +205,7 @@ public class CategoryDbDAO
             pstmt.setString(1, "%" + input + "%");
             pstmt.setInt(2, chosenCat.getId());
             ResultSet rs = pstmt.executeQuery();
-            
+
             while (rs.next())
             {
                 int id = rs.getInt("id");
@@ -198,14 +215,12 @@ public class CategoryDbDAO
                 String filelink = rs.getString("filelink");
                 Date lastview = rs.getDate("lastview");
 
-                searchCatMovie.add(new Movie(id, title, imdbRating, personalRating,filelink,lastview));
+                searchCatMovie.add(new Movie(id, title, imdbRating, personalRating, filelink, lastview));
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
-            throw new DALException("Could not access the database",e);
+            throw new DALException("Could not access the database", e);
         }
         return searchCatMovie;
     }
 }
-
