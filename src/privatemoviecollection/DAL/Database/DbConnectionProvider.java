@@ -18,7 +18,7 @@ import java.util.Properties;
  */
 public class DbConnectionProvider
 {
-    private static final String PROP_FILE = "Database_Settings.txt";
+    private static final String PROP_FILE = "Database_Settings.txt"; //the file containing the required info for the database
     private final SQLServerDataSource ds;
 
     /*
