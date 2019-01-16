@@ -211,9 +211,7 @@ public class MainMovieViewController implements Initializable
             {
                 if (DuplicateName.getName().toLowerCase().equals(catName.toLowerCase()))
                 {
-                    Alert alert = new Alert(AlertType.ERROR);
-                    alert.setTitle("Error");
-                    alert.setContentText("Duplicate found, aborting.");
+                    Alert alert = new Alert(AlertType.ERROR, "Duplicate found, aborting");                  
                     alert.showAndWait();
                     return;
                 }
