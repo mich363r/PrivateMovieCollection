@@ -99,6 +99,7 @@ public void deleteMovie(Movie movieToDelete) throws SQLServerException, SQLExcep
 gets all the movies from the database and returns them as a list of movies
 @throws SQLServerException
 @throws SQLException
+@return
 */
 public List<Movie> getAllMovies () throws SQLServerException, SQLException
 {
@@ -131,7 +132,9 @@ public List<Movie> getAllMovies () throws SQLServerException, SQLException
 
 /*
  gets a movie from the database by matching the id
+
 @param id the id of the movie to get
+@return
 */
 public Movie getMovie(int id)
 {
@@ -165,7 +168,9 @@ public Movie getMovie(int id)
 }
 /*
 searches the database based on the input and returns the result as alist of movies
+
 @param input the searched query
+@return
 */
 public List<Movie> searchMovies (String input)
 {
@@ -206,8 +211,8 @@ public List<Movie> searchMovies (String input)
 /*
 searches for movies based on IMDB rating
 @param highImdb
-@param  lowImdb
-@return List<Movie>
+@param lowImdb
+@return movieToSearch
 */
 public List<Movie> searchImdbRating (double lowImdb, double highImdb)
 {
@@ -245,7 +250,7 @@ public List<Movie> searchImdbRating (double lowImdb, double highImdb)
 
     /*
     adds a personal rating to a movie
-    @param  movieToRate
+    @param movieToRate
     @param personalRating the input rating
     */
     public void addPersonalRating (Movie movieToRate, double personalRating)
