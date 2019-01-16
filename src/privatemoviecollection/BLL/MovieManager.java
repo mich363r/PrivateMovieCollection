@@ -12,6 +12,7 @@ import privatemoviecollection.BE.Category;
 import privatemoviecollection.BE.Movie;
 import privatemoviecollection.DAL.Database.CategoryDbDAO;
 import privatemoviecollection.DAL.Database.MovieDbDAO;
+import privatemoviecollection.DAL.Exception.DALException;
 
 /**
  *
@@ -35,7 +36,7 @@ public class MovieManager
     tells the movie data access object to add a new movie to the database
     @param movieToAdd the movie we want added
     */
-    public void addMovie (Movie movieToAdd) throws SQLException
+    public void addMovie (Movie movieToAdd) throws SQLException, DALException
     {
         mDbDAO.addMovie(movieToAdd);
     }
@@ -44,7 +45,7 @@ public class MovieManager
     tells the movie data access object to delete a movie from the database.
     @param movieToDelete the movie we want to delete
     */
-    public void deleteMovie (Movie movieToDelete) throws SQLException
+    public void deleteMovie (Movie movieToDelete) throws SQLException, DALException
     {
         mDbDAO.deleteMovie(movieToDelete);
     }
@@ -53,7 +54,7 @@ public class MovieManager
     tells the movie data access object to retrieve all the movies in the database
     and then returns this information as a List
     */
-    public List<Movie> getAllMovies () throws SQLException
+    public List<Movie> getAllMovies () throws SQLException, DALException
     {
         return mDbDAO.getAllMovies();
     }
@@ -62,7 +63,7 @@ public class MovieManager
     tells the movie data access object to retrieve a specific movie in the database
     @param movie the wanted movie
     */
-    public Movie getMovie (Movie movie)
+    public Movie getMovie (Movie movie) throws DALException
     {
         return mDbDAO.getMovie(movie.getId());
     }
@@ -71,7 +72,7 @@ public class MovieManager
     tells the MovieDbDAO class to run the search method and then returns the result
     @param input the search query
     */
-    public List<Movie> searchMovies (String input)
+    public List<Movie> searchMovies (String input) throws DALException
     {
         return mDbDAO.searchMovies(input);
     }
@@ -80,7 +81,7 @@ public class MovieManager
     tells the CategoryDbDAO class to add a category to the database
     @param catToAdd the category we are adding to the database
     */
-    public void addCategory(Category catToAdd)
+    public void addCategory(Category catToAdd) throws DALException
     {
         cDbDAO.addCategory(catToAdd);
     }
@@ -89,7 +90,7 @@ public class MovieManager
     tells the CategoryDbDAO class to remove a category from the database
     @param catToDelete the category we want deleted
     */
-    public void deleteCategory(Category catToDelete)
+    public void deleteCategory(Category catToDelete) throws DALException
     {
         cDbDAO.deleteCategory(catToDelete);
     }
@@ -99,7 +100,7 @@ public class MovieManager
     @param movieToAdd the movie want we want added
     @param chosenCat the category we want to add to
     */
-    public void addToCategory (Movie movieToAdd, Category chosenCat)
+    public void addToCategory (Movie movieToAdd, Category chosenCat) throws DALException
     {
         cDbDAO.addToCategory(movieToAdd, chosenCat);
     }
@@ -108,7 +109,7 @@ public class MovieManager
     tells the CategoryDbDAO class to delete a movie from a category
     @param movieToDelete the movie we want removed
     */
-    public void deleteFromCategory(Movie movieToDelete, Category chosenCategory)
+    public void deleteFromCategory(Movie movieToDelete, Category chosenCategory) throws DALException
     {
         cDbDAO.deleteFromCategory(movieToDelete, chosenCategory);
     }
@@ -116,7 +117,7 @@ public class MovieManager
     /*
     tells the CategoryDbDAO class to retrieve all categories and then returns the list
     */
-    public List<Category> getAllCategories ()
+    public List<Category> getAllCategories () throws DALException
     {
         return cDbDAO.getAllCategories();
     }
@@ -126,7 +127,7 @@ public class MovieManager
     @param movieToRate the movie we want rated
     @param personalRating the input rating to add
     */
-    public void addPersonalRating (Movie movieToRate, double personalRating)
+    public void addPersonalRating (Movie movieToRate, double personalRating) throws DALException
     {
         mDbDAO.addPersonalRating(movieToRate, personalRating);
     }
@@ -135,7 +136,7 @@ public class MovieManager
     tells the MovieDbDAO class to set the last view date of the chosen movie
     @param movieToEdit
     */
-    public void setLastviewed (Movie movieToEdit)
+    public void setLastviewed (Movie movieToEdit) throws DALException
     {
         mDbDAO.setLastviewed(movieToEdit);
     }
@@ -143,17 +144,17 @@ public class MovieManager
     /*
     tells the MovieDbDAO class to get all the movies within the chosen category
     */
-    public List<Movie> getAllMoviesInCategory(Category chosenCat)
+    public List<Movie> getAllMoviesInCategory(Category chosenCat) throws DALException
     {
        return cDbDAO.getCategoryMovies(chosenCat);
     }
     
-    public List<Movie> searchImdbRating (double lowImdb, double highImdb)
+    public List<Movie> searchImdbRating (double lowImdb, double highImdb) throws DALException
     {
         return mDbDAO.searchImdbRating(lowImdb, highImdb);
     }
     
-    public List<Movie> searchMoviesInCat (String input, Category chosenCat)
+    public List<Movie> searchMoviesInCat (String input, Category chosenCat) throws DALException
     {
         return cDbDAO.searchMoviesInCat(input, chosenCat);
     }

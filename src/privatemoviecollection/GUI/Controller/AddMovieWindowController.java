@@ -23,6 +23,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javax.swing.JOptionPane;
 import privatemoviecollection.BE.Movie;
+import privatemoviecollection.DAL.Exception.DALException;
 import privatemoviecollection.GUI.Model.MovieModel;
 
 /**
@@ -74,7 +75,7 @@ public class AddMovieWindowController implements Initializable {
     takes the input from the textfields and adds a movie based on said input
     */
     @FXML
-    public void saveMovie(ActionEvent event) throws SQLException {
+    public void saveMovie(ActionEvent event) throws SQLException, DALException {
         Stage primeStage = (Stage) btnSaveMovie.getScene().getWindow();
 
         String title = this.txtTitle.getText();
