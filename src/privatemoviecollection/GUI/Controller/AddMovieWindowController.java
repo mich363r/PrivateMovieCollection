@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
@@ -138,10 +139,11 @@ public class AddMovieWindowController implements Initializable {
     {
         if (txtTitle.getLength() == 0 || txtTitle.getText().equals(" "))
         {
-            JOptionPane.showMessageDialog(null, "You have to write a title first","title field is empty", JOptionPane.ERROR_MESSAGE);
+            Alert alert = new Alert (AlertType.ERROR, "You have to write a title first", ButtonType.OK);
+            alert.showAndWait();
             return;
         }
-            String url = "https://www.imdb.com/find?ref_=nv_sr_fn&q=" + txtTitle.getText();
+            String url = "https://www.imdb.com/find?ref_=nv_sr_fn&q=" + txtTitle.getText().replace(" ", "+");
             Desktop.getDesktop().browse(URI.create(url));
     
     }
