@@ -24,7 +24,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 import privatemoviecollection.BE.Movie;
 import privatemoviecollection.DAL.Exception.DALException;
 import privatemoviecollection.GUI.Model.MovieModel;
@@ -50,11 +49,10 @@ public class AddMovieWindowController implements Initializable {
     private Button btnCancelMovie;
     @FXML
     private Button btnSaveMovie;
-    
-    MovieModel mModel;
     @FXML
-    private Button btnSearchImdb;
-
+//    private Button btnSearchImdb;
+    
+        MovieModel mModel;
     /**
      * Initializes the controller class.
      * @param url
@@ -76,6 +74,10 @@ public class AddMovieWindowController implements Initializable {
     
     /*
     takes the input from the textfields and adds a movie based on said input
+    
+    @param event
+    @throws SQLException
+    @throws DALException
     */
     @FXML
     public void saveMovie(ActionEvent event) throws SQLException, DALException {
@@ -101,8 +103,9 @@ public class AddMovieWindowController implements Initializable {
         
     }
 
-    /**
-     * Closes the add movie window.
+    /*
+      Closes the add movie window.
+      *param event
      */
     @FXML
     public void cancelMovie(ActionEvent event) {
@@ -112,6 +115,8 @@ public class AddMovieWindowController implements Initializable {
     
     /*
     chooses which mp4 or mpeg4 file to add
+    
+    @param event
     */
     @FXML
     public void chooseFile(ActionEvent event) {
@@ -133,6 +138,9 @@ public class AddMovieWindowController implements Initializable {
     }
     /*
     Searches imdb based on the title input field
+    
+    @param event
+    @throws IOException
     */
     @FXML
     private void searchImdbTitle(ActionEvent event) throws IOException
