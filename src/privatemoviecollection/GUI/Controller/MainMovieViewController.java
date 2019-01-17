@@ -193,7 +193,7 @@ public class MainMovieViewController implements Initializable
     @FXML
     public void addCategory(ActionEvent event) throws DALException
     {
-        List<Category> nameList = mModel.getAllCategories();
+        
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Add new category");
         dialog.setContentText("Enter category name");
@@ -204,6 +204,7 @@ public class MainMovieViewController implements Initializable
 
         if (result.isPresent())
         {
+            List<Category> nameList = mModel.getAllCategories();
             catName = result.get();
             
             if (catName.equals("") || catName.equals(" "))
@@ -222,7 +223,6 @@ public class MainMovieViewController implements Initializable
             
             Category newCat = new Category(0, catName);
             mModel.addCategory(newCat);
-            tbViewCategory.getSelectionModel().clearSelection();
             tbViewCategory.setItems(mModel.getAllCategories());
         }
          

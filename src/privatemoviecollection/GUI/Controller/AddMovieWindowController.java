@@ -141,7 +141,7 @@ public class AddMovieWindowController implements Initializable {
             JOptionPane.showMessageDialog(null, "You have to write a title first","title field is empty", JOptionPane.ERROR_MESSAGE);
             return;
         }
-            String url = "https://www.imdb.com/find?ref_=nv_sr_fn&q=" + txtTitle.getText();
+            String url = "https://www.imdb.com/find?ref_=nv_sr_fn&q=" + txtTitle.getText().replace(" ", "+");
             Desktop.getDesktop().browse(URI.create(url));
     
     }
