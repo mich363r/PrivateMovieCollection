@@ -106,8 +106,6 @@ public class MovieModel
     {
         mManager.addCategory(catToAdd);
         categoryList.add(catToAdd);
-//        categoryList.clear();
-//        categoryList.addAll(mManager.getAllCategories());
     }
     
     /*
