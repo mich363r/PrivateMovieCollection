@@ -499,7 +499,7 @@ public class MainMovieViewController implements Initializable
         double highImdb = 10;
         double lowImdb = Double.parseDouble(txtSearch.getText());
 
-        if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
+        if (lowImdb >= 0 && lowImdb <= highImdb)
         {
             mModel.searchImdbRating(lowImdb, highImdb);
         }
