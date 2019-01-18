@@ -82,7 +82,7 @@ public class MainMovieViewController implements Initializable
     private TextField txtSearchRatings;
 
     private MovieModel mModel;
-    private Category currentCategory;
+    private Category chosenCat;
     private Boolean searchDone;
 
     /*
@@ -174,7 +174,7 @@ public class MainMovieViewController implements Initializable
 
                 if (!tbViewCategory.getSelectionModel().isEmpty())
                 {
-                    tbViewCatMovies.setItems(mModel.searchMoviesInCat(input, currentCategory));
+                    tbViewCatMovies.setItems(mModel.searchMoviesInCat(input, chosenCat));
                 }
             }
 
@@ -185,7 +185,7 @@ public class MainMovieViewController implements Initializable
         {
             if (!tbViewCategory.getSelectionModel().isEmpty())
             {
-                tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory));
+                tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(chosenCat));
             }
             searchDone = false;
             btnSearch.setText("Search");
@@ -235,7 +235,6 @@ public class MainMovieViewController implements Initializable
 
             Category newCat = new Category(0, catName);
             mModel.addCategory(newCat);
-//            tbViewCategory.setItems(mModel.getAllCategories());
         }
 
     }
@@ -428,15 +427,15 @@ public class MainMovieViewController implements Initializable
     {
         if (!tbViewCategory.getSelectionModel().isEmpty())
         {
-            currentCategory = tbViewCategory.getSelectionModel().getSelectedItem();
-            tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory));
+            chosenCat = tbViewCategory.getSelectionModel().getSelectedItem();
+            tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(chosenCat));
             if (event.getButton().equals(MouseButton.PRIMARY))
             {
                 if (event.getClickCount() == 2)
                 {
 
                     tbViewCategory.getSelectionModel().clearSelection();
-                    currentCategory = null;
+                    chosenCat = null;
                 }
             }
         }
