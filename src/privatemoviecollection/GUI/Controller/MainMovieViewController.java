@@ -383,13 +383,14 @@ public class MainMovieViewController implements Initializable
             File movieFile = new File(moviePath);
             Movie movieToPlay = tbViewMovie.getSelectionModel().getSelectedItem();
 
-            Date lastview = new Date();
+            
             if (event.getButton().equals(MouseButton.PRIMARY))
             {
                 if (event.getClickCount() == 2)
                 {
-                    movieToPlay.setLastview(lastview);
                     mModel.setLastviewed(movieToPlay);
+                    tbViewMovie.setItems(mModel.getAllMovies());
+                    
                     Desktop.getDesktop().open(movieFile);
 
                 }
@@ -497,7 +498,7 @@ public class MainMovieViewController implements Initializable
         double highImdb = 10;
         double lowImdb = Double.parseDouble(txtSearch.getText());
 
-        if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
+        if (lowImdb >= 0 && lowImdb <= highImdb)
         {
             mModel.searchImdbRating(lowImdb, highImdb);
         }
