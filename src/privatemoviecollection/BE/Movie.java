@@ -30,6 +30,11 @@ public class Movie
         this.lastview = lastview;
     }
 
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
     public String getTitle()
     {
         return title;

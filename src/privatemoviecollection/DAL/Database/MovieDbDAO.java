@@ -60,12 +60,21 @@ public class MovieDbDAO
 
             String sql = "INSERT INTO Movie VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+           
             pstmt.setString(1, title);
             pstmt.setDouble(2, imdbRating);
             pstmt.setDouble(3, personalRating);
             pstmt.setString(4, filelink);
             pstmt.setDate(5, lastview);
             pstmt.execute();
+             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                movieToAdd.setId(generatedKeys.getInt(1));
+            }
+            else {
+                throw new SQLException("Creating user failed, no ID obtained.");
+            }
+        }
         } catch (Exception e)
         {
             throw new DALException("Could not access the database", e);

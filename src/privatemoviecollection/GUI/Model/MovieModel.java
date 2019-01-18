@@ -7,6 +7,7 @@ package privatemoviecollection.GUI.Model;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -176,6 +177,8 @@ public class MovieModel
     */
     public void setLastviewed (Movie movieToEdit) throws DALException, SQLException
     {
+        Date lastview = new Date();
+        movieToEdit.setLastview(lastview);
         mManager.setLastviewed(movieToEdit);
         movieList.setAll(mManager.getAllMovies());
     }
