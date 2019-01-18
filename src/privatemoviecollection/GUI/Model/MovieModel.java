@@ -152,7 +152,6 @@ public class MovieModel
     */
     public ObservableList<Category> getAllCategories() throws DALException
     {
-//        categoryList = FXCollections.observableArrayList(mManager.getAllCategories());
         return categoryList;
     }
     
@@ -178,8 +177,7 @@ public class MovieModel
     public void setLastviewed (Movie movieToEdit) throws DALException, SQLException
     {
         mManager.setLastviewed(movieToEdit);
-        movieList.clear();
-        movieList.addAll(mManager.getAllMovies());
+        movieList.setAll(mManager.getAllMovies());
     }
     
     /*
@@ -204,8 +202,7 @@ public class MovieModel
     */
     public ObservableList<Movie> searchImdbRating (double lowImdb, double highImdb) throws DALException
     {
-        movieList.clear();
-        movieList.addAll(FXCollections.observableArrayList(mManager.searchImdbRating(lowImdb, highImdb)));
+        movieList.setAll((mManager.searchImdbRating(lowImdb, highImdb)));
         return movieList;
     }
     
@@ -218,8 +215,7 @@ public class MovieModel
     */
     public ObservableList<Movie> searchMoviesInCat (String input, Category chosenCat) throws DALException
     {
-        catMovie.clear();
-        catMovie.addAll(FXCollections.observableArrayList(mManager.searchMoviesInCat(input, chosenCat)));
+        catMovie.setAll((mManager.searchMoviesInCat(input, chosenCat)));
         return catMovie;
         
     }

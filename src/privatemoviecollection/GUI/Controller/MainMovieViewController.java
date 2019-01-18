@@ -205,7 +205,7 @@ public class MainMovieViewController implements Initializable
     public void addCategory(ActionEvent event) throws DALException
     {
         List<Category> nameList = mModel.getAllCategories();
-        
+
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Add new category");
         dialog.setContentText("Enter category name");
@@ -216,7 +216,7 @@ public class MainMovieViewController implements Initializable
 
         if (result.isPresent())
         {
-            
+
             catName = result.get();
 
             if (catName.equals("") || catName.equals(" "))
@@ -294,7 +294,7 @@ public class MainMovieViewController implements Initializable
     
     @param event
     @throws DALException
-    */
+     */
     @FXML
     public void deleteCategory(ActionEvent event) throws DALException
     {
@@ -318,7 +318,7 @@ public class MainMovieViewController implements Initializable
     adds a personal rating to the selected movie between 1 and 10
     @param event
     @throws DALException 
-    */
+     */
     @FXML
     public void addPersonalRating(ActionEvent event) throws SQLException, DALException
     {
@@ -334,13 +334,13 @@ public class MainMovieViewController implements Initializable
             textInputRating();
         }
     }
-    
+
     /*
     parses the input string to double if the input is valid.
     
     @throws SQLException
     @throws DALException
-    */
+     */
     public void textInputRating() throws SQLException, DALException
     {
         TextInputDialog dialog = new TextInputDialog();
@@ -389,9 +389,10 @@ public class MainMovieViewController implements Initializable
             {
                 if (event.getClickCount() == 2)
                 {
-                    Desktop.getDesktop().open(movieFile);
                     movieToPlay.setLastview(lastview);
                     mModel.setLastviewed(movieToPlay);
+                    Desktop.getDesktop().open(movieFile);
+
                 }
             }
         }
@@ -446,7 +447,7 @@ public class MainMovieViewController implements Initializable
     
     @param event
     @throws DALException
-    */
+     */
     @FXML
     public void addToCategory(ActionEvent event) throws DALException
     {
@@ -486,12 +487,12 @@ public class MainMovieViewController implements Initializable
             mModel.deleteFromCategory(tbViewCatMovies.getSelectionModel().getSelectedItem(), tbViewCategory.getSelectionModel().getSelectedItem());
         }
     }
-    
+
     /*
     searches for movies by their IMDbrating between 1 and 10
     @param event
     @throws DALException
-    */
+     */
     public void searchRatings(ActionEvent event) throws DALException
     {
         double highImdb = 10;
@@ -502,14 +503,14 @@ public class MainMovieViewController implements Initializable
             mModel.searchImdbRating(lowImdb, highImdb);
         }
     }
-    
+
     /*
     plays the category movie when clicked twice
     @param event
     @throws IOException
     @throws DALException
     @throws SQLException
-    */
+     */
     @FXML
     private void playMovieInCategory(MouseEvent event) throws IOException, DALException, SQLException
     {
