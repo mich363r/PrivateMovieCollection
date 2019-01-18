@@ -152,7 +152,7 @@ public class MovieModel
     */
     public ObservableList<Category> getAllCategories() throws DALException
     {
-        categoryList = FXCollections.observableArrayList(mManager.getAllCategories());
+//        categoryList = FXCollections.observableArrayList(mManager.getAllCategories());
         return categoryList;
     }
     

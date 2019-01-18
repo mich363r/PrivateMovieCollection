@@ -204,6 +204,7 @@ public class MainMovieViewController implements Initializable
     @FXML
     public void addCategory(ActionEvent event) throws DALException
     {
+        List<Category> nameList = mModel.getAllCategories();
         
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Add new category");
@@ -215,7 +216,7 @@ public class MainMovieViewController implements Initializable
 
         if (result.isPresent())
         {
-            List<Category> nameList = mModel.getAllCategories();
+            
             catName = result.get();
 
             if (catName.equals("") || catName.equals(" "))
@@ -234,7 +235,7 @@ public class MainMovieViewController implements Initializable
 
             Category newCat = new Category(0, catName);
             mModel.addCategory(newCat);
-            tbViewCategory.setItems(mModel.getAllCategories());
+//            tbViewCategory.setItems(mModel.getAllCategories());
         }
 
     }
@@ -483,8 +484,6 @@ public class MainMovieViewController implements Initializable
         if (result.get() == ButtonType.YES)
         {
             mModel.deleteFromCategory(tbViewCatMovies.getSelectionModel().getSelectedItem(), tbViewCategory.getSelectionModel().getSelectedItem());
-            tbViewCatMovies.getItems().clear();
-            tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(currentCategory)); // gets the new list of songs minus the deleted ones.
         }
     }
     
