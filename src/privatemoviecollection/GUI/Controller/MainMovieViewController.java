@@ -158,24 +158,12 @@ public class MainMovieViewController implements Initializable
         {
             if (txtSearch.getText().length() == 0 && txtSearchRatings.getText().length() != 0)
             {
-                double highImdb = 10;
-                double lowImdb = Double.parseDouble(txtSearchRatings.getText());
-
-                if (lowImdb >= 0 && lowImdb <= highImdb && lowImdb <= highImdb)
-                {
-                    mModel.searchImdbRating(lowImdb, highImdb);
-                }
+                searchRatings();
             }
 
             if (txtSearchRatings.getText().length() == 0)
             {
-                String input = txtSearch.getText();
-                tbViewMovie.setItems(mModel.searchMovies(input));
-
-                if (!tbViewCategory.getSelectionModel().isEmpty())
-                {
-                    tbViewCatMovies.setItems(mModel.searchMoviesInCat(input, chosenCat));
-                }
+                searchMovies();
             }
 
             searchDone = true;
@@ -183,7 +171,13 @@ public class MainMovieViewController implements Initializable
 
         } else if (searchDone == true)
         {
-            if (!tbViewCategory.getSelectionModel().isEmpty())
+           clearSearch();
+        }
+    }
+    
+    public void clearSearch() throws DALException, SQLException
+    {
+         if (!tbViewCategory.getSelectionModel().isEmpty())
             {
                 tbViewCatMovies.setItems(mModel.getAllMoviesInCategory(chosenCat));
             }
@@ -192,7 +186,16 @@ public class MainMovieViewController implements Initializable
             tbViewMovie.setItems(mModel.getAllMovies());
             txtSearch.clear();
             txtSearchRatings.clear();
-        }
+    }
+    public void searchMovies() throws DALException
+    {
+        String input = txtSearch.getText();
+                tbViewMovie.setItems(mModel.searchMovies(input));
+
+                if (!tbViewCategory.getSelectionModel().isEmpty())
+                {
+                    tbViewCatMovies.setItems(mModel.searchMoviesInCat(input, chosenCat));
+                }
     }
 
     /*
@@ -493,10 +496,10 @@ public class MainMovieViewController implements Initializable
     @param event
     @throws DALException
      */
-    public void searchRatings(ActionEvent event) throws DALException
+    public void searchRatings() throws DALException
     {
         double highImdb = 10;
-        double lowImdb = Double.parseDouble(txtSearch.getText());
+        double lowImdb = Double.parseDouble(txtSearchRatings.getText());
 
         if (lowImdb >= 0 && lowImdb <= highImdb)
         {
